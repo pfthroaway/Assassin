@@ -1,0 +1,3 @@
+User not saving properly.
+Window staying open when all are supposed to be closed.
+Battle Window status not displaying correctly.
