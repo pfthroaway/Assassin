@@ -666,15 +666,15 @@ namespace Assassin
 
         private async void windowBattle_Closing(object sender, CancelEventArgs e)
         {
-            if (!battleOver)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
+          //  if (!battleOver)
+         //   {
+           //     e.Cancel = true;
+           // }
+            //else
+           // {
                 await GameState.SaveUser(GameState.CurrentUser);
-                RefToAssassinationWindow.Show();
-            }
+              RefToAssassinationWindow.Show();
+            //}
         }
     }
 }
