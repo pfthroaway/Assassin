@@ -161,7 +161,7 @@ namespace Assassin
                         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                         {
                             WeaponType currentWeapon;
-                            Enum.TryParse(ds.Tables[0].Rows[i]["WeaponType"].ToString(), out currentWeapon);
+                            Enum.TryParse(ds.Tables[0].Rows[i]["CurrentWeapon"].ToString(), out currentWeapon);
                             User newUser = new User();
                             newUser.Name = ds.Tables[0].Rows[i]["Username"].ToString();
                             newUser.Password = ds.Tables[0].Rows[i]["UserPassword"].ToString();

@@ -61,10 +61,18 @@ namespace Assassin
 
         private void mnuHelpManual_Click(object sender, RoutedEventArgs e)
         {
+            ManualWindow manualWindow = new ManualWindow();
+            manualWindow.RefToMainWindow = this;
+            manualWindow.Show();
+            this.Visibility = Visibility.Hidden;
         }
 
         private void mnuHelpAbout_Click(object sender, RoutedEventArgs e)
         {
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.RefToMainWindow = this;
+            aboutWindow.Show();
+            this.Visibility = Visibility.Hidden;
         }
 
         #endregion Click Methods
@@ -78,14 +86,6 @@ namespace Assassin
             else
                 btnLogin.IsEnabled = false;
         }
-
-        //private void mnuAdmin_Click(object sender, RoutedEventArgs e)
-        ////{
-        ////    frmAdminLogin AdminLoginWindow = new frmAdminLogin();
-        ////    AdminLoginWindow.Show();
-        ////    AdminLoginWindow.RefToMainWindow = this;
-        ////    this.Visibility = Visibility.Hidden;
-        //}
 
         public MainWindow()
         {
