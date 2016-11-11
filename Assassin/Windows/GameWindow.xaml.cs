@@ -114,6 +114,10 @@ namespace Assassin
 
         private void btnBank_Click(object sender, RoutedEventArgs e)
         {
+            BankWindow bankWindow = new BankWindow();
+            bankWindow.RefToGameWindow = this;
+            bankWindow.Show();
+            this.Visibility = Visibility.Hidden;
         }
 
         #endregion Button-Click Methods

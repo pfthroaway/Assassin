@@ -90,6 +90,12 @@
     <Compile Include="Windows\AdminUsersWindow.xaml.cs">
       <DependentUpon>AdminUsersWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\BankDialogWindow.xaml.cs">
+      <DependentUpon>BankDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BankWindow.xaml.cs">
+      <DependentUpon>BankWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\BarWindow.xaml.cs">
       <DependentUpon>BarWindow.xaml</DependentUpon>
     </Compile>
@@ -164,8 +170,6 @@
     <Compile Include="Windows\ArmoryWindow.xaml.cs">
       <DependentUpon>ArmoryWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\BankDialogWindow.xaml.cs" />
-    <Compile Include="Windows\BankWindow.xaml.cs" />
     <Compile Include="Windows\ShopsWindow.xaml.cs">
       <DependentUpon>ShopsWindow.xaml</DependentUpon>
     </Compile>
@@ -202,6 +206,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AdminUsersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BankDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BankWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -300,14 +312,6 @@
     <Page Include="Windows\ArmoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\BankDialogWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\BankWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ShopsWindow.xaml">
       <SubType>Designer</SubType>
