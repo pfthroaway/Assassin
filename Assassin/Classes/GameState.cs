@@ -160,6 +160,8 @@ namespace Assassin
                     {
                         for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                         {
+                            WeaponType currentWeapon;
+                            Enum.TryParse(ds.Tables[0].Rows[i]["WeaponType"].ToString(), out currentWeapon);
                             User newUser = new User();
                             newUser.Name = ds.Tables[0].Rows[i]["Username"].ToString();
                             newUser.Password = ds.Tables[0].Rows[i]["UserPassword"].ToString();
@@ -172,7 +174,7 @@ namespace Assassin
                             newUser.MaximumEndurance = Int32Helper.Parse(ds.Tables[0].Rows[i]["MaximumEndurance"]);
                             newUser.Hunger = Int32Helper.Parse(ds.Tables[0].Rows[i]["Hunger"]);
                             newUser.Thirst = Int32Helper.Parse(ds.Tables[0].Rows[i]["Thirst"]);
-                            newUser.CurrentWeapon = ds.Tables[0].Rows[i]["CurrentWeapon"].ToString();
+                            newUser.CurrentWeapon = currentWeapon;
                             newUser.LightWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["LightWeapon"].ToString());
                             newUser.HeavyWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["HeavyWeapon"].ToString());
                             newUser.TwoHandedWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["TwoHandedWeapon"].ToString());
@@ -231,74 +233,6 @@ namespace Assassin
                 AllWeapons = AllWeapons.OrderBy(weapon => weapon.Value).ToList();
             });
         }
-
-        #region Login Methods
-
-        internal async static void Login(string username)
-        {
-            CurrentUser = new User();
-            SQLiteConnection con = new SQLiteConnection();
-            SQLiteDataAdapter da = new SQLiteDataAdapter();
-            con.ConnectionString = _DBPROVIDERANDSOURCE;
-            DataSet ds = new DataSet();
-
-            await Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    string sql = "SELECT * FROM Users WHERE [Username] = '" + username + "'";
-                    string table = "User";
-                    da = new SQLiteDataAdapter(sql, con);
-                    da.Fill(ds, table);
-
-                    if (ds.Tables[0].Rows.Count > 0)
-                    {
-                        CurrentUser.Name = ds.Tables[0].Rows[0]["Username"].ToString();
-                        CurrentUser.Password = ds.Tables[0].Rows[0]["UserPassword"].ToString();
-                        CurrentUser.Level = Int32Helper.Parse(ds.Tables[0].Rows[0]["Level"]);
-                        CurrentUser.Experience = Int32Helper.Parse(ds.Tables[0].Rows[0]["Experience"]);
-                        CurrentUser.SkillPoints = Int32Helper.Parse(ds.Tables[0].Rows[0]["SkillPoints"]);
-                        CurrentUser.Alive = BoolHelper.Parse(ds.Tables[0].Rows[0]["Alive"]);
-                        CurrentUser.CurrentLocation = ds.Tables[0].Rows[0]["Location"].ToString();
-                        CurrentUser.CurrentEndurance = Int32Helper.Parse(ds.Tables[0].Rows[0]["CurrentEndurance"]);
-                        CurrentUser.MaximumEndurance = Int32Helper.Parse(ds.Tables[0].Rows[0]["MaximumEndurance"]);
-                        CurrentUser.Hunger = Int32Helper.Parse(ds.Tables[0].Rows[0]["Hunger"]);
-                        CurrentUser.Thirst = Int32Helper.Parse(ds.Tables[0].Rows[0]["Thirst"]);
-                        CurrentUser.CurrentWeapon = ds.Tables[0].Rows[0]["CurrentWeapon"].ToString();
-                        CurrentUser.LightWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[0]["LightWeapon"].ToString());
-                        CurrentUser.HeavyWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[0]["HeavyWeapon"].ToString());
-                        CurrentUser.TwoHandedWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[0]["TwoHandedWeapon"].ToString());
-                        CurrentUser.Armor = AllArmor.Find(armr => armr.Name == ds.Tables[0].Rows[0]["Armor"].ToString());
-                        CurrentUser.Potion = AllPotions.Find(potn => potn.Name == ds.Tables[0].Rows[0]["Potion"].ToString());
-                        CurrentUser.Lockpicks = Int32Helper.Parse(ds.Tables[0].Rows[0]["Lockpicks"]);
-                        CurrentUser.GoldOnHand = Int32Helper.Parse(ds.Tables[0].Rows[0]["GoldOnHand"]);
-                        CurrentUser.GoldInBank = Int32Helper.Parse(ds.Tables[0].Rows[0]["GoldInBank"]);
-                        CurrentUser.GoldOnLoan = Int32Helper.Parse(ds.Tables[0].Rows[0]["GoldOnLoan"]);
-                        CurrentUser.Shovel = BoolHelper.Parse(ds.Tables[0].Rows[0]["Shovel"]);
-                        CurrentUser.Lantern = BoolHelper.Parse(ds.Tables[0].Rows[0]["Lantern"]);
-                        CurrentUser.Amulet = BoolHelper.Parse(ds.Tables[0].Rows[0]["Amulet"]);
-                        CurrentUser.LightWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[0]["LightWeaponSkill"]);
-                        CurrentUser.HeavyWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[0]["HeavyWeaponSkill"]);
-                        CurrentUser.TwoHandedWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[0]["TwoHandedWeaponSkill"]);
-                        CurrentUser.Blocking = Int32Helper.Parse(ds.Tables[0].Rows[0]["Blocking"]);
-                        CurrentUser.Slipping = Int32Helper.Parse(ds.Tables[0].Rows[0]["Slipping"]);
-                        CurrentUser.Stealth = Int32Helper.Parse(ds.Tables[0].Rows[0]["Stealth"]);
-                        CurrentUser.HenchmenLevel1 = Int32Helper.Parse(ds.Tables[0].Rows[0]["HenchmenLevel1"]);
-                        CurrentUser.HenchmenLevel2 = Int32Helper.Parse(ds.Tables[0].Rows[0]["HenchmenLevel2"]);
-                        CurrentUser.HenchmenLevel3 = Int32Helper.Parse(ds.Tables[0].Rows[0]["HenchmenLevel3"]);
-                        CurrentUser.HenchmenLevel4 = Int32Helper.Parse(ds.Tables[0].Rows[0]["HenchmenLevel4"]);
-                        CurrentUser.HenchmenLevel5 = Int32Helper.Parse(ds.Tables[0].Rows[0]["HenchmenLevel5"]);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error Loading User", MessageBoxButton.OK);
-                }
-                finally { con.Close(); }
-            });
-        }
-
-        #endregion Login Methods
 
         #region Random Number Generation
 

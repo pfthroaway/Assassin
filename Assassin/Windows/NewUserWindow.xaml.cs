@@ -10,7 +10,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for NewUserWindow.xaml
     /// </summary>
-    public partial class NewUserWindow : Window
+    public partial class NewUserWindow : Window, INotifyPropertyChanged
     {
         private bool blnStart = false;
         private User createUser = new User();
@@ -332,7 +332,7 @@ namespace Assassin
             this.Close();
         }
 
-        private void windowNewUser_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowNewUser_Closing(object sender, CancelEventArgs e)
         {
             if (!blnStart)
                 RefToMainWindow.Show();

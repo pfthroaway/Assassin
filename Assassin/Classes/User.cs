@@ -4,9 +4,10 @@ namespace Assassin
 {
     public class User : INotifyPropertyChanged
     {
-        private string _name, _password, _currentLocation, _currentWeapon;
+        private string _name, _password, _currentLocation;
         private int _level, _experience, _skillPoints, _currentEndurance, _maximumEndurance, _hunger, _thirst, _lockpicks, _goldOnHand, _goldInBank, _goldOnLoan, _lightWeaponSkill, _heavyWeaponSkill, _twoHandedWeaponSkill, _blocking, _slipping, _stealth, _henchmenLevel1, _henchmenLevel2, _henchmenLevel3, _henchmenLevel4, _henchmenLevel5;
         private bool _alive, _shovel, _lantern, _amulet;
+        private WeaponType _currentWeapon;
         private Weapon _lightWeapon, _heavyWeapon, _twoHandedWeapon;
         private Armor _armor = new Armor();
         private Potion _potion;
@@ -132,7 +133,7 @@ namespace Assassin
             }
         }
 
-        public string CurrentWeapon
+        public WeaponType CurrentWeapon
         {
             get { return _currentWeapon; }
             set { _currentWeapon = value; OnPropertyChanged("SelectedWeapon"); }
@@ -145,15 +146,15 @@ namespace Assassin
                 Weapon newWeapon = new Weapon();
                 switch (CurrentWeapon)
                 {
-                    case "Light":
+                    case WeaponType.Light:
                         newWeapon = LightWeapon;
                         break;
 
-                    case "Heavy":
+                    case WeaponType.Heavy:
                         newWeapon = HeavyWeapon;
                         break;
 
-                    case "Two-Handed":
+                    case WeaponType.TwoHanded:
                         newWeapon = TwoHandedWeapon;
                         break;
                 }
@@ -168,15 +169,15 @@ namespace Assassin
                 int skill = 0;
                 switch (CurrentWeapon)
                 {
-                    case "Light":
+                    case WeaponType.Light:
                         skill = LightWeaponSkill;
                         break;
 
-                    case "Heavy":
+                    case WeaponType.Heavy:
                         skill = HeavyWeaponSkill;
                         break;
 
-                    case "Two-Handed":
+                    case WeaponType.TwoHanded:
                         skill = TwoHandedWeaponSkill;
                         break;
                 }
@@ -253,7 +254,7 @@ namespace Assassin
         public int GoldOnLoan
         {
             get { return _goldOnLoan; }
-            set { _goldOnLoan = value; OnPropertyChanged("GoldOnLoan"); }
+            set { _goldOnLoan = value; OnPropertyChanged("GoldOnLoan"); OnPropertyChanged("LoanAvailable"); OnPropertyChanged("LoanAvailableToString"); }
         }
 
         public string GoldInBankToString
@@ -269,6 +270,16 @@ namespace Assassin
         public string GoldOnHandToString
         {
             get { return GoldOnHand.ToString("N0"); }
+        }
+
+        public int LoanAvailable
+        {
+            get { return (Level * 250) - GoldOnLoan; }
+        }
+
+        public string LoanAvailableToString
+        {
+            get { return ((Level * 250) - GoldOnLoan).ToString("N0"); }
         }
 
         public int LightWeaponSkill
@@ -425,7 +436,7 @@ namespace Assassin
             Hunger = 0;
             Thirst = 0;
 
-            CurrentWeapon = "Light";
+            CurrentWeapon = WeaponType.Light;
             LightWeapon = new Weapon();
             HeavyWeapon = new Weapon();
             TwoHandedWeapon = new Weapon();
@@ -491,7 +502,7 @@ namespace Assassin
         /// <param name="henchmenLevel3">Amount of Level 3 Henchmen employed by the User</param>
         /// <param name="henchmenLevel4">Amount of Level 4 Henchmen employed by the User</param>
         /// <param name="henchmenLevel5">Amount of Level 5 Henchmen employed by the User</param>
-        internal User(string name, string password, int level, int experience, int skillPoints, bool alive, string currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, string currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
+        internal User(string name, string password, int level, int experience, int skillPoints, bool alive, string currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
         {
             Name = name;
             Password = password;

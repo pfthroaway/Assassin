@@ -78,11 +78,102 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Windows\BattleWindow.xaml.cs">
-      <DependentUpon>BattleWindow.xaml</DependentUpon>
+    <Compile Include="Windows\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AdminEnemiesWindow.xaml.cs">
+      <DependentUpon>AdminEnemiesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AdminGuildWindow.xaml.cs">
+      <DependentUpon>AdminGuildWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AdminUsersWindow.xaml.cs">
+      <DependentUpon>AdminUsersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BarWindow.xaml.cs">
+      <DependentUpon>BarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ChangePasswordWindow.xaml.cs">
+      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Jail.cs" />
+    <Compile Include="Classes\JailedUser.cs" />
+    <Compile Include="Windows\CourtWindow.xaml.cs">
+      <DependentUpon>CourtWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GuildDonateWindow.xaml.cs">
+      <DependentUpon>GuildDonateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GuildListWindow.xaml.cs">
+      <DependentUpon>GuildListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GuildManageWindow.xaml.cs">
+      <DependentUpon>GuildManageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GuildOptionsWindow.xaml.cs">
+      <DependentUpon>GuildOptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GuildTransferWindow.xaml.cs">
+      <DependentUpon>GuildTransferWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GuildWindow.xaml.cs">
+      <DependentUpon>GuildWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\HireHenchmenWindow.xaml.cs">
+      <DependentUpon>HireHenchmenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\JobsWindow.xaml.cs">
+      <DependentUpon>JobsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ManageApplicationsWindow.xaml.cs">
+      <DependentUpon>ManageApplicationsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ManualWindow.xaml.cs">
+      <DependentUpon>ManualWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MembersWindow.xaml.cs">
+      <DependentUpon>MembersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MysticWindow.xaml.cs">
+      <DependentUpon>MysticWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RaidWindow.xaml.cs">
+      <DependentUpon>RaidWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RobWindow.xaml.cs">
+      <DependentUpon>RobWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ThievesGuildWindow.xaml.cs">
+      <DependentUpon>ThievesGuildWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\TrainWindow.xaml.cs">
+      <DependentUpon>TrainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\JailWindow.xaml.cs">
+      <DependentUpon>JailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InventoryWindow.xaml.cs">
+      <DependentUpon>InventoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ArmoryWindow.xaml.cs">
+      <DependentUpon>ArmoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BankDialogWindow.xaml.cs" />
+    <Compile Include="Windows\BankWindow.xaml.cs" />
+    <Compile Include="Windows\ShopsWindow.xaml.cs">
+      <DependentUpon>ShopsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\AssassinationWindow.xaml.cs">
       <DependentUpon>AssassinationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\BattleWindow.xaml.cs">
+      <DependentUpon>BattleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
@@ -98,11 +189,135 @@
     <Compile Include="Windows\NewUserWindow.xaml.cs">
       <DependentUpon>NewUserWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Windows\BattleWindow.xaml">
+    <Page Include="Windows\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AdminEnemiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AdminGuildWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AdminUsersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ChangePasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CourtWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GuildDonateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GuildListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GuildManageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GuildOptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GuildTransferWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GuildWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\HireHenchmenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\JobsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ManageApplicationsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ManualWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MembersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MysticWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RaidWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RobWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ThievesGuildWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TrainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\JailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InventoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ArmoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BankDialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\BankWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ShopsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AssassinationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BattleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

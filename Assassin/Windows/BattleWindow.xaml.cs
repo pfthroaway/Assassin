@@ -7,7 +7,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for BattleWindow.xaml
     /// </summary>
-    public partial class BattleWindow : Window
+    public partial class BattleWindow : Window, INotifyPropertyChanged
     {
         private string nl = Environment.NewLine;
         private int _playerStamina = 20;
@@ -29,6 +29,7 @@ namespace Assassin
         #region Properties
 
         internal AssassinationWindow RefToAssassinationWindow { get; set; }
+        internal GameWindow RefToGameWindow { get; set; }
 
         public int PlayerStamina
         {
@@ -666,15 +667,15 @@ namespace Assassin
 
         private async void windowBattle_Closing(object sender, CancelEventArgs e)
         {
-          //  if (!battleOver)
-         //   {
-           //     e.Cancel = true;
-           // }
-            //else
-           // {
+            if (!battleOver)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
                 await GameState.SaveUser(GameState.CurrentUser);
-              RefToAssassinationWindow.Show();
-            //}
+                RefToAssassinationWindow.Show();
+            }
         }
     }
 }

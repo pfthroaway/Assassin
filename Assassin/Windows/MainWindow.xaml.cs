@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -131,6 +132,10 @@ namespace Assassin
         private void pswdPassword_GotFocus(object sender, RoutedEventArgs e)
         {
             pswdPassword.SelectAll();
+        }
+
+        private void windowMain_Closing(object sender, CancelEventArgs e)
+        {
         }
 
         #endregion Window-Manipulation Methods

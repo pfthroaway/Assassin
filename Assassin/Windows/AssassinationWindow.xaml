@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="txtAssassinate" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="350" Height="200" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10" IsReadOnly="True" />
+        <TextBox x:Name="txtAssassinate" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="350" Height="200" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Visible" />
         <Button x:Name="btnAssassinate" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="150" Height="30" Margin="0,0,0,10" Content="_Assassinate" Click="btnAssassinate_Click" IsDefault="True" />
         <Button x:Name="btnNewVictim" Grid.Column="0" Grid.Row="2" Width="150" Height="30" Content="_Stalk New Victim" Click="btnNewVictim_Click" />
         <Button x:Name="btnBack" Grid.Column="1" Grid.Row="2" Width="150" Height="30" Content="_Back" Click="btnBack_Click" IsCancel="True" />

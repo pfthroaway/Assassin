@@ -85,6 +85,10 @@ namespace Assassin
 
         private void btnRob_Click(object sender, RoutedEventArgs e)
         {
+            //BattleWindow battleWindow = new BattleWindow();
+            //battleWindow.RefToGameWindow = this;
+            //battleWindow.Show();
+            //this.Visibility = Visibility.Hidden;
         }
 
         private void btnAssassinate_Click(object sender, RoutedEventArgs e)

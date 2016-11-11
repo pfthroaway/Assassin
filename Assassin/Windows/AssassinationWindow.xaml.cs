@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 
 namespace Assassin
@@ -107,7 +108,7 @@ namespace Assassin
             txtAssassinate.Text = "You go out in search of prey...";
         }
 
-        private void windowAssassination_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowAssassination_Closing(object sender, CancelEventArgs e)
         {
             RefToGameWindow.Show();
             RefToGameWindow.AddTextTT(txtAssassinate.Text);

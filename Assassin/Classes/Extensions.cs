@@ -49,7 +49,7 @@ namespace Assassin
                 temp = Convert.ToInt32(bln);
             }
             catch (Exception e)
-            { MessageBox.Show(e.Message, "Sulimn", MessageBoxButton.OK); }
+            { MessageBox.Show(e.Message, "Assassin", MessageBoxButton.OK); }
 
             return temp;
         }
@@ -67,7 +67,7 @@ namespace Assassin
                 temp = (int)dbl;
             }
             catch (Exception e)
-            { MessageBox.Show(e.Message, "Sulimn", MessageBoxButton.OK); }
+            { MessageBox.Show(e.Message, "Assassin", MessageBoxButton.OK); }
 
             return temp;
         }
@@ -85,7 +85,7 @@ namespace Assassin
                 temp = (int)dcml;
             }
             catch (Exception e)
-            { MessageBox.Show(e.Message, "Sulimn", MessageBoxButton.OK); }
+            { MessageBox.Show(e.Message, "Assassin", MessageBoxButton.OK); }
 
             return temp;
         }
@@ -134,7 +134,7 @@ namespace Assassin
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Sulimn", MessageBoxButton.OK);
+                MessageBox.Show(ex.Message, "Assassin", MessageBoxButton.OK);
             }
             return temp;
         }

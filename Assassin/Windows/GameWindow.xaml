@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="txtGame" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="410" Height="300" BorderBrush="Black" BorderThickness="1" TextWrapping="Wrap" IsReadOnly="True" Padding="5" />
+        <TextBox x:Name="txtGame" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="410" Height="300" BorderBrush="Black" BorderThickness="1" TextWrapping="Wrap" IsReadOnly="True" Padding="5" ScrollViewer.VerticalScrollBarVisibility="Visible" />
         <Button x:Name="btnAssassinate" Grid.Column="0" Grid.Row="1" Width="200" Height="30" Content="_Assassinate" Click="btnAssassinate_Click" Margin="0,0,5,0" />
         <Button x:Name="btnInventory" Grid.Column="1" Grid.Row="1" Width="200" Height="30" Margin="5,5,0,5" Content="_Inventory" Click="btnInventory_Click" />
         <Button x:Name="btnRob" Grid.Column="0" Grid.Row="2" Width="200" Height="30" Margin="0,5,5,5" Content="_Rob" Click="btnRob_Click" />
@@ -97,7 +97,7 @@
                 <TextBlock Text="Hunger" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="1" Grid.Row="5" BorderBrush="Black" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=Hunger}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Path=HungerToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="6" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Thirst" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />

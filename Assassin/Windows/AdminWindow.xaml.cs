@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 namespace Assassin
 {
@@ -30,7 +31,7 @@ namespace Assassin
             InitializeComponent();
         }
 
-        private void windowAdminLogin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowAdminLogin_Closing(object sender, CancelEventArgs e)
         {
             RefToMainWindow.Show();
         }
