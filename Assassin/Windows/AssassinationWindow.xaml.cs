@@ -8,7 +8,7 @@ namespace Assassin
     /// </summary>
     public partial class AssassinationWindow : Window
     {
-        internal GameWindow RefToGameWindow = new GameWindow();
+        internal GameWindow RefToGameWindow { get; set; }
         private string nl = Environment.NewLine;
 
         /// <summary>
