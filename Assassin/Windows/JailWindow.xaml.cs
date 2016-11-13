@@ -40,7 +40,7 @@ namespace Assassin
             InitializeComponent();
         }
 
-        private async void windowJail_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private async void windowJail_Closing(object sender, CancelEventArgs e)
         {
             await GameState.SaveUser(GameState.CurrentUser);
             RefToGameWindow.Show();

@@ -79,6 +79,7 @@ namespace Assassin
             btnAssassinate.IsEnabled = false;
             BattleWindow battleWindow = new BattleWindow();
             battleWindow.RefToAssassinationWindow = this;
+            battleWindow.SetPreviousWindow("Assassinate");
             battleWindow.Show();
             this.Visibility = Visibility.Hidden;
         }

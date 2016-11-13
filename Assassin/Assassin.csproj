@@ -78,6 +78,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Employer.cs" />
+    <Compile Include="Windows\PubWindow.xaml.cs">
+      <DependentUpon>PubWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -193,6 +197,10 @@
     <Compile Include="Windows\NewUserWindow.xaml.cs">
       <DependentUpon>NewUserWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\PubWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
