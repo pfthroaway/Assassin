@@ -35,10 +35,7 @@ namespace Assassin
             set { _maximumEndurance = value; OnPropertyChanged("EnduranceToString"); }
         }
 
-        public string EnduranceToString
-        {
-            get { return CurrentEndurance.ToString("N0") + " / " + MaximumEndurance.ToString("N0"); }
-        }
+        public string EnduranceToString => CurrentEndurance.ToString("N0") + " / " + MaximumEndurance.ToString("N0");
 
         public Weapon Weapon
         {
@@ -132,6 +129,7 @@ namespace Assassin
         /// Initializes a new instance of the Enemy class by assigning Property values.
         /// </summary>
         /// <param name="name">Name of Enemy</param>
+        /// <param name="level">Level of Enemy</param>
         /// <param name="currentEndurance">Amount of Endurance the Enemy currently has</param>
         /// <param name="maximumEndurance">Maximum amount of Endurance the Enemy can have</param>
         /// <param name="weapon">Weapon equipped by the Enemy</param>

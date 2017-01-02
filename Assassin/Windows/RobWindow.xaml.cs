@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for RobWindow.xaml
     /// </summary>
-    public partial class RobWindow : Window
+    public partial class RobWindow 
     {
         public RobWindow()
         {

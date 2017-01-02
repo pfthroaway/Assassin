@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for HireHenchmenWindow.xaml
     /// </summary>
-    public partial class HireHenchmenWindow : Window
+    public partial class HireHenchmenWindow 
     {
         public HireHenchmenWindow()
         {

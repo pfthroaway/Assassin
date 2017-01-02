@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for MysticWindow.xaml
     /// </summary>
-    public partial class MysticWindow : Window
+    public partial class MysticWindow 
     {
         public MysticWindow()
         {

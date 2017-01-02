@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for TrainWindow.xaml
     /// </summary>
-    public partial class TrainWindow : Window
+    public partial class TrainWindow 
     {
         public TrainWindow()
         {

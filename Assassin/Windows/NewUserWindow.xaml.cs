@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Extensions;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Assassin
 {
-    /// <summary>
-    /// Interaction logic for NewUserWindow.xaml
-    /// </summary>
-    public partial class NewUserWindow : Window, INotifyPropertyChanged
+    /// <summary>Interaction logic for NewUserWindow.xaml</summary>
+    public partial class NewUserWindow : INotifyPropertyChanged
     {
-        private bool blnStart = false;
-        private User createUser = new User();
-        private User defaultUser = new User();
+        private bool _blnStart;
+        private User _createUser = new User();
+        private readonly User _defaultUser = new User();
 
-        internal MainWindow RefToMainWindow { get; set; }
+        internal MainWindow RefToMainWindow { private get; set; }
 
         #region Data-Binding
 
@@ -33,12 +30,12 @@ namespace Assassin
 
         private void CheckButtons()
         {
-            if (createUser.SkillPoints > 0)
+            if (_createUser.SkillPoints > 0)
             {
                 EnablePlusButtons();
                 btnCreate.IsEnabled = false;
 
-                if (createUser.SkillPoints == defaultUser.SkillPoints)
+                if (_createUser.SkillPoints == _defaultUser.SkillPoints)
                 {
                     DisableMinusButtons();
                     btnReset.IsEnabled = false;
@@ -113,7 +110,7 @@ namespace Assassin
         private int IncreaseAttribute(int attribute)
         {
             attribute += 8;
-            createUser.SkillPoints--;
+            _createUser.SkillPoints--;
             CheckButtons();
             return attribute;
         }
@@ -126,7 +123,7 @@ namespace Assassin
         private int DecreaseAttribute(int attribute)
         {
             attribute -= 8;
-            createUser.SkillPoints++;
+            _createUser.SkillPoints++;
             CheckButtons();
             return attribute;
         }
@@ -137,98 +134,98 @@ namespace Assassin
 
         private void btnEnduranceMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.SkillPoints++;
-            createUser.CurrentEndurance -= 20;
-            createUser.MaximumEndurance -= 20;
-            if (createUser.MaximumEndurance == defaultUser.MaximumEndurance)
+            _createUser.SkillPoints++;
+            _createUser.CurrentEndurance -= 20;
+            _createUser.MaximumEndurance -= 20;
+            if (_createUser.MaximumEndurance == _defaultUser.MaximumEndurance)
                 btnEnduranceMinus.IsEnabled = false;
             CheckButtons();
         }
 
         private void btnEndurancePlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.SkillPoints--;
-            createUser.CurrentEndurance += 20;
-            createUser.MaximumEndurance += 20;
+            _createUser.SkillPoints--;
+            _createUser.CurrentEndurance += 20;
+            _createUser.MaximumEndurance += 20;
             btnEnduranceMinus.IsEnabled = true;
             CheckButtons();
         }
 
         private void btnLightWeaponsMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.LightWeaponSkill = DecreaseAttribute(createUser.LightWeaponSkill);
-            if (createUser.LightWeaponSkill == defaultUser.LightWeaponSkill)
+            _createUser.LightWeaponSkill = DecreaseAttribute(_createUser.LightWeaponSkill);
+            if (_createUser.LightWeaponSkill == _defaultUser.LightWeaponSkill)
                 btnLightWeaponsMinus.IsEnabled = false;
         }
 
         private void btnLightWeaponsPlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.LightWeaponSkill = IncreaseAttribute(createUser.LightWeaponSkill);
+            _createUser.LightWeaponSkill = IncreaseAttribute(_createUser.LightWeaponSkill);
             btnLightWeaponsMinus.IsEnabled = true;
         }
 
         private void btnHeavyWeaponsMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.HeavyWeaponSkill = DecreaseAttribute(createUser.HeavyWeaponSkill);
-            if (createUser.HeavyWeaponSkill == defaultUser.HeavyWeaponSkill)
+            _createUser.HeavyWeaponSkill = DecreaseAttribute(_createUser.HeavyWeaponSkill);
+            if (_createUser.HeavyWeaponSkill == _defaultUser.HeavyWeaponSkill)
                 btnHeavyWeaponsMinus.IsEnabled = false;
         }
 
         private void btnHeavyWeaponsPlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.HeavyWeaponSkill = IncreaseAttribute(createUser.HeavyWeaponSkill);
+            _createUser.HeavyWeaponSkill = IncreaseAttribute(_createUser.HeavyWeaponSkill);
             btnHeavyWeaponsMinus.IsEnabled = true;
         }
 
         private void btnTwoHandedWeaponsMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.TwoHandedWeaponSkill = DecreaseAttribute(createUser.TwoHandedWeaponSkill);
-            if (createUser.TwoHandedWeaponSkill == defaultUser.TwoHandedWeaponSkill)
+            _createUser.TwoHandedWeaponSkill = DecreaseAttribute(_createUser.TwoHandedWeaponSkill);
+            if (_createUser.TwoHandedWeaponSkill == _defaultUser.TwoHandedWeaponSkill)
                 btnTwoHandedWeaponsMinus.IsEnabled = false;
         }
 
         private void btnTwoHandedWeaponsPlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.TwoHandedWeaponSkill = IncreaseAttribute(createUser.TwoHandedWeaponSkill);
+            _createUser.TwoHandedWeaponSkill = IncreaseAttribute(_createUser.TwoHandedWeaponSkill);
             btnTwoHandedWeaponsMinus.IsEnabled = true;
         }
 
         private void btnBlockingMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.Blocking = DecreaseAttribute(createUser.Blocking);
-            if (createUser.Blocking == defaultUser.Blocking)
+            _createUser.Blocking = DecreaseAttribute(_createUser.Blocking);
+            if (_createUser.Blocking == _defaultUser.Blocking)
                 btnBlockingMinus.IsEnabled = false;
         }
 
         private void btnBlockingPlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.Blocking = IncreaseAttribute(createUser.Blocking);
+            _createUser.Blocking = IncreaseAttribute(_createUser.Blocking);
             btnBlockingMinus.IsEnabled = true;
         }
 
         private void btnSlippingMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.Slipping = DecreaseAttribute(createUser.Slipping);
-            if (createUser.Slipping == defaultUser.Slipping)
+            _createUser.Slipping = DecreaseAttribute(_createUser.Slipping);
+            if (_createUser.Slipping == _defaultUser.Slipping)
                 btnSlippingMinus.IsEnabled = false;
         }
 
         private void btnSlippingPlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.Slipping = IncreaseAttribute(createUser.Slipping);
+            _createUser.Slipping = IncreaseAttribute(_createUser.Slipping);
             btnSlippingMinus.IsEnabled = true;
         }
 
         private void btnStealthMinus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.Stealth = DecreaseAttribute(createUser.Stealth);
-            if (createUser.Stealth == defaultUser.Stealth)
+            _createUser.Stealth = DecreaseAttribute(_createUser.Stealth);
+            if (_createUser.Stealth == _defaultUser.Stealth)
                 btnStealthMinus.IsEnabled = false;
         }
 
         private void btnStealthPlus_Click(object sender, RoutedEventArgs e)
         {
-            createUser.Stealth = IncreaseAttribute(createUser.Stealth);
+            _createUser.Stealth = IncreaseAttribute(_createUser.Stealth);
             btnStealthMinus.IsEnabled = true;
         }
 
@@ -242,27 +239,27 @@ namespace Assassin
             {
                 if (txtUsername.Text.Trim().Length >= 4 && pswdPassword.Password.Trim().Length >= 4 && pswdConfirm.Password.Trim().Length >= 4)
                 {
-                    createUser.Name = txtUsername.Text.Trim();
-                    createUser.Password = PasswordHash.HashPassword(pswdPassword.Password.Trim());
-                    if (await GameState.CreateUser(createUser))
+                    _createUser.Name = txtUsername.Text.Trim();
+                    _createUser.Password = PasswordHash.HashPassword(pswdPassword.Password.Trim());
+                    if (await GameState.CreateUser(_createUser))
                     {
-                        blnStart = true;
+                        _blnStart = true;
                         CloseWindow();
                     }
                 }
                 else
-                    MessageBox.Show("Usernames and passwords must be at least 4 characters in length, excluding leading and trailing spaces.", "Assassin", MessageBoxButton.OK);
+                    new Notification("Usernames and passwords must be at least 4 characters in length, excluding leading and trailing spaces.", "Assassin", NotificationButtons.OK, this).ShowDialog();
             }
             else
-                MessageBox.Show("Please ensure the typed passwords match.", "Assassin", MessageBoxButton.OK);
+                new Notification("Please ensure the typed passwords match.", "Assassin", NotificationButtons.OK, this).ShowDialog();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             DisableMinusButtons();
             EnablePlusButtons();
-            createUser = new User(defaultUser);
-            DataContext = createUser;
+            _createUser = new User(_defaultUser);
+            DataContext = _createUser;
             txtUsername.Clear();
             pswdPassword.Clear();
             pswdConfirm.Clear();
@@ -281,50 +278,35 @@ namespace Assassin
         public NewUserWindow()
         {
             InitializeComponent();
-            DataContext = createUser;
+            DataContext = _createUser;
             CheckButtons();
             txtUsername.Focus();
         }
 
         private void txtUsername_GotFocus(object sender, RoutedEventArgs e)
         {
-            txtUsername.SelectAll();
+            Functions.TextBoxGotFocus(sender);
         }
 
         private void txtUsername_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Key k = e.Key;
-
-            List<bool> keys = GameState.GetListOfKeys(Key.Back, Key.Delete, Key.Home, Key.End, Key.Enter, Key.Tab, Key.Left, Key.Right, Key.Escape, Key.LeftShift, Key.RightShift, Key.LeftAlt, Key.RightAlt, Key.LeftCtrl, Key.RightCtrl);
-
-            if (keys.Any(key => key == true) || Key.A <= k && k <= Key.Z)
-                e.Handled = false;
-            else
-                e.Handled = true;
+            Functions.PreviewKeyDown(e, KeyType.Letters);
         }
 
         private void txtUsername_Changed(object sender, TextChangedEventArgs e)
         {
-            txtUsername.Text = new string((from c in txtUsername.Text
-                                           where char.IsLetter(c)
-                                           select c).ToArray());
-            txtUsername.CaretIndex = txtUsername.Text.Length;
+            Functions.TextBoxTextChanged(sender, KeyType.Letters);
             CheckButtons();
         }
 
-        private void pswdPassword_GotFocus(object sender, RoutedEventArgs e)
+        private void pswd_GotFocus(object sender, RoutedEventArgs e)
         {
-            pswdPassword.SelectAll();
+            Functions.PasswordBoxGotFocus(sender);
         }
 
-        private void pswd_Changed(object sender, RoutedEventArgs e)
+        private void pswd_TextChanged(object sender, RoutedEventArgs e)
         {
             CheckButtons();
-        }
-
-        private void pswdConfirm_GotFocus(object sender, RoutedEventArgs e)
-        {
-            pswdConfirm.SelectAll();
         }
 
         private void CloseWindow()
@@ -334,14 +316,13 @@ namespace Assassin
 
         private void windowNewUser_Closing(object sender, CancelEventArgs e)
         {
-            if (!blnStart)
+            if (!_blnStart)
                 RefToMainWindow.Show();
             else
             {
-                GameState.CurrentUser = new User(createUser);
-                GameState.AllUsers.Add(new User(createUser));
-                GameWindow gameWindow = new GameWindow();
-                gameWindow.RefToMainWindow = RefToMainWindow;
+                GameState.CurrentUser = new User(_createUser);
+                GameState.AllUsers.Add(new User(_createUser));
+                GameWindow gameWindow = new GameWindow { RefToMainWindow = RefToMainWindow };
                 gameWindow.Show();
                 gameWindow.NewUser();
             }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using Extensions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +9,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         #region Login
 
@@ -20,8 +18,7 @@ namespace Assassin
             txtUsername.Text = "";
             pswdPassword.Password = "";
             txtUsername.Focus();
-            GameWindow gameWindow = new GameWindow();
-            gameWindow.RefToMainWindow = this;
+            GameWindow gameWindow = new GameWindow { RefToMainWindow = this };
             gameWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
@@ -32,8 +29,7 @@ namespace Assassin
 
         private void btnNewUser_Click(object sender, RoutedEventArgs e)
         {
-            NewUserWindow newUserWindow = new NewUserWindow();
-            newUserWindow.RefToMainWindow = this;
+            NewUserWindow newUserWindow = new NewUserWindow { RefToMainWindow = this };
             newUserWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
@@ -41,9 +37,7 @@ namespace Assassin
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (GameState.CheckLogin(txtUsername.Text.Trim(), pswdPassword.Password.Trim()))
-            {
                 Login();
-            }
         }
 
         private void mnuFileExit_Click(object sender, RoutedEventArgs e)
@@ -53,24 +47,21 @@ namespace Assassin
 
         private void mnuAdmin_Click(object sender, RoutedEventArgs e)
         {
-            AdminLoginWindow adminLoginWindow = new AdminLoginWindow();
-            adminLoginWindow.RefToMainWindow = this;
+            AdminLoginWindow adminLoginWindow = new AdminLoginWindow { RefToMainWindow = this };
             adminLoginWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
 
         private void mnuHelpManual_Click(object sender, RoutedEventArgs e)
         {
-            ManualWindow manualWindow = new ManualWindow();
-            manualWindow.RefToMainWindow = this;
+            ManualWindow manualWindow = new ManualWindow { RefToMainWindow = this };
             manualWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
 
         private void mnuHelpAbout_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow aboutWindow = new AboutWindow();
-            aboutWindow.RefToMainWindow = this;
+            AboutWindow aboutWindow = new AboutWindow { RefToMainWindow = this };
             aboutWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
@@ -81,10 +72,7 @@ namespace Assassin
 
         private void TextChanged()
         {
-            if (txtUsername.Text.Length >= 4 && pswdPassword.Password.Length >= 4)
-                btnLogin.IsEnabled = true;
-            else
-                btnLogin.IsEnabled = false;
+            btnLogin.IsEnabled = txtUsername.Text.Length >= 1 && pswdPassword.Password.Length >= 1;
         }
 
         public MainWindow()
@@ -95,32 +83,23 @@ namespace Assassin
 
         private async void windowMain_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Factory.StartNew(() => GameState.LoadAll());
+            await Task.Factory.StartNew(GameState.LoadAll);
+            new SplashWindow(this).ShowDialog();
         }
 
         private void txtUsername_GotFocus(object sender, RoutedEventArgs e)
         {
-            txtUsername.SelectAll();
+            Functions.TextBoxGotFocus(sender);
         }
 
         private void txtUsername_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Key k = e.Key;
-
-            List<bool> keys = GameState.GetListOfKeys(Key.Back, Key.Delete, Key.Home, Key.End, Key.Enter, Key.Tab, Key.Left, Key.Right, Key.Escape, Key.LeftShift, Key.RightShift, Key.LeftAlt, Key.RightAlt, Key.LeftCtrl, Key.RightCtrl);
-
-            if (keys.Any(key => key == true) || Key.A <= k && k <= Key.Z)
-                e.Handled = false;
-            else
-                e.Handled = true;
+            Functions.PreviewKeyDown(e, KeyType.Letters);
         }
 
         private void txtUsername_TextChanged(object sender, TextChangedEventArgs e)
         {
-            txtUsername.Text = new string((from c in txtUsername.Text
-                                           where char.IsLetter(c)
-                                           select c).ToArray());
-            txtUsername.CaretIndex = txtUsername.Text.Length;
+            Functions.TextBoxTextChanged(sender, KeyType.Letters);
             TextChanged();
         }
 
@@ -131,11 +110,7 @@ namespace Assassin
 
         private void pswdPassword_GotFocus(object sender, RoutedEventArgs e)
         {
-            pswdPassword.SelectAll();
-        }
-
-        private void windowMain_Closing(object sender, CancelEventArgs e)
-        {
+            Functions.PasswordBoxGotFocus(sender);
         }
 
         #endregion Window-Manipulation Methods

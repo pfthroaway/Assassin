@@ -45,6 +45,9 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Extensions">
+      <HintPath>.\Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -359,7 +362,6 @@
     <Compile Include="Classes\Food.cs" />
     <Compile Include="Classes\GameState.cs" />
     <Compile Include="Classes\Guild.cs" />
-    <Compile Include="Classes\Extensions.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -370,7 +372,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\PasswordHash.cs" />
     <Compile Include="Classes\Potion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -389,6 +390,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assassin.sqlite" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -401,6 +403,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Windows\Assassin.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Assassin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" />

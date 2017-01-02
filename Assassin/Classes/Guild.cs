@@ -15,31 +15,31 @@ namespace Assassin
         public int ID
         {
             get { return _id; }
-            set { _id = value; }
+            set { _id = value; OnPropertyChanged("ID"); }
         }
 
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            set { _name = value; OnPropertyChanged("Name"); }
         }
 
         public string Master
         {
             get { return _master; }
-            set { _master = value; }
+            set { _master = value; OnPropertyChanged("Master"); }
         }
 
         public int Fee
         {
             get { return _fee; }
-            set { _fee = value; }
+            set { _fee = value; OnPropertyChanged("Fee"); }
         }
 
         public int Gold
         {
             get { return _gold; }
-            set { _gold = value; }
+            set { _gold = value; OnPropertyChanged("Gold"); }
         }
 
         public List<string> Members

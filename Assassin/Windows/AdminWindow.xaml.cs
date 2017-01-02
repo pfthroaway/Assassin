@@ -6,7 +6,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for AdminWindow.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class AdminWindow 
     {
         internal MainWindow RefToMainWindow { get; set; }
 

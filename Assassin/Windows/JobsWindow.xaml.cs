@@ -18,12 +18,12 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for JobsWindow.xaml
     /// </summary>
-    public partial class JobsWindow : Window
+    public partial class JobsWindow
     {
-        private string nl = Environment.NewLine;
-        private List<Employer> employers = new List<Employer>();
+        private readonly string nl = Environment.NewLine;
+        private readonly List<Employer> employers = new List<Employer>();
         private Employer currentEmployer = new Employer();
-        private int bounty = 0;
+        private int bounty;
 
         internal GuildWindow RefToGuildWindow { get; set; }
         internal PubWindow RefToTavernWindow { get; set; }

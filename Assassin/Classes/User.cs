@@ -32,10 +32,7 @@ namespace Assassin
             set { _level = value; OnPropertyChanged("Level"); }
         }
 
-        public string Rank
-        {
-            get { return GameState.AllRanks[Level]; }
-        }
+        public string Rank => GameState.AllRanks[Level];
 
         public int Experience
         {
@@ -49,10 +46,7 @@ namespace Assassin
             set { _skillPoints = value; OnPropertyChanged("SkillPoints"); OnPropertyChanged("SkillPointsToString"); }
         }
 
-        public string SkillPointsToString
-        {
-            get { return SkillPoints.ToString("N0") + " Skill Points Available"; }
-        }
+        public string SkillPointsToString => SkillPoints.ToString("N0") + " Skill Points Available";
 
         public bool Alive
         {
@@ -78,10 +72,7 @@ namespace Assassin
             set { _maximumEndurance = value; OnPropertyChanged("MaximumEndurance"); OnPropertyChanged("EnduranceToString"); }
         }
 
-        public string EnduranceToString
-        {
-            get { return CurrentEndurance.ToString("N0") + " / " + MaximumEndurance.ToString("N0"); }
-        }
+        public string EnduranceToString => CurrentEndurance.ToString("N0") + " / " + MaximumEndurance.ToString("N0");
 
         public int Hunger
         {
@@ -257,30 +248,15 @@ namespace Assassin
             set { _goldOnLoan = value; OnPropertyChanged("GoldOnLoan"); OnPropertyChanged("LoanAvailable"); OnPropertyChanged("LoanAvailableToString"); }
         }
 
-        public string GoldInBankToString
-        {
-            get { return GoldInBank.ToString("N0"); }
-        }
+        public string GoldInBankToString => GoldInBank.ToString("N0");
 
-        public string GoldOnLoanToString
-        {
-            get { return GoldOnLoan.ToString("N0"); }
-        }
+        public string GoldOnLoanToString => GoldOnLoan.ToString("N0");
 
-        public string GoldOnHandToString
-        {
-            get { return GoldOnHand.ToString("N0"); }
-        }
+        public string GoldOnHandToString => GoldOnHand.ToString("N0");
 
-        public int LoanAvailable
-        {
-            get { return (Level * 250) - GoldOnLoan; }
-        }
+        public int LoanAvailable => (Level * 250) - GoldOnLoan;
 
-        public string LoanAvailableToString
-        {
-            get { return ((Level * 250) - GoldOnLoan).ToString("N0"); }
-        }
+        public string LoanAvailableToString => ((Level * 250) - GoldOnLoan).ToString("N0");
 
         public int LightWeaponSkill
         {
@@ -369,7 +345,7 @@ namespace Assassin
         internal string GainExperience(int experience)
         {
             int oldExperience = Experience;
-            string ExperienceText = "You have earned " + experience + " experience from the battle."; ;
+            string ExperienceText = "You have earned " + experience + " experience from the battle.";
             string LevelText = "";
 
             Experience += experience;
@@ -407,7 +383,7 @@ namespace Assassin
         /// <summary>
         /// The User takes damage.
         /// </summary>
-        /// <param name="healAmount">Amount of damage taken.</param>
+        /// <param name="damage">Amount of damage taken.</param>
         /// <returns>String saying you took damage</returns>
         internal string TakeDamage(int damage)
         {

@@ -3,10 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Assassin"
         mc:Ignorable="d"
         Title="Admin" SizeToContent="WidthAndHeight" Closing="windowAdminLogin_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Assassin.ico">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -15,11 +14,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Admin" TextAlignment="Center" Margin="10,10,10,5" />
-        <Button x:Name="btnManageEnemies" Grid.Row="1" Height="30" Width="150" Content="Manage _Enemies" Margin="10,5" />
-        <Button x:Name="btnManageGuilds" Grid.Row="2" Height="30" Width="150" Content="Manage _Guilds" Margin="10,5" />
-        <Button x:Name="btnManageUsers" Grid.Row="3" Height="30" Width="150" Content="Manage _Users" Margin="10,5" />
-        <Button x:Name="btnChangePassword" Grid.Row="4" Height="30" Width="150" Content="_Change Password" Margin="10,5" />
-        <Button x:Name="btnBack" Grid.Row="5" Height="30" Width="150" Content="Back" Margin="10,5,10,10" Click="btnBack_Click" />
+        <TextBlock Grid.Row="0" Text="Admin" TextAlignment="Center" Margin="0,0,0,10" />
+        <Button x:Name="btnManageEnemies" Grid.Row="1" Height="30" Width="150" Content="Manage _Enemies" Margin="0,0,0,10" />
+        <Button x:Name="btnManageGuilds" Grid.Row="2" Height="30" Width="150" Content="Manage _Guilds" Margin="0,0,0,10" />
+        <Button x:Name="btnManageUsers" Grid.Row="3" Height="30" Width="150" Content="Manage _Users" Margin="0,0,0,10" />
+        <Button x:Name="btnChangePassword" Grid.Row="4" Height="30" Width="150" Content="_Change Password" Margin="0,0,0,10" />
+        <Button x:Name="btnBack" Grid.Row="5" Height="30" Width="150" Content="Back" Click="btnBack_Click" />
     </Grid>
 </Window>

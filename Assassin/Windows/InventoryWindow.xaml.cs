@@ -6,7 +6,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for InventoryWindow.xaml
     /// </summary>
-    public partial class InventoryWindow : Window, INotifyPropertyChanged
+    public partial class InventoryWindow :  INotifyPropertyChanged
     {
         internal GameWindow RefToGameWindow { get; set; }
         internal BattleWindow RefToBattleWindow { get; set; }

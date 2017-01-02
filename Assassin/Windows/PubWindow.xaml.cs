@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for PubWindow.xaml
     /// </summary>
-    public partial class PubWindow : Window
+    public partial class PubWindow 
     {
         public PubWindow()
         {

@@ -18,10 +18,10 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for ShopsWindow.xaml
     /// </summary>
-    public partial class ShopsWindow : Window
+    public partial class ShopsWindow 
     {
         internal GameWindow RefToGameWindow { get; set; }
-        private string nl = Environment.NewLine;
+        private readonly string nl = Environment.NewLine;
 
         /// <summary>
         /// Adds text to the txtGame Textbox.

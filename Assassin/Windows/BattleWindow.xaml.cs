@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -7,14 +8,14 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for BattleWindow.xaml
     /// </summary>
-    public partial class BattleWindow : Window, INotifyPropertyChanged
+    public partial class BattleWindow : INotifyPropertyChanged
     {
-        private string nl = Environment.NewLine;
+        private readonly string nl = Environment.NewLine;
         private int _playerStamina = 20;
         private int _enemyStamina = 20;
         private Stance playerStance = Stance.Normal;
         private Stance enemyStance = Stance.Normal;
-        private bool battleOver = false;
+        private bool battleOver;
         private string previousWindow = "";
 
         private enum Stance { Normal, Defend, Berserk, Flee, Lunge, Parry }
@@ -124,15 +125,9 @@ namespace Assassin
             set { _enemyStamina = value; OnPropertyChanged("EnemyStaminaToString"); }
         }
 
-        public string PlayerStaminaToString
-        {
-            get { return GetStaminaText(PlayerStamina); }
-        }
+        public string PlayerStaminaToString => GetStaminaText(PlayerStamina);
 
-        public string EnemyStaminaToString
-        {
-            get { return GetStaminaText(EnemyStamina); }
-        }
+        public string EnemyStaminaToString => GetStaminaText(EnemyStamina);
 
         #endregion Properties
 
@@ -192,11 +187,7 @@ namespace Assassin
             btnParry.IsEnabled = true;
             btnDefend.IsEnabled = true;
             btnQuickCombat.IsEnabled = true;
-
-            if (PlayerStamina < 2)
-                btnBerserk.IsEnabled = false;
-            else
-                btnBerserk.IsEnabled = true;
+            btnBerserk.IsEnabled = PlayerStamina >= 2;
         }
 
         #endregion Button Manipulation
@@ -663,7 +654,7 @@ namespace Assassin
 
         private void btnQuickCombat_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Quick Combat still under construction.", "Assassin", MessageBoxButton.OK);
+            new Notification("Quick Combat still under construction.", "Assassin", NotificationButtons.OK, this).ShowDialog();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)

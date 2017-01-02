@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Assassin"
+
         mc:Ignorable="d"
         Title="New User" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="windowNewUser_Closing" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Assassin.ico">
     <Grid>
@@ -29,9 +29,9 @@
         <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0">Username</TextBlock>
         <TextBox x:Name="txtUsername" Grid.Column="1" Grid.Row="0" Width="200" Margin="10,10,10,5" TextChanged="txtUsername_Changed" TextAlignment="Center" MaxLength="20" PreviewKeyDown="txtUsername_PreviewKeyDown" Padding="5" GotFocus="txtUsername_GotFocus" />
         <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0">Password</TextBlock>
-        <PasswordBox x:Name="pswdPassword" Grid.Column="1" Grid.Row="1" Width="200" Margin="5" PasswordChanged="pswd_Changed" HorizontalContentAlignment="Center" Padding="5" GotFocus="pswdPassword_GotFocus" />
+        <PasswordBox x:Name="pswdPassword" Grid.Column="1" Grid.Row="1" Width="200" Margin="5" PasswordChanged="pswd_TextChanged" HorizontalContentAlignment="Center" Padding="5" GotFocus="pswd_GotFocus" />
         <TextBlock Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0">Confirm Password</TextBlock>
-        <PasswordBox x:Name="pswdConfirm" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5" PasswordChanged="pswd_Changed" HorizontalContentAlignment="Center" Padding="5" GotFocus="pswdConfirm_GotFocus" />
+        <PasswordBox x:Name="pswdConfirm" Grid.Column="1" Grid.Row="2"  Width="200" Margin="5" PasswordChanged="pswd_TextChanged" HorizontalContentAlignment="Center" Padding="5" GotFocus="pswd_GotFocus" />
         <TextBlock Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right" Text="Endurance" />
         <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="btnEnduranceMinus" MinWidth="30" Margin="5" Click="btnEnduranceMinus_Click" IsEnabled="False" >-</Button>

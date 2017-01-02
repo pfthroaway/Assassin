@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Extensions;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -6,20 +7,15 @@ using System.Windows.Input;
 
 namespace Assassin
 {
-    /// <summary>
-    /// Interaction logic for BankDialogWindow.xaml
-    /// </summary>
-    public partial class BankDialogWindow : Window
+    /// <summary>Interaction logic for BankDialogWindow.xaml</summary>
+    public partial class BankDialogWindow
     {
-        private int _maximum = 0;
-        private int _textAmount = 0;
+        private int _maximum, _textAmount;
         private string _type = "";
 
-        internal BankWindow RefToBankWindow { get; set; }
+        internal BankWindow RefToBankWindow { private get; set; }
 
-        /// <summary>
-        /// Load the necessary data for the form.
-        /// </summary>
+        /// <summary>Load the necessary data for the Window.</summary>
         /// <param name="maximum">Maximum amount of gold to be used.</param>
         /// <param name="type">What type of transaction is taking place.</param>
         internal void LoadWindow(int maximum, string type)
@@ -53,9 +49,7 @@ namespace Assassin
 
         #region Transaction Methods
 
-        /// <summary>
-        /// Deposit money into the bank.
-        /// </summary>
+        /// <summary>Deposit money into the bank.</summary>
         private void Deposit()
         {
             GameState.CurrentUser.GoldInBank += _textAmount;
@@ -63,9 +57,7 @@ namespace Assassin
             CloseWindow("You deposit " + _textAmount.ToString("N0") + " gold.");
         }
 
-        /// <summary>
-        /// Repay the loan.
-        /// </summary>
+        /// <summary>Repay the loan.</summary>
         private void RepayLoan()
         {
             GameState.CurrentUser.GoldOnLoan -= _textAmount;
@@ -73,9 +65,7 @@ namespace Assassin
             CloseWindow("You repay " + _textAmount.ToString("N0") + " gold on your loan.");
         }
 
-        /// <summary>
-        /// Take out a loan.
-        /// </summary>
+        /// <summary>Take out a loan.</summary>
         private void TakeOutLoan()
         {
             GameState.CurrentUser.GoldOnLoan += _textAmount + (_textAmount / 20);
@@ -83,9 +73,7 @@ namespace Assassin
             CloseWindow("You take out a loan for " + _textAmount.ToString("N0") + " gold.");
         }
 
-        /// <summary>
-        /// Withdraw money from the bank account.
-        /// </summary>
+        /// <summary>Withdraw money from the bank account.</summary>
         private void Withdrawal()
         {
             GameState.CurrentUser.GoldInBank -= _textAmount;
@@ -109,7 +97,7 @@ namespace Assassin
                         if (_textAmount <= GameState.CurrentUser.GoldOnHand)
                             Deposit();
                         else
-                            MessageBox.Show("Please enter a value less than or equal to your current gold. You currently have " + GameState.CurrentUser.GoldOnHandToString + " gold.");
+                            new Notification("Please enter a value less than or equal to your current gold. You currently have " + GameState.CurrentUser.GoldOnHandToString + " gold.", "Assassin", NotificationButtons.OK, this).ShowDialog();
                         break;
 
                     case "Withdrawal":
@@ -122,7 +110,7 @@ namespace Assassin
                             RepayLoan();
                         }
                         else
-                            MessageBox.Show("Please enter a value less than or equal to your current gold. You currently have " + GameState.CurrentUser.GoldOnHandToString + " gold.");
+                            new Notification("Please enter a value less than or equal to your current gold. You currently have " + GameState.CurrentUser.GoldOnHandToString + " gold.", "Assassin", NotificationButtons.OK, this).ShowDialog();
                         break;
 
                     case "Take Out Loan":
@@ -131,7 +119,7 @@ namespace Assassin
                 }
             }
             else
-                MessageBox.Show("Please enter a positive value less than or equal to your current gold. You currently have " + GameState.CurrentUser.GoldOnHandToString + " gold.");
+                new Notification("Please enter a positive value less than or equal to your current gold. You currently have " + GameState.CurrentUser.GoldOnHandToString + " gold.", "Assassin", NotificationButtons.OK, this).ShowDialog();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -143,9 +131,7 @@ namespace Assassin
 
         #region Window-Manipulation Methods
 
-        /// <summary>
-        /// Closes the Window
-        /// </summary>
+        /// <summary>Closes the Window</summary>
         /// <param name="text">Text to be passed back to the Bank Window</param>
         private void CloseWindow(string text)
         {
@@ -164,19 +150,12 @@ namespace Assassin
 
         private void txtBank_GotFocus(object sender, RoutedEventArgs e)
         {
-            txtBank.SelectAll();
+            Functions.TextBoxGotFocus(sender);
         }
 
         private void txtBank_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Key k = e.Key;
-
-            List<bool> keys = GameState.GetListOfKeys(Key.Back, Key.Delete, Key.Home, Key.End, Key.LeftShift, Key.RightShift, Key.Enter, Key.Tab, Key.LeftAlt, Key.RightAlt, Key.Left, Key.Right, Key.LeftCtrl, Key.RightCtrl, Key.Escape);
-
-            if (keys.Any(key => key == true) || (Key.D0 <= k && k <= Key.D9) || (Key.NumPad0 <= k && k <= Key.NumPad9))
-                e.Handled = false;
-            else
-                e.Handled = true;
+            Functions.PreviewKeyDown(e, KeyType.Numbers);
         }
 
         private void windowBankDialog_Closing(object sender, CancelEventArgs e)

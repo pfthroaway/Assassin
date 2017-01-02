@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for MembersWindow.xaml
     /// </summary>
-    public partial class MembersWindow : Window
+    public partial class MembersWindow 
     {
         public MembersWindow()
         {

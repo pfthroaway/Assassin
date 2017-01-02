@@ -7,10 +7,10 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for AssassinationWindow.xaml
     /// </summary>
-    public partial class AssassinationWindow : Window
+    public partial class AssassinationWindow 
     {
         internal GameWindow RefToGameWindow { get; set; }
-        private string nl = Environment.NewLine;
+        private readonly string nl = Environment.NewLine;
 
         /// <summary>
         /// Adds text to the txtAssassination TextBox.
@@ -77,8 +77,7 @@ namespace Assassin
         private void btnAssassinate_Click(object sender, RoutedEventArgs e)
         {
             btnAssassinate.IsEnabled = false;
-            BattleWindow battleWindow = new BattleWindow();
-            battleWindow.RefToAssassinationWindow = this;
+            BattleWindow battleWindow = new BattleWindow { RefToAssassinationWindow = this };
             battleWindow.SetPreviousWindow("Assassinate");
             battleWindow.Show();
             this.Visibility = Visibility.Hidden;

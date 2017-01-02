@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for GuildManageWindow.xaml
     /// </summary>
-    public partial class GuildManageWindow : Window
+    public partial class GuildManageWindow 
     {
         public GuildManageWindow()
         {

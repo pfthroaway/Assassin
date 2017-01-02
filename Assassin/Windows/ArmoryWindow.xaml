@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Assassin"
         mc:Ignorable="d"
         Title="The Armoury" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="windowArmory_Closing" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Assassin.ico">
     <Grid Margin="10">
@@ -16,12 +15,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <DataTemplate x:Key="armorNameTemplate">
-                <TextBlock Text="{Binding Path=Name}" />
-            </DataTemplate>
-        </Grid.Resources>
-        <ListBox x:Name="lstArmor" Grid.Column="0" Grid.Row="0" Width="225" Height="218" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding}" ItemTemplate="{StaticResource armorNameTemplate}" SelectionChanged="lstArmor_SelectionChanged" />
+        <ListBox x:Name="lstArmor" Grid.Column="0" Grid.Row="0" Width="225" Height="218" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding}" SelectionChanged="lstArmor_SelectionChanged" />
         <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

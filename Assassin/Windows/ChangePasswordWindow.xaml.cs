@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for ChangePasswordWindow.xaml
     /// </summary>
-    public partial class ChangePasswordWindow : Window
+    public partial class ChangePasswordWindow 
     {
         public ChangePasswordWindow()
         {

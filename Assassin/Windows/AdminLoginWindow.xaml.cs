@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Extensions;
+using System.ComponentModel;
 using System.Windows;
 
 namespace Assassin
@@ -6,10 +7,10 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for AdminLoginWindow.xaml
     /// </summary>
-    public partial class AdminLoginWindow : Window
+    public partial class AdminLoginWindow
     {
         internal MainWindow RefToMainWindow { get; set; }
-        private bool blnAdmin = false;
+        private bool blnAdmin;
 
         #region Button-Click Methods
 
@@ -21,7 +22,7 @@ namespace Assassin
                 CloseWindow();
             }
             else
-                MessageBox.Show("Invalid login.", "Assassin", MessageBoxButton.OK);
+                new Notification("Invalid login.", "Assassin", NotificationButtons.OK, this).ShowDialog();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -46,15 +47,12 @@ namespace Assassin
 
         private void pswdAdmin_GotFocus(object sender, RoutedEventArgs e)
         {
-            pswdAdmin.SelectAll();
+            Functions.PasswordBoxGotFocus(sender);
         }
 
         private void pswdAdmin_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (pswdAdmin.Password.Length > 0)
-                btnSubmit.IsEnabled = true;
-            else
-                btnSubmit.IsEnabled = false;
+            btnSubmit.IsEnabled = pswdAdmin.Password.Length > 0;
         }
 
         private void windowAdminLogin_Closing(object sender, CancelEventArgs e)
@@ -63,8 +61,7 @@ namespace Assassin
                 RefToMainWindow.Show();
             else
             {
-                AdminWindow adminWindow = new AdminWindow();
-                adminWindow.RefToMainWindow = RefToMainWindow;
+                AdminWindow adminWindow = new AdminWindow { RefToMainWindow = RefToMainWindow };
                 adminWindow.Show();
             }
         }

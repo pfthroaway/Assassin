@@ -18,7 +18,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for ArmoryWindow.xaml
     /// </summary>
-    public partial class ArmoryWindow : Window, INotifyPropertyChanged
+    public partial class ArmoryWindow : INotifyPropertyChanged
     {
         #region Data-Binding
 

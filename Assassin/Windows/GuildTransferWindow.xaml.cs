@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for GuildTransferWindow.xaml
     /// </summary>
-    public partial class GuildTransferWindow : Window
+    public partial class GuildTransferWindow 
     {
         public GuildTransferWindow()
         {

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Assassin"
         mc:Ignorable="d"
         Title="Battle" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="windowBattle_Closing" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Assassin.ico">
     <Grid Margin="10">
@@ -52,25 +51,25 @@
             <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Endurance" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,0">
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="0,1,1,0">
                 <TextBlock x:Name="lblUserEndurance" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="2" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Status" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,0">
+            <Border Grid.Column="1" Grid.Row="2" BorderBrush="Black" BorderThickness="0,1,1,0">
                 <TextBlock x:Name="lblUserStatus" Text="{Binding Path=PlayerStaminaToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="3" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Weapon" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,0">
+            <Border Grid.Column="1" Grid.Row="3" BorderBrush="Black" BorderThickness="0,1,1,0">
                 <TextBlock x:Name="lblUserWeapon" Text="{Binding Path=SelectedWeapon}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="4" BorderBrush="Black" BorderThickness="1,1,1,1">
                 <TextBlock Text="Armor" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,1">
+            <Border Grid.Column="1" Grid.Row="4" BorderBrush="Black" BorderThickness="0,1,1,1">
                 <TextBlock x:Name="lblUserArmor" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Button x:Name="btnInventory" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Height="30" Width="125" Content="_Inventory" Click="btnInventory_Click" />
@@ -80,25 +79,25 @@
             <Border Grid.Column="0" Grid.Row="7" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Endurance" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,0">
+            <Border Grid.Column="1" Grid.Row="7" BorderBrush="Black" BorderThickness="0,1,1,0">
                 <TextBlock x:Name="lblEnemyEndurance" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="8" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Status" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,0">
+            <Border Grid.Column="1" Grid.Row="8" BorderBrush="Black" BorderThickness="0,1,1,0">
                 <TextBlock x:Name="lblEnemyStatus" Text="{Binding Path=EnemyStaminaToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="9" BorderBrush="Black" BorderThickness="1,1,1,0">
                 <TextBlock Text="Weapon" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,0">
+            <Border Grid.Column="1" Grid.Row="9" BorderBrush="Black" BorderThickness="0,1,1,0">
                 <TextBlock x:Name="lblEnemyWeapon" Text="{Binding Path=Weapon}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Grid.Column="0" Grid.Row="10" BorderBrush="Black" BorderThickness="1,1,1,1">
                 <TextBlock Text="Armor" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
-            <Border Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,1,1,1">
+            <Border Grid.Column="1" Grid.Row="10" BorderBrush="Black" BorderThickness="0,1,1,1">
                 <TextBlock x:Name="lblEnemyArmor" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
         </Grid>

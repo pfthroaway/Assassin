@@ -7,9 +7,9 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for BankWindow.xaml
     /// </summary>
-    public partial class BankWindow : Window, INotifyPropertyChanged
+    public partial class BankWindow :  INotifyPropertyChanged
     {
-        private string nl = Environment.NewLine;
+        private readonly string nl = Environment.NewLine;
 
         internal GameWindow RefToGameWindow { get; set; }
 
@@ -43,25 +43,10 @@ namespace Assassin
         /// </summary>
         internal void CheckButtons()
         {
-            if (GameState.CurrentUser.GoldOnHand > 0)
-                btnDeposit.IsEnabled = true;
-            else
-                btnDeposit.IsEnabled = false;
-
-            if (GameState.CurrentUser.GoldInBank > 0)
-                btnWithdraw.IsEnabled = true;
-            else
-                btnWithdraw.IsEnabled = false;
-
-            if (GameState.CurrentUser.LoanAvailable > 0)
-                btnTakeLoan.IsEnabled = true;
-            else
-                btnTakeLoan.IsEnabled = false;
-
-            if (GameState.CurrentUser.GoldOnLoan > 0)
-                btnRepayLoan.IsEnabled = true;
-            else
-                btnRepayLoan.IsEnabled = false;
+            btnDeposit.IsEnabled = GameState.CurrentUser.GoldOnHand > 0;
+            btnWithdraw.IsEnabled = GameState.CurrentUser.GoldInBank > 0;
+            btnTakeLoan.IsEnabled = GameState.CurrentUser.LoanAvailable > 0;
+            btnRepayLoan.IsEnabled = GameState.CurrentUser.GoldOnLoan > 0;
         }
 
         /// <summary>

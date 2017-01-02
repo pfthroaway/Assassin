@@ -7,9 +7,9 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    public partial class AboutWindow : Window
+    public partial class AboutWindow 
     {
-        private string nl = Environment.NewLine;
+        private readonly string nl = Environment.NewLine;
         internal MainWindow RefToMainWindow { get; set; }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

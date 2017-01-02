@@ -1,34 +1,21 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Assassin
 {
-    /// <summary>
-    /// Interaction logic for CourtWindow.xaml
-    /// </summary>
-    public partial class CourtWindow : Window
+    /// <summary>Interaction logic for CourtWindow.xaml</summary>
+    public partial class CourtWindow
     {
         internal GameWindow RefToGameWindow { get; set; }
-        private string nl = Environment.NewLine;
-        private List<string> courtText = new List<string>();
-        private int index = 0;
-        private DispatcherTimer timer = new DispatcherTimer();
-        private bool blnGuilty = false;
-        private bool blnFinished = false;
-        private int fine = 0;
+        private readonly string nl = Environment.NewLine;
+        private readonly List<string> courtText = new List<string>();
+        private int index, fine;
+        private readonly DispatcherTimer timer = new DispatcherTimer();
+        private bool blnGuilty, blnFinished;
         private string reason = "";
 
         /// <summary>
@@ -104,10 +91,9 @@ namespace Assassin
 
         private void btnGoToJail_Click(object sender, RoutedEventArgs e)
         {
-            if (GameState.CurrentUser.GoldOnHand < fine)
-                AddTextTT("You don't have the money required to pay the fine.");
-            else
-                AddTextTT("You decide it is best to spend the night in jail.");
+            AddTextTT(GameState.CurrentUser.GoldOnHand < fine
+                ? "You don't have the money required to pay the fine."
+                : "You decide it is best to spend the night in jail.");
 
             GameState.CurrentUser.CurrentLocation = "Jail";
             blnFinished = true;
@@ -179,7 +165,7 @@ namespace Assassin
             }
             else
             {
-                MessageBox.Show("You must first make a decision.", "Assassin", MessageBoxButton.OK);
+                new Notification("You must first make a decision.", "Assassin", NotificationButtons.OK, this).ShowDialog();
                 e.Cancel = true;
             }
         }

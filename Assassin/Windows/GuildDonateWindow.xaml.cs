@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for GuildDonateWindow.xaml
     /// </summary>
-    public partial class GuildDonateWindow : Window
+    public partial class GuildDonateWindow 
     {
         public GuildDonateWindow()
         {

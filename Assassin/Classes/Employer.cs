@@ -2,27 +2,13 @@
 {
     internal class Employer
     {
-        private string _prefix, _age, _gender;
-
         #region Properties
 
-        public string Age
-        {
-            get { return _age; }
-            set { _age = value; }
-        }
+        public string Age { get; set; }
 
-        public string Gender
-        {
-            get { return _gender; }
-            set { _gender = value; }
-        }
+        public string Gender { get; set; }
 
-        public string Prefix
-        {
-            get { return _prefix; }
-            set { _prefix = value; }
-        }
+        public string Prefix { get; set; }
 
         #endregion Properties
 

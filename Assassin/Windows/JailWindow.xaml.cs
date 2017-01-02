@@ -18,7 +18,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for JailWindow.xaml
     /// </summary>
-    public partial class JailWindow : Window, INotifyPropertyChanged
+    public partial class JailWindow :  INotifyPropertyChanged
     {
         internal GameWindow RefToGameWindow { get; set; }
 

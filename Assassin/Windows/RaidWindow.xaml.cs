@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for RaidWindow.xaml
     /// </summary>
-    public partial class RaidWindow : Window
+    public partial class RaidWindow 
     {
         public RaidWindow()
         {

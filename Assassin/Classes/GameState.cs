@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Assassin
 {
@@ -28,10 +27,11 @@ namespace Assassin
         internal static List<Drink> AllDrinks = new List<Drink>();
         internal static string AdminPassword = "";
 
-        internal async static void LoadAll()
+        [STAThread]
+        internal static async void LoadAll()
         {
             SQLiteConnection con = new SQLiteConnection();
-            SQLiteDataAdapter da = new SQLiteDataAdapter();
+            SQLiteDataAdapter da;
             con.ConnectionString = _DBPROVIDERANDSOURCE;
 
             await Task.Factory.StartNew(() =>
@@ -162,42 +162,48 @@ namespace Assassin
                         {
                             WeaponType currentWeapon;
                             Enum.TryParse(ds.Tables[0].Rows[i]["CurrentWeapon"].ToString(), out currentWeapon);
-                            User newUser = new User();
-                            newUser.Name = ds.Tables[0].Rows[i]["Username"].ToString();
-                            newUser.Password = ds.Tables[0].Rows[i]["UserPassword"].ToString();
-                            newUser.Level = Int32Helper.Parse(ds.Tables[0].Rows[i]["Level"]);
-                            newUser.Experience = Int32Helper.Parse(ds.Tables[0].Rows[i]["Experience"]);
-                            newUser.SkillPoints = Int32Helper.Parse(ds.Tables[0].Rows[i]["SkillPoints"]);
-                            newUser.Alive = BoolHelper.Parse(ds.Tables[0].Rows[i]["Alive"]);
-                            newUser.CurrentLocation = ds.Tables[0].Rows[i]["Location"].ToString();
-                            newUser.CurrentEndurance = Int32Helper.Parse(ds.Tables[0].Rows[i]["CurrentEndurance"]);
-                            newUser.MaximumEndurance = Int32Helper.Parse(ds.Tables[0].Rows[i]["MaximumEndurance"]);
-                            newUser.Hunger = Int32Helper.Parse(ds.Tables[0].Rows[i]["Hunger"]);
-                            newUser.Thirst = Int32Helper.Parse(ds.Tables[0].Rows[i]["Thirst"]);
-                            newUser.CurrentWeapon = currentWeapon;
-                            newUser.LightWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["LightWeapon"].ToString());
-                            newUser.HeavyWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["HeavyWeapon"].ToString());
-                            newUser.TwoHandedWeapon = AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["TwoHandedWeapon"].ToString());
-                            newUser.Armor = AllArmor.Find(armr => armr.Name == ds.Tables[0].Rows[i]["Armor"].ToString());
-                            newUser.Potion = AllPotions.Find(potn => potn.Name == ds.Tables[0].Rows[i]["Potion"].ToString());
-                            newUser.Lockpicks = Int32Helper.Parse(ds.Tables[0].Rows[i]["Lockpicks"]);
-                            newUser.GoldOnHand = Int32Helper.Parse(ds.Tables[0].Rows[i]["GoldOnHand"]);
-                            newUser.GoldInBank = Int32Helper.Parse(ds.Tables[0].Rows[i]["GoldInBank"]);
-                            newUser.GoldOnLoan = Int32Helper.Parse(ds.Tables[0].Rows[i]["GoldOnLoan"]);
-                            newUser.Shovel = BoolHelper.Parse(ds.Tables[0].Rows[i]["Shovel"]);
-                            newUser.Lantern = BoolHelper.Parse(ds.Tables[0].Rows[i]["Lantern"]);
-                            newUser.Amulet = BoolHelper.Parse(ds.Tables[0].Rows[i]["Amulet"]);
-                            newUser.LightWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[i]["LightWeaponSkill"]);
-                            newUser.HeavyWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[i]["HeavyWeaponSkill"]);
-                            newUser.TwoHandedWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[i]["TwoHandedWeaponSkill"]);
-                            newUser.Blocking = Int32Helper.Parse(ds.Tables[0].Rows[i]["Blocking"]);
-                            newUser.Slipping = Int32Helper.Parse(ds.Tables[0].Rows[i]["Slipping"]);
-                            newUser.Stealth = Int32Helper.Parse(ds.Tables[0].Rows[i]["Stealth"]);
-                            newUser.HenchmenLevel1 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel1"]);
-                            newUser.HenchmenLevel2 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel2"]);
-                            newUser.HenchmenLevel3 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel3"]);
-                            newUser.HenchmenLevel4 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel4"]);
-                            newUser.HenchmenLevel5 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel5"]);
+                            User newUser = new User
+                            {
+                                Name = ds.Tables[0].Rows[i]["Username"].ToString(),
+                                Password = ds.Tables[0].Rows[i]["UserPassword"].ToString(),
+                                Level = Int32Helper.Parse(ds.Tables[0].Rows[i]["Level"]),
+                                Experience = Int32Helper.Parse(ds.Tables[0].Rows[i]["Experience"]),
+                                SkillPoints = Int32Helper.Parse(ds.Tables[0].Rows[i]["SkillPoints"]),
+                                Alive = BoolHelper.Parse(ds.Tables[0].Rows[i]["Alive"]),
+                                CurrentLocation = ds.Tables[0].Rows[i]["Location"].ToString(),
+                                CurrentEndurance = Int32Helper.Parse(ds.Tables[0].Rows[i]["CurrentEndurance"]),
+                                MaximumEndurance = Int32Helper.Parse(ds.Tables[0].Rows[i]["MaximumEndurance"]),
+                                Hunger = Int32Helper.Parse(ds.Tables[0].Rows[i]["Hunger"]),
+                                Thirst = Int32Helper.Parse(ds.Tables[0].Rows[i]["Thirst"]),
+                                CurrentWeapon = currentWeapon,
+                                LightWeapon =
+                                    AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["LightWeapon"].ToString()),
+                                HeavyWeapon =
+                                    AllWeapons.Find(wpn => wpn.Name == ds.Tables[0].Rows[i]["HeavyWeapon"].ToString()),
+                                TwoHandedWeapon =
+                                    AllWeapons.Find(
+                                        wpn => wpn.Name == ds.Tables[0].Rows[i]["TwoHandedWeapon"].ToString()),
+                                Armor = AllArmor.Find(armr => armr.Name == ds.Tables[0].Rows[i]["Armor"].ToString()),
+                                Potion = AllPotions.Find(potn => potn.Name == ds.Tables[0].Rows[i]["Potion"].ToString()),
+                                Lockpicks = Int32Helper.Parse(ds.Tables[0].Rows[i]["Lockpicks"]),
+                                GoldOnHand = Int32Helper.Parse(ds.Tables[0].Rows[i]["GoldOnHand"]),
+                                GoldInBank = Int32Helper.Parse(ds.Tables[0].Rows[i]["GoldInBank"]),
+                                GoldOnLoan = Int32Helper.Parse(ds.Tables[0].Rows[i]["GoldOnLoan"]),
+                                Shovel = BoolHelper.Parse(ds.Tables[0].Rows[i]["Shovel"]),
+                                Lantern = BoolHelper.Parse(ds.Tables[0].Rows[i]["Lantern"]),
+                                Amulet = BoolHelper.Parse(ds.Tables[0].Rows[i]["Amulet"]),
+                                LightWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[i]["LightWeaponSkill"]),
+                                HeavyWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[i]["HeavyWeaponSkill"]),
+                                TwoHandedWeaponSkill = Int32Helper.Parse(ds.Tables[0].Rows[i]["TwoHandedWeaponSkill"]),
+                                Blocking = Int32Helper.Parse(ds.Tables[0].Rows[i]["Blocking"]),
+                                Slipping = Int32Helper.Parse(ds.Tables[0].Rows[i]["Slipping"]),
+                                Stealth = Int32Helper.Parse(ds.Tables[0].Rows[i]["Stealth"]),
+                                HenchmenLevel1 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel1"]),
+                                HenchmenLevel2 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel2"]),
+                                HenchmenLevel3 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel3"]),
+                                HenchmenLevel4 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel4"]),
+                                HenchmenLevel5 = Int32Helper.Parse(ds.Tables[0].Rows[i]["HenchmenLevel5"])
+                            };
 
                             AllUsers.Add(newUser);
                         }
@@ -219,7 +225,10 @@ namespace Assassin
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Filling DataSet", MessageBoxButton.OK);
+                    Application.Current.Dispatcher.Invoke(delegate
+                    {
+                        new Notification(ex.Message, "Error Filling DataSet", NotificationButtons.OK).ShowDialog();
+                    });
                 }
                 finally { con.Close(); }
 
@@ -256,12 +265,7 @@ namespace Assassin
         /// <returns>Returns randomly generated integer between min and max with an upper limit of upperLimit.</returns>
         internal static int GenerateRandomNumber(int min, int max, int upperLimit)
         {
-            int result;
-
-            if (min < max)
-                result = ThreadSafeRandom.ThisThreadsRandom.Next(min, max + 1);
-            else
-                result = ThreadSafeRandom.ThisThreadsRandom.Next(max, min + 1);
+            int result = min < max ? ThreadSafeRandom.ThisThreadsRandom.Next(min, max + 1) : ThreadSafeRandom.ThisThreadsRandom.Next(max, min + 1);
 
             if (result > upperLimit)
                 return upperLimit;
@@ -273,10 +277,9 @@ namespace Assassin
 
         internal static bool CheckLogin(string username, string password)
         {
-            User checkUser = new User();
             try
             {
-                checkUser = AllUsers.Find(hero => hero.Name == username);
+                User checkUser = AllUsers.Find(hero => hero.Name == username);
                 if (PasswordHash.ValidatePassword(password, checkUser.Password))
                 {
                     CurrentUser = new User(checkUser);
@@ -284,39 +287,25 @@ namespace Assassin
                 }
                 else
                 {
-                    MessageBox.Show("Invalid login.", "Assassin", MessageBoxButton.OK);
+                    Application.Current.Dispatcher.Invoke(delegate
+                        { new Notification("Invalid login.", "Assassin", NotificationButtons.OK).ShowDialog(); });
                     return false;
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Invalid login.", "Assassin", MessageBoxButton.OK);
+                Application.Current.Dispatcher.Invoke(delegate
+                    { new Notification("Invalid login.", "Assassin", NotificationButtons.OK).ShowDialog(); });
                 return false;
             }
         }
 
-        /// <summary>
-        /// Turns several Keyboard.Keys into a list of Keys which can be tested using List.Any.
-        /// </summary>
-        /// <param name="keys">Array of Keys</param>
-        /// <returns></returns>
-        internal static List<bool> GetListOfKeys(params Key[] keys)
-        {
-            List<bool> allKeys = new List<bool>();
-            foreach (Key key in keys)
-                allKeys.Add(Keyboard.IsKeyDown(key));
-            return allKeys;
-        }
-
-        /// <summary>
-        /// Saves the current User.
-        /// </summary>
-        internal async static Task<bool> SaveUser(User saveUser)
+        /// <summary>Saves the current User.</summary>
+        internal static async Task<bool> SaveUser(User saveUser)
         {
             bool success = false;
             SQLiteCommand cmd = new SQLiteCommand();
-            SQLiteConnection con = new SQLiteConnection();
-            con.ConnectionString = _DBPROVIDERANDSOURCE;
+            SQLiteConnection con = new SQLiteConnection { ConnectionString = _DBPROVIDERANDSOURCE };
 
             string sql = "UPDATE Users SET [Level] = @level, [Experience] = @experience, [SkillPoints] = @skillPoints, [Alive] = @alive, [Location] = location, [CurrentEndurance] = @currentEndurance, [MaximumEndurance] = @maximumEndurance, [Hunger] = @hunger, [Thirst] = @thirst, [CurrentWeapon] = @currentWeapon, [LightWeapon] = @lightWeapon, [HeavyWeapon] = @heavyWeapon, [TwoHandedWeapon] = @twoHandedWeapon, [Armor] = @armor, [Potion] = @potion, [Lockpicks] = @lockpicks, [GoldOnHand] = @goldOnHand, [GoldInBank] = @goldInBank, [GoldOnLoan] = @goldOnLoan, [Shovel] = @shovel, [Lantern] = @lantern, [Amulet] = @amulet, [LightWeaponSkill] = @lightWeaponSkill, [HeavyWeaponSkill] = @heavyWeaponSkill, [TwoHandedWeaponSkill] = @twoHandedWeaponSkill, [Blocking] = @blocking, [Slipping] = @slipping, [Stealth] = @stealth, [HenchmenLevel1] = @henchmenLevel1, [HenchmenLevel2] = @henchmenLevel2, [HenchmenLevel3] = @henchmenLevel3, [HenchmenLevel4] = @henchmenLevel4, [HenchmenLevel5] = @henchmenLevel5 WHERE [Username] = @name";
 
@@ -370,17 +359,18 @@ namespace Assassin
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Saving User", MessageBoxButton.OK);
+                    Application.Current.Dispatcher.Invoke(delegate
+                        { new Notification(ex.Message, "Error Saving User", NotificationButtons.OK).ShowDialog(); });
                 }
                 finally { con.Close(); }
             });
             return success;
         }
 
-        internal async static Task<bool> CreateUser(User newUser)
+        internal static async Task<bool> CreateUser(User newUser)
         {
             SQLiteConnection con = new SQLiteConnection();
-            SQLiteDataAdapter da = new SQLiteDataAdapter();
+            SQLiteDataAdapter da;
             con.ConnectionString = _DBPROVIDERANDSOURCE;
 
             bool success = false;
@@ -395,11 +385,30 @@ namespace Assassin
                     da.Fill(ds, table);
 
                     if (ds.Tables[0].Rows.Count > 0 | newUser.Name == "Computer")
-                        MessageBox.Show("This username has already been used.", "Assassin", MessageBoxButton.OK);
+                        Application.Current.Dispatcher.Invoke(delegate
+                        {
+                            new Notification("This username has already been used.", "Assassin",
+                                NotificationButtons.OK).ShowDialog();
+                        });
                     else
                     {
                         SQLiteCommand cmd = con.CreateCommand();
-                        cmd.CommandText = "Insert into Users([Username],[UserPassword],[Level],[Experience],[SkillPoints],[Alive],[Location],[CurrentEndurance],[MaximumEndurance],[Hunger],[Thirst],[CurrentWeapon],[LightWeapon],[HeavyWeapon],[TwoHandedWeapon],[Armor],[Potion],[Lockpicks],[GoldOnHand],[GoldInBank],[GoldOnLoan],[Shovel],[Lantern],[Amulet],[LightWeaponSkill],[HeavyWeaponSkill],[TwoHandedWeaponSkill],[Blocking],[Slipping],[Stealth],[HenchmenLevel1],[HenchmenLevel2],[HenchmenLevel3],[HenchmenLevel4],[HenchmenLevel5])Values('" + newUser.Name + "','" + newUser.Password + "','" + newUser.Level + "','" + newUser.Experience + "','" + newUser.SkillPoints + "'," + Int32Helper.Parse(newUser.Alive) + ",'" + newUser.CurrentLocation + "','" + newUser.CurrentEndurance + "','" + newUser.MaximumEndurance + "','" + newUser.Hunger + "','" + newUser.Thirst + "','" + newUser.CurrentWeapon + "','" + newUser.LightWeapon.Name + "','" + newUser.HeavyWeapon.Name + "','" + newUser.TwoHandedWeapon.Name + "','" + newUser.Armor.Name + "','" + newUser.Potion.Name + "','" + newUser.Lockpicks + "','" + newUser.GoldOnHand + "','" + newUser.GoldInBank + "','" + newUser.GoldOnLoan + "'," + Int32Helper.Parse(newUser.Shovel) + "," + Int32Helper.Parse(newUser.Lantern) + "," + Int32Helper.Parse(newUser.Amulet) + ",'" + newUser.LightWeaponSkill + "','" + newUser.HeavyWeaponSkill + "','" + newUser.TwoHandedWeaponSkill + "','" + newUser.Blocking + "','" + newUser.Slipping + "','" + newUser.Stealth + "','" + newUser.HenchmenLevel1 + "','" + newUser.HenchmenLevel2 + "','" + newUser.HenchmenLevel3 + "','" + newUser.HenchmenLevel4 + "','" + newUser.HenchmenLevel5 + "')";
+                        cmd.CommandText =
+                            "Insert into Users([Username],[UserPassword],[Level],[Experience],[SkillPoints],[Alive],[Location],[CurrentEndurance],[MaximumEndurance],[Hunger],[Thirst],[CurrentWeapon],[LightWeapon],[HeavyWeapon],[TwoHandedWeapon],[Armor],[Potion],[Lockpicks],[GoldOnHand],[GoldInBank],[GoldOnLoan],[Shovel],[Lantern],[Amulet],[LightWeaponSkill],[HeavyWeaponSkill],[TwoHandedWeaponSkill],[Blocking],[Slipping],[Stealth],[HenchmenLevel1],[HenchmenLevel2],[HenchmenLevel3],[HenchmenLevel4],[HenchmenLevel5])Values('" +
+                            newUser.Name + "','" + newUser.Password + "','" + newUser.Level + "','" + newUser.Experience +
+                            "','" + newUser.SkillPoints + "'," + Int32Helper.Parse(newUser.Alive) + ",'" +
+                            newUser.CurrentLocation + "','" + newUser.CurrentEndurance + "','" +
+                            newUser.MaximumEndurance + "','" + newUser.Hunger + "','" + newUser.Thirst + "','" +
+                            newUser.CurrentWeapon + "','" + newUser.LightWeapon.Name + "','" + newUser.HeavyWeapon.Name +
+                            "','" + newUser.TwoHandedWeapon.Name + "','" + newUser.Armor.Name + "','" +
+                            newUser.Potion.Name + "','" + newUser.Lockpicks + "','" + newUser.GoldOnHand + "','" +
+                            newUser.GoldInBank + "','" + newUser.GoldOnLoan + "'," + Int32Helper.Parse(newUser.Shovel) +
+                            "," + Int32Helper.Parse(newUser.Lantern) + "," + Int32Helper.Parse(newUser.Amulet) + ",'" +
+                            newUser.LightWeaponSkill + "','" + newUser.HeavyWeaponSkill + "','" +
+                            newUser.TwoHandedWeaponSkill + "','" + newUser.Blocking + "','" + newUser.Slipping + "','" +
+                            newUser.Stealth + "','" + newUser.HenchmenLevel1 + "','" + newUser.HenchmenLevel2 + "','" +
+                            newUser.HenchmenLevel3 + "','" + newUser.HenchmenLevel4 + "','" + newUser.HenchmenLevel5 +
+                            "')";
 
                         con.Open();
                         cmd.Connection = con;
@@ -411,7 +420,10 @@ namespace Assassin
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Creating New User", MessageBoxButton.OK);
+                    Application.Current.Dispatcher.Invoke(delegate
+                    {
+                        new Notification(ex.Message, "Error Creating New User", NotificationButtons.OK).ShowDialog();
+                    });
                 }
                 finally { con.Close(); }
             });
@@ -422,9 +434,7 @@ namespace Assassin
         //end user exists
         //if passwords don't match
 
-        /// <summary>
-        /// Selects an Enemy based on the User's current level.
-        /// </summary>
+        /// <summary>Selects an Enemy based on the User's current level.</summary>
         /// <returns>Selected Enemy</returns>
         internal static Enemy SelectEnemy()
         {
@@ -433,10 +443,7 @@ namespace Assassin
             switch (CurrentUser.Level)
             {
                 case 1:
-                    if (random <= 65)
-                        index = 0;
-                    else
-                        index = 1;
+                    index = random <= 65 ? 0 : 1;
                     break;
 
                 case 2:

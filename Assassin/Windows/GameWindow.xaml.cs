@@ -7,10 +7,10 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window, INotifyPropertyChanged
+    public partial class GameWindow :  INotifyPropertyChanged
     {
         internal MainWindow RefToMainWindow { get; set; }
-        private string nl = Environment.NewLine;
+        private readonly string nl = Environment.NewLine;
 
         internal void NewUser()
         {
@@ -93,8 +93,7 @@ namespace Assassin
 
         private void btnAssassinate_Click(object sender, RoutedEventArgs e)
         {
-            AssassinationWindow assassinationWindow = new AssassinationWindow();
-            assassinationWindow.RefToGameWindow = this;
+            AssassinationWindow assassinationWindow = new AssassinationWindow { RefToGameWindow = this };
             assassinationWindow.GetEnemy();
             assassinationWindow.Show();
             this.Visibility = Visibility.Hidden;
@@ -114,8 +113,7 @@ namespace Assassin
 
         private void btnBank_Click(object sender, RoutedEventArgs e)
         {
-            BankWindow bankWindow = new BankWindow();
-            bankWindow.RefToGameWindow = this;
+            BankWindow bankWindow = new BankWindow { RefToGameWindow = this };
             bankWindow.Show();
             this.Visibility = Visibility.Hidden;
         }

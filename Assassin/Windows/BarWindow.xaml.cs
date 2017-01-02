@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for BarWindow.xaml
     /// </summary>
-    public partial class BarWindow : Window
+    public partial class BarWindow 
     {
         public BarWindow()
         {

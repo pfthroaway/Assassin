@@ -17,7 +17,7 @@ namespace Assassin
     /// <summary>
     /// Interaction logic for ManageApplicationsWindow.xaml
     /// </summary>
-    public partial class ManageApplicationsWindow : Window
+    public partial class ManageApplicationsWindow 
     {
         public ManageApplicationsWindow()
         {

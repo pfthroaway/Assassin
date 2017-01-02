@@ -27,10 +27,7 @@ namespace Assassin
             set { fine = value; OnPropertyChanged("Fine"); OnPropertyChanged("FineToString"); }
         }
 
-        public string FineToString
-        {
-            get { return Fine.ToString("N0"); }
-        }
+        public string FineToString => Fine.ToString("N0");
 
         #endregion Properties
 
