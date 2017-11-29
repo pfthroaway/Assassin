@@ -9,13 +9,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Assassin</RootNamespace>
     <AssemblyName>Assassin</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,30 +39,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Extensions">
-      <HintPath>.\Extensions.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net451\System.Data.SQLite.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.106.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.103\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.106.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.106.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,274 +74,289 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Employer.cs" />
-    <Compile Include="Windows\PubWindow.xaml.cs">
-      <DependentUpon>PubWindow.xaml</DependentUpon>
+    <Compile Include="Classes\Database\IDatabaseInteraction.cs" />
+    <Compile Include="Classes\Database\SQLiteDatabaseInteraction.cs" />
+    <Compile Include="Classes\Entities\Employer.cs" />
+    <Compile Include="Classes\Entities\IEntity.cs" />
+    <Compile Include="Classes\Entities\LivingEntity.cs" />
+    <Compile Include="Classes\Enums\Stance.cs" />
+    <Compile Include="Classes\Enums\WeaponType.cs" />
+    <Compile Include="Classes\Items\IItem.cs" />
+    <Compile Include="Classes\Items\Item.cs" />
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Shopping\PubPage.xaml.cs">
+      <DependentUpon>PubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AdminEnemiesWindow.xaml.cs">
-      <DependentUpon>AdminEnemiesWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Help\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AdminGuildWindow.xaml.cs">
-      <DependentUpon>AdminGuildWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Admin\AdminEnemiesPage.xaml.cs">
+      <DependentUpon>AdminEnemiesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AdminUsersWindow.xaml.cs">
-      <DependentUpon>AdminUsersWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Admin\AdminGuildPage.xaml.cs">
+      <DependentUpon>AdminGuildPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\BankDialogWindow.xaml.cs">
-      <DependentUpon>BankDialogWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Admin\AdminUsersPage.xaml.cs">
+      <DependentUpon>AdminUsersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\BankWindow.xaml.cs">
-      <DependentUpon>BankWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Bank\BankDialogPage.xaml.cs">
+      <DependentUpon>BankDialogPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\BarWindow.xaml.cs">
-      <DependentUpon>BarWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Bank\BankPage.xaml.cs">
+      <DependentUpon>BankPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ChangePasswordWindow.xaml.cs">
-      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Shopping\BarPage.xaml.cs">
+      <DependentUpon>BarPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Jail.cs" />
-    <Compile Include="Classes\JailedUser.cs" />
-    <Compile Include="Windows\CourtWindow.xaml.cs">
-      <DependentUpon>CourtWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Options\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GuildDonateWindow.xaml.cs">
-      <DependentUpon>GuildDonateWindow.xaml</DependentUpon>
+    <Compile Include="Classes\Entities\Jail.cs" />
+    <Compile Include="Classes\Entities\JailedUser.cs" />
+    <Compile Include="Pages\Court\CourtPage.xaml.cs">
+      <DependentUpon>CourtPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GuildListWindow.xaml.cs">
-      <DependentUpon>GuildListWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\GuildDonatePage.xaml.cs">
+      <DependentUpon>GuildDonatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GuildManageWindow.xaml.cs">
-      <DependentUpon>GuildManageWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\GuildListPage.xaml.cs">
+      <DependentUpon>GuildListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GuildOptionsWindow.xaml.cs">
-      <DependentUpon>GuildOptionsWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\GuildManagePage.xaml.cs">
+      <DependentUpon>GuildManagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GuildTransferWindow.xaml.cs">
-      <DependentUpon>GuildTransferWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\GuildOptionsPage.xaml.cs">
+      <DependentUpon>GuildOptionsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GuildWindow.xaml.cs">
-      <DependentUpon>GuildWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\GuildTransferPage.xaml.cs">
+      <DependentUpon>GuildTransferPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\HelpWindow.xaml.cs">
-      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\GuildPage.xaml.cs">
+      <DependentUpon>GuildPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\HireHenchmenWindow.xaml.cs">
-      <DependentUpon>HireHenchmenWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Help\HelpPage.xaml.cs">
+      <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\JobsWindow.xaml.cs">
-      <DependentUpon>JobsWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\HireHenchmenPage.xaml.cs">
+      <DependentUpon>HireHenchmenPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ManageApplicationsWindow.xaml.cs">
-      <DependentUpon>ManageApplicationsWindow.xaml</DependentUpon>
+    <Compile Include="Pages\City\JobsPage.xaml.cs">
+      <DependentUpon>JobsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ManualWindow.xaml.cs">
-      <DependentUpon>ManualWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\ManageApplicationsPage.xaml.cs">
+      <DependentUpon>ManageApplicationsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MembersWindow.xaml.cs">
-      <DependentUpon>MembersWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Help\ManualPage.xaml.cs">
+      <DependentUpon>ManualPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MysticWindow.xaml.cs">
-      <DependentUpon>MysticWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Guilds\MembersPage.xaml.cs">
+      <DependentUpon>MembersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RaidWindow.xaml.cs">
-      <DependentUpon>RaidWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Shopping\MysticPage.xaml.cs">
+      <DependentUpon>MysticPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RobWindow.xaml.cs">
-      <DependentUpon>RobWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Battle\RaidPage.xaml.cs">
+      <DependentUpon>RaidPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\SplashWindow.xaml.cs">
+    <Compile Include="Pages\Battle\RobPage.xaml.cs">
+      <DependentUpon>RobPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ThievesGuildWindow.xaml.cs">
-      <DependentUpon>ThievesGuildWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Shopping\ThievesGuildPage.xaml.cs">
+      <DependentUpon>ThievesGuildPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\TrainWindow.xaml.cs">
-      <DependentUpon>TrainWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Player\TrainPage.xaml.cs">
+      <DependentUpon>TrainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\JailWindow.xaml.cs">
-      <DependentUpon>JailWindow.xaml</DependentUpon>
+    <Compile Include="Pages\City\JailPage.xaml.cs">
+      <DependentUpon>JailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\InventoryWindow.xaml.cs">
-      <DependentUpon>InventoryWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Player\InventoryPage.xaml.cs">
+      <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ArmoryWindow.xaml.cs">
-      <DependentUpon>ArmoryWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Shopping\ArmoryPage.xaml.cs">
+      <DependentUpon>ArmoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ShopsWindow.xaml.cs">
-      <DependentUpon>ShopsWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Shopping\ShopsPage.xaml.cs">
+      <DependentUpon>ShopsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AssassinationWindow.xaml.cs">
-      <DependentUpon>AssassinationWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Battle\AssassinationPage.xaml.cs">
+      <DependentUpon>AssassinationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\BattleWindow.xaml.cs">
-      <DependentUpon>BattleWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Battle\BattlePage.xaml.cs">
+      <DependentUpon>BattlePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\GameWindow.xaml.cs">
-      <DependentUpon>GameWindow.xaml</DependentUpon>
+    <Compile Include="Pages\City\GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AdminLoginWindow.xaml.cs">
-      <DependentUpon>AdminLoginWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Admin\AdminLoginPage.xaml.cs">
+      <DependentUpon>AdminLoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AdminWindow.xaml.cs">
-      <DependentUpon>AdminWindow.xaml</DependentUpon>
+    <Compile Include="Pages\Admin\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\User.cs" />
-    <Compile Include="Classes\Weapon.cs" />
-    <Compile Include="Windows\NewUserWindow.xaml.cs">
-      <DependentUpon>NewUserWindow.xaml</DependentUpon>
+    <Compile Include="Classes\Entities\User.cs" />
+    <Compile Include="Classes\Items\Weapon.cs" />
+    <Compile Include="Pages\Player\NewUserPage.xaml.cs">
+      <DependentUpon>NewUserPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Windows\PubWindow.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AboutWindow.xaml">
+    <Page Include="Pages\Shopping\PubPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AdminEnemiesWindow.xaml">
+    <Page Include="Pages\Help\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AdminGuildWindow.xaml">
+    <Page Include="Pages\Admin\AdminEnemiesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AdminUsersWindow.xaml">
+    <Page Include="Pages\Admin\AdminGuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BankDialogWindow.xaml">
+    <Page Include="Pages\Admin\AdminUsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BankWindow.xaml">
+    <Page Include="Pages\Bank\BankDialogPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BarWindow.xaml">
+    <Page Include="Pages\Bank\BankPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ChangePasswordWindow.xaml">
+    <Page Include="Pages\Shopping\BarPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\CourtWindow.xaml">
+    <Page Include="Pages\Options\ChangePasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GuildDonateWindow.xaml">
+    <Page Include="Pages\Court\CourtPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GuildListWindow.xaml">
+    <Page Include="Pages\Guilds\GuildDonatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GuildManageWindow.xaml">
+    <Page Include="Pages\Guilds\GuildListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GuildOptionsWindow.xaml">
+    <Page Include="Pages\Guilds\GuildManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GuildTransferWindow.xaml">
+    <Page Include="Pages\Guilds\GuildOptionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GuildWindow.xaml">
+    <Page Include="Pages\Guilds\GuildTransferPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\HelpWindow.xaml">
+    <Page Include="Pages\Guilds\GuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\HireHenchmenWindow.xaml">
+    <Page Include="Pages\Help\HelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\JobsWindow.xaml">
+    <Page Include="Pages\Guilds\HireHenchmenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ManageApplicationsWindow.xaml">
+    <Page Include="Pages\City\JobsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ManualWindow.xaml">
+    <Page Include="Pages\Guilds\ManageApplicationsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MembersWindow.xaml">
+    <Page Include="Pages\Help\ManualPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MysticWindow.xaml">
+    <Page Include="Pages\Guilds\MembersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RaidWindow.xaml">
+    <Page Include="Pages\Shopping\MysticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RobWindow.xaml">
+    <Page Include="Pages\Battle\RaidPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\SplashWindow.xaml">
+    <Page Include="Pages\Battle\RobPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ThievesGuildWindow.xaml">
+    <Page Include="Pages\SplashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\TrainWindow.xaml">
+    <Page Include="Pages\Shopping\ThievesGuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\JailWindow.xaml">
+    <Page Include="Pages\Player\TrainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\InventoryWindow.xaml">
+    <Page Include="Pages\City\JailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ArmoryWindow.xaml">
+    <Page Include="Pages\Player\InventoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ShopsWindow.xaml">
+    <Page Include="Pages\Shopping\ArmoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AssassinationWindow.xaml">
+    <Page Include="Pages\Shopping\ShopsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BattleWindow.xaml">
+    <Page Include="Pages\Battle\AssassinationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GameWindow.xaml">
+    <Page Include="Pages\Battle\BattlePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AdminLoginWindow.xaml">
+    <Page Include="Pages\City\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AdminWindow.xaml">
+    <Page Include="Pages\Admin\AdminLoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="Pages\Admin\AdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -356,23 +364,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Armor.cs" />
-    <Compile Include="Classes\Drink.cs" />
-    <Compile Include="Classes\Enemy.cs" />
-    <Compile Include="Classes\Food.cs" />
+    <Compile Include="Classes\Items\Armor.cs" />
+    <Compile Include="Classes\Items\Drink.cs" />
+    <Compile Include="Classes\Entities\Enemy.cs" />
+    <Compile Include="Classes\Items\Food.cs" />
     <Compile Include="Classes\GameState.cs" />
-    <Compile Include="Classes\Guild.cs" />
-    <Compile Include="Windows\MainWindow.xaml.cs">
+    <Compile Include="Classes\Entities\Guild.cs" />
+    <Compile Include="Pages\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\NewUserWindow.xaml">
+    <Page Include="Pages\Player\NewUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Potion.cs" />
+    <Compile Include="Classes\Items\Potion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -390,9 +398,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Assassin.sqlite">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Assassin.sqlite" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -404,18 +410,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\Assassin.ico" />
+    <Resource Include="Pages\Assassin.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Assassin.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Extensions\Extensions.csproj">
+      <Project>{20f40385-5991-461c-9340-2f5de0e320f4}</Project>
+      <Name>Extensions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

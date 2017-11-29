@@ -1,0 +1,27 @@
+﻿<Page x:Class="Assassin.Pages.Shopping.ShopsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Shops"
+        Style="{StaticResource PageStyle}">
+    <Grid x:Name="Grid" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtShops" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="310" Height="200" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+        <Button x:Name="BtnArmory" Grid.Column="0" Grid.Row="1" Width="150" Margin="0,0,5,5" Content="The _Armoury" Click="BtnArmory_Click" />
+        <Button x:Name="BtnGeneralStore" Grid.Column="1" Grid.Row="1" Width="150" Margin="5,0,0,5" Content="_General Store" Click="BtnGeneralStore_Click" />
+        <Button x:Name="BtnWeapons" Grid.Column="0" Grid.Row="2" Width="150" Margin="0,5,5,5" Content="_Weapons 'R Us" Click="BtnWeapons_Click" />
+        <Button x:Name="BtnThieves" Grid.Column="1" Grid.Row="2" Width="150" Margin="5,5,0,5" Content="_Thieves Guild" Click="BtnThieves_Click" />
+        <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="150" Content="_Back" IsCancel="True" Margin="0,5,0,0" Click="BtnBack_Click" />
+    </Grid>
+</Page>
