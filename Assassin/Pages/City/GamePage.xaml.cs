@@ -1,6 +1,7 @@
 ﻿using Assassin.Classes;
 using Assassin.Pages.Bank;
 using Assassin.Pages.Battle;
+using Assassin.Pages.Shopping;
 using Extensions;
 using System.ComponentModel;
 using System.Windows;
@@ -79,9 +80,7 @@ namespace Assassin.Pages.City
         {
         }
 
-        private void BtnShops_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        private void BtnShops_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ShopsPage());
 
         private void BtnTrain_Click(object sender, RoutedEventArgs e)
         {

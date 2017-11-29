@@ -14,14 +14,14 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem x:Name="MnuFileExit" Header="_Exit" Click="mnuFileExit_Click" />
+                <MenuItem x:Name="MnuFileExit" Header="_Exit" Click="MnuFileExit_Click" />
             </MenuItem>
-            <MenuItem x:Name="MnuAdmin" Header="_Admin" Click="mnuAdmin_Click">
+            <MenuItem x:Name="MnuAdmin" Header="_Admin" Click="MnuAdmin_Click">
             </MenuItem>
             <MenuItem Header="_Help">
                 <Separator />
-                <MenuItem x:Name="MnuHelpManual" Header="_Manual" Click="mnuHelpManual_Click" />
-                <MenuItem x:Name="MnuHelpAbout" Header="_About" Click="mnuHelpAbout_Click" />
+                <MenuItem x:Name="MnuHelpManual" Header="_Manual" Click="MnuHelpManual_Click" />
+                <MenuItem x:Name="MnuHelpAbout" Header="_About" Click="MnuHelpAbout_Click" />
             </MenuItem>
         </Menu>
         <Frame

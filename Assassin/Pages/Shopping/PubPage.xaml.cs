@@ -1,14 +1,12 @@
-﻿namespace Assassin.Pages.Shopping
+﻿using Assassin.Classes;
+
+namespace Assassin.Pages.Shopping
 {
-    /// <summary>
-    /// Interaction logic for PubPage.xaml
-    /// </summary>
+    /// <summary>Interaction logic for PubPage.xaml</summary>
     public partial class PubPage
     {
         public PubPage() => InitializeComponent();
 
-        private void windowPub_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-        }
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e) => GameState.CalculateScale(Grid);
     }
 }

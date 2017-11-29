@@ -44,12 +44,13 @@ namespace Assassin.Classes.Database
         /// <returns>All Ranks</returns>
         Task<List<string>> LoadRanks();
 
-        /// <summary>Loads a User from the database.</summary>
+        /// <summary>Loads a <see cref="User"/> from the database.</summary>
+        /// <param name="username"><see cref="User"/> to load from the database</param>
         /// <returns>Requested User</returns>
         Task<User> LoadUser(string username);
 
-        /// <summary>Loads all Users from the database.</summary>
-        /// <returns>All Users</returns>
+        /// <summary>Loads all <see cref="User"/>s from the database.</summary>
+        /// <returns>All <see cref="User"/>s</returns>
         Task<List<User>> LoadUsers();
 
         /// <summary>Loads all Weapons from the database.</summary>

@@ -272,32 +272,28 @@ namespace Assassin.Classes.Entities
         public string GoldOnLoanToString => GoldOnLoan.ToString("N0");
 
         /// <summary>Amount of gold the <see cref="User"/> can take as a loan from the bank.</summary>
-        public int LoanAvailable => Level * 250 - GoldOnLoan;
+        public int LoanAvailable => (Level * 250) - GoldOnLoan;
 
         /// <summary>Amount of gold the <see cref="User"/> can take as a loan from the bank, formatted.</summary>
-        public string LoanAvailableToString => (Level * 250 - GoldOnLoan).ToString("N0");
+        public string LoanAvailableToString => (LoanAvailable - GoldOnLoan).ToString("N0");
 
         /// <summary><see cref="User"/>'s skill with their currently equipped weapon.</summary>
         public int SelectedWeaponSkill
         {
             get
             {
-                int skill = 0;
                 switch (CurrentWeapon)
                 {
                     case WeaponType.Light:
-                        skill = LightWeaponSkill;
-                        break;
+                        return LightWeaponSkill;
 
                     case WeaponType.Heavy:
-                        skill = HeavyWeaponSkill;
-                        break;
+                        return HeavyWeaponSkill;
 
                     case WeaponType.TwoHanded:
-                        skill = TwoHandedWeaponSkill;
-                        break;
+                        return TwoHandedWeaponSkill;
                 }
-                return skill;
+                return 0;
             }
         }
 
@@ -306,22 +302,18 @@ namespace Assassin.Classes.Entities
         {
             get
             {
-                Weapon newWeapon = new Weapon();
                 switch (CurrentWeapon)
                 {
                     case WeaponType.Light:
-                        newWeapon = LightWeapon;
-                        break;
+                        return LightWeapon;
 
                     case WeaponType.Heavy:
-                        newWeapon = HeavyWeapon;
-                        break;
+                        return HeavyWeapon;
 
                     case WeaponType.TwoHanded:
-                        newWeapon = TwoHandedWeapon;
-                        break;
+                        return TwoHandedWeapon;
                 }
-                return newWeapon;
+                return new Weapon();
             }
         }
 

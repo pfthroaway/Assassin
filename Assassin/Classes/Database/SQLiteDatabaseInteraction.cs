@@ -129,6 +129,7 @@ namespace Assassin.Classes.Database
         }
 
         /// <summary>Loads a <see cref="User"/> from the database.</summary>
+        /// <param name="username"><see cref="User"/> to load from the database</param>
         /// <returns>Requested <see cref="User"/></returns>
         public async Task<User> LoadUser(string username)
         {

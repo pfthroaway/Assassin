@@ -86,6 +86,9 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Shopping\GeneralStorePage.xaml.cs">
+      <DependentUpon>GeneralStorePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Shopping\PubPage.xaml.cs">
       <DependentUpon>PubPage.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,9 @@
     <Compile Include="Pages\Battle\RobPage.xaml.cs">
       <DependentUpon>RobPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Shopping\WeaponsRUsPage.xaml.cs">
+      <DependentUpon>WeaponsRUsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
@@ -205,6 +211,10 @@
       <DependentUpon>NewUserPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Shopping\GeneralStorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -305,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Battle\RobPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Shopping\WeaponsRUsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

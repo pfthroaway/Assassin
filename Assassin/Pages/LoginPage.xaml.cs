@@ -56,9 +56,9 @@ namespace Assassin.Pages
             TextChanged();
         }
 
-        private void pswdPassword_TextChanged(object sender, RoutedEventArgs e) => TextChanged();
+        private void PswdPassword_TextChanged(object sender, RoutedEventArgs e) => TextChanged();
 
-        private void pswdPassword_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
+        private void PswdPassword_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 

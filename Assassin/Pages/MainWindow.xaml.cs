@@ -31,8 +31,7 @@ namespace Assassin.Pages
             if (double.IsNaN(value))
                 return 1.0f;
 
-            value = Math.Max(0.1, value);
-            return value;
+            return Math.Max(0.1, value);
         }
 
         protected virtual void OnScaleValueChanged(double oldValue, double newValue)
@@ -62,13 +61,13 @@ namespace Assassin.Pages
 
         #region Click Methods
 
-        private void mnuFileExit_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
+        private void MnuFileExit_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
 
-        private void mnuAdmin_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AdminLoginPage());
+        private void MnuAdmin_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AdminLoginPage());
 
-        private void mnuHelpManual_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ManualPage());
+        private void MnuHelpManual_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ManualPage());
 
-        private void mnuHelpAbout_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AboutPage());
+        private void MnuHelpAbout_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AboutPage());
 
         #endregion Click Methods
 

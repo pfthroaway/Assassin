@@ -7,16 +7,32 @@ namespace Assassin.Classes.Items
     {
         private int _defense;
 
-        #region Properties
+        #region Modifying Properties
 
         /// <summary>Defense of the <see cref="Armor"/>.</summary>
         public int Defense
         {
             get => _defense;
-            set { _defense = value; OnPropertyChanged("Defense"); }
+            set
+            {
+                _defense = value;
+                OnPropertyChanged("Defense");
+                OnPropertyChanged("DefenseToString");
+                OnPropertyChanged("DefenseToStringWithText");
+            }
         }
 
-        #endregion Properties
+        #endregion Modifying Properties
+
+        #region Helper Properties
+
+        /// <summary>Defense of the <see cref="Armor"/>, formatted.</summary>
+        public string DefenseToString => Defense.ToString("N0");
+
+        /// <summary>Defense of the <see cref="Armor"/>, formatted with text.</summary>
+        public string DefenseToStringWithText => $"Defense: {DefenseToString}";
+
+        #endregion Helper Properties
 
         #region Override Operators
 
@@ -44,10 +60,10 @@ namespace Assassin.Classes.Items
         /// <summary>Initializes a new instance of the <see cref="Armor"/> class.</summary>
         internal Armor()
         {
-            Name = "Clothes";
-            Defense = 4;
-            Value = 0;
-            Hidden = false;
+            //Name = "Clothes";
+            //Defense = 4;
+            //Value = 0;
+            //Hidden = false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Armor"/> class using Property values.</summary>
