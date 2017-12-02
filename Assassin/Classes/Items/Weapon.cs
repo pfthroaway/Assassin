@@ -9,7 +9,7 @@ namespace Assassin.Classes.Items
         private int _damage;
         private WeaponType _type;
 
-        #region Properties
+        #region Modifying Properties
 
         /// <summary>Type of <see cref="Weapon"/></summary>
         public WeaponType Type
@@ -18,14 +18,30 @@ namespace Assassin.Classes.Items
             set { _type = value; OnPropertyChanged("Type"); }
         }
 
-        /// <summary>Damage of <see cref="Weapon"/></summary>
+        /// <summary>Damage of <see cref="Weapon"/>.</summary>
         public int Damage
         {
             get => _damage;
-            set { _damage = value; OnPropertyChanged("Damage"); }
+            set
+            {
+                _damage = value;
+                OnPropertyChanged("Damage");
+                OnPropertyChanged("DamageToString");
+                OnPropertyChanged("DamageToStringWithText");
+            }
         }
 
-        #endregion Properties
+        #endregion Modifying Properties
+
+        #region Helper Properties
+
+        /// <summary>Damage of <see cref="Weapon"/>, formatted.</summary>
+        public string DamageToString => Damage.ToString("N0");
+
+        /// <summary>Damage of <see cref="Weapon"/>, formatted with text.</summary>
+        public string DamageToStringWithText => $"Damage: {DamageToString}";
+
+        #endregion Helper Properties
 
         #region Override Operators
 
@@ -53,11 +69,11 @@ namespace Assassin.Classes.Items
         /// <summary>Initializes a new instance of the <see cref="Weapon"/> class.</summary>
         public Weapon()
         {
-            Name = "Hands";
-            Type = WeaponType.Light;
-            Damage = 6;
-            Value = 0;
-            Hidden = true;
+            //    Name = "Hands";
+            //    Type = WeaponType.Light;
+            //    Damage = 6;
+            //    Value = 0;
+            //    Hidden = true;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Weapon"/> class using Property values.</summary>

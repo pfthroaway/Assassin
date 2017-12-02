@@ -26,9 +26,9 @@
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Username" TextAlignment="Center" Margin="0,0,0,5" />
         <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="1" Width="300" TextChanged="TxtUsername_Changed" TextAlignment="Center" PreviewKeyDown="TxtUsername_PreviewKeyDown" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Password" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Width="300" PasswordChanged="pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="pswd_GotFocus" Margin="0,0,0,10" />
+        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Width="300" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="4" Text="Confirm Password:" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdConfirm" Grid.Column="0" Grid.Row="5" Width="300" PasswordChanged="pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="pswd_GotFocus" Margin="0,0,0,10" />
+        <PasswordBox x:Name="PswdConfirm" Grid.Column="0" Grid.Row="5" Width="300" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=SkillPointsToString, Mode=OneWay}" Margin="0,0,0,10" />
         <GroupBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Header="Skills" Margin="20,0,0,10">
             <Grid Margin="5">

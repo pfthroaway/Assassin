@@ -1,5 +1,6 @@
 ﻿using Assassin.Classes;
 using Extensions;
+using Extensions.DataTypeHelpers;
 using Extensions.Enums;
 using System.Windows;
 using System.Windows.Input;
@@ -89,7 +90,7 @@ namespace Assassin.Pages.Bank
 
         private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(TxtBank.Text, out _textAmount);
+            _textAmount = Int32Helper.Parse(TxtBank.Text);
 
             if (_textAmount <= _maximum && _textAmount > 0)
             {
@@ -147,11 +148,11 @@ namespace Assassin.Pages.Bank
             TxtBank.Focus();
         }
 
-        private void BankDialogPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         private void TxtBank_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
 
         private void TxtBank_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Integers);
+
+        private void BankDialogPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

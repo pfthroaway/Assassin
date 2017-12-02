@@ -1,6 +1,7 @@
 ﻿using Assassin.Classes;
 using Assassin.Pages.Bank;
 using Assassin.Pages.Battle;
+using Assassin.Pages.Player;
 using Assassin.Pages.Shopping;
 using Extensions;
 using System.ComponentModel;
@@ -76,15 +77,11 @@ namespace Assassin.Pages.City
 
         private void BtnAssassinate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AssassinationPage());
 
-        private void BtnInventory_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        private void BtnInventory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InventoryPage());
 
         private void BtnShops_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ShopsPage());
 
-        private void BtnTrain_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        private void BtnTrain_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new TrainPage());
 
         private void BtnBank_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new BankPage());
 
@@ -98,13 +95,13 @@ namespace Assassin.Pages.City
             await GameState.SaveUser(GameState.CurrentUser);
         }
 
-        public GamePage()
+        public GamePage() => InitializeComponent();
+
+        private void GamePage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            GameState.CalculateScale(Grid);
             DataContext = GameState.CurrentUser;
         }
-
-        private void GamePage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

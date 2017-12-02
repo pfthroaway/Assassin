@@ -28,6 +28,7 @@ namespace Assassin.Pages.Player
 
         #region Button-Manipulation Methods
 
+        /// <summary>Check which buttons to enable.</summary>
         private void CheckButtons()
         {
             if (_createUser.SkillPoints > 0)
@@ -48,16 +49,11 @@ namespace Assassin.Pages.Player
                 DisablePlusButtons();
                 BtnReset.IsEnabled = true;
 
-                if (TxtUsername.Text.Length >= 1 && PswdConfirm.Password.Length >= 1 && PswdPassword.Password.Length >= 1)
-                    BtnCreate.IsEnabled = true;
-                else
-                    BtnCreate.IsEnabled = false;
+                BtnCreate.IsEnabled = TxtUsername.Text.Length >= 1 && PswdConfirm.Password.Length >= 1 && PswdPassword.Password.Length >= 1;
             }
         }
 
-        /// <summary>
-        /// Disable Minus buttons.
-        /// </summary>
+        /// <summary>Disable Minus buttons.</summary>
         private void DisableMinusButtons()
 
         {
@@ -70,9 +66,7 @@ namespace Assassin.Pages.Player
             BtnStealthMinus.IsEnabled = false;
         }
 
-        /// <summary>
-        /// Disables Plus buttons.
-        /// </summary>
+        /// <summary>Disables Plus buttons.</summary>
         private void DisablePlusButtons()
         {
             BtnEndurancePlus.IsEnabled = false;
@@ -84,9 +78,7 @@ namespace Assassin.Pages.Player
             BtnStealthPlus.IsEnabled = false;
         }
 
-        /// <summary>
-        /// Enables Plus buttons.
-        /// </summary>
+        /// <summary>Enables Plus buttons.</summary>
         private void EnablePlusButtons()
         {
             BtnEndurancePlus.IsEnabled = true;
@@ -102,9 +94,7 @@ namespace Assassin.Pages.Player
 
         #region Attribute Modification
 
-        /// <summary>
-        /// Increases the passed attribute.
-        /// </summary>
+        /// <summary>Increases the passed attribute.</summary>
         /// <param name="attribute">Attribute to be increased</param>
         /// <returns>Increased attribute</returns>
         private int IncreaseAttribute(int attribute)
@@ -115,9 +105,7 @@ namespace Assassin.Pages.Player
             return attribute;
         }
 
-        /// <summary>
-        /// Decreases the passed attribute.
-        /// </summary>
+        /// <summary>Decreases the passed attribute.</summary>
         /// <param name="attribute">Attribute to be decreased</param>
         /// <returns>Decreased attribute</returns>
         private int DecreaseAttribute(int attribute)
@@ -288,13 +276,7 @@ namespace Assassin.Pages.Player
             }
         }
 
-        public NewUserPage()
-        {
-            InitializeComponent();
-            DataContext = _createUser;
-            CheckButtons();
-            TxtUsername.Focus();
-        }
+        public NewUserPage() => InitializeComponent();
 
         private void TxtUsername_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
 
@@ -306,11 +288,17 @@ namespace Assassin.Pages.Player
             CheckButtons();
         }
 
-        private void pswd_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
+        private void Pswd_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 
-        private void pswd_TextChanged(object sender, RoutedEventArgs e) => CheckButtons();
+        private void Pswd_TextChanged(object sender, RoutedEventArgs e) => CheckButtons();
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            GameState.CalculateScale(Grid);
+            DataContext = _createUser;
+            CheckButtons();
+            TxtUsername.Focus();
+        }
 
         #endregion Page-Manipulation Methods
     }

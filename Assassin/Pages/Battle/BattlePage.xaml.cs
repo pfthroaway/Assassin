@@ -15,8 +15,7 @@ namespace Assassin.Pages.Battle
     {
         private int _playerStamina = 20;
         private int _enemyStamina = 20;
-        private Stance _playerStance = Stance.Normal;
-        private Stance _enemyStance = Stance.Normal;
+        private Stance _playerStance, _enemyStance;
         private bool _battleOver;
         private string _previousPage = "";
 
@@ -120,16 +119,10 @@ namespace Assassin.Pages.Battle
         /// <summary>Binds information to labels.</summary>
         private void BindLabels()
         {
-            LblEnemyArmor.DataContext = GameState.CurrentEnemy;
-            LblEnemyEndurance.DataContext = GameState.CurrentEnemy;
-            LblEnemyName.DataContext = GameState.CurrentEnemy;
+            GrpUser.DataContext = GameState.CurrentUser;
+            LblPlayerStatus.DataContext = this;
+            GrpEnemy.DataContext = GameState.CurrentEnemy;
             LblEnemyStatus.DataContext = this;
-            LblEnemyWeapon.DataContext = GameState.CurrentEnemy;
-            LblUserArmor.DataContext = GameState.CurrentUser;
-            LblUserEndurance.DataContext = GameState.CurrentUser;
-            LblUsername.DataContext = GameState.CurrentUser;
-            LblUserStatus.DataContext = this;
-            LblUserWeapon.DataContext = GameState.CurrentUser;
 
             Surprise();
         }
@@ -255,7 +248,7 @@ namespace Assassin.Pages.Battle
             switch (_playerStance)
             {
                 case Stance.Normal:
-                    PlayerStamina -= 1;
+                    PlayerStamina--;
                     break;
 
                 case Stance.Berserk:
@@ -266,7 +259,7 @@ namespace Assassin.Pages.Battle
                 case Stance.Lunge:
                     playerDamage = Int32Helper.Parse(playerDamage * 1.5m);
                     playerDefense = Int32Helper.Parse(playerDefense * 0.5m);
-                    PlayerStamina -= 1;
+                    PlayerStamina--;
                     break;
             }
 
@@ -324,6 +317,9 @@ namespace Assassin.Pages.Battle
         /// <returns>Returns stance</returns>
         private Stance EnemyStance()
         {
+            // if Enemy will soon run out of Stamina, Defend to regain Stamina
+            if (EnemyStamina <= 1) return Stance.Defend;
+
             int stance = Functions.GenerateRandomNumber(1, 100);
 
             if (Decimal.Divide(GameState.CurrentEnemy.CurrentEndurance, GameState.CurrentEnemy.MaximumEndurance) > 0.2m)
@@ -338,15 +334,17 @@ namespace Assassin.Pages.Battle
                     return Stance.Defend;
                 return Stance.Lunge;
             }
-            if (stance <= 10)
+
+            // if Enemy is at less than 20% health, give a 20% chance to attempt to run away.
+            if (stance <= 16)
                 return Stance.Normal;
-            if (stance <= 20)
+            if (stance <= 32)
                 return Stance.Berserk;
-            if (stance <= 30)
+            if (stance <= 48)
                 return Stance.Parry;
-            if (stance <= 40)
+            if (stance <= 64)
                 return Stance.Defend;
-            if (stance <= 50)
+            if (stance <= 80)
                 return Stance.Lunge;
             return Stance.Flee;
         }
@@ -397,13 +395,13 @@ namespace Assassin.Pages.Battle
             switch (_enemyStance)
             {
                 case Stance.Normal:
-                    EnemyStamina -= 1;
+                    EnemyStamina--;
                     break;
 
                 case Stance.Lunge:
                     enemyDamage = Int32Helper.Parse(enemyDamage * 1.5m);
                     enemyDefense = Int32Helper.Parse(enemyDefense * 0.5m);
-                    EnemyStamina -= 1;
+                    EnemyStamina--;
                     break;
 
                 case Stance.Berserk:
@@ -546,9 +544,9 @@ namespace Assassin.Pages.Battle
                     break;
             }
             if (!blnTakeWeapon)
-                Functions.AddTextToTextBox(TxtBattle, "You take the " + GameState.CurrentEnemy.Name + "'s " + GameState.CurrentEnemy.Weapon.Name + " off their corpse and bring it to the Weapon shop and sell it for " + GameState.CurrentEnemy.Weapon.Value / 2 + " gold.");
+                Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse and bring it to the Weapon shop and sell it for {GameState.CurrentEnemy.Weapon.Value / 2} gold.");
             else
-                Functions.AddTextToTextBox(TxtBattle, "You take the " + GameState.CurrentEnemy.Name + "'s " + GameState.CurrentEnemy.Weapon.Name + " off their corpse.");
+                Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse.");
 
             EndBattle();
         }
@@ -615,13 +613,13 @@ namespace Assassin.Pages.Battle
             }
         }
 
-        public BattlePage()
+        public BattlePage() => InitializeComponent();
+
+        private void BattlePage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            GameState.CalculateScale(Grid);
             BindLabels();
         }
-
-        private void BattlePage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

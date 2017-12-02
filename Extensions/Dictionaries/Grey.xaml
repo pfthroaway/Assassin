@@ -13,6 +13,7 @@
         <ResourceDictionary Source="Grey/Menu.xaml" />
         <ResourceDictionary Source="Grey/Page.xaml" />
         <ResourceDictionary Source="Grey/PasswordBox.xaml" />
+        <ResourceDictionary Source="Grey/RadioButton.xaml" />
         <ResourceDictionary Source="Grey/TabControl.xaml" />
         <ResourceDictionary Source="Grey/TextBlock.xaml" />
         <ResourceDictionary Source="Grey/TextBox.xaml" />

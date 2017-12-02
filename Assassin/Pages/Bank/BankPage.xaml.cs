@@ -67,14 +67,14 @@ namespace Assassin.Pages.Bank
             await GameState.SaveUser(GameState.CurrentUser);
         }
 
-        public BankPage()
+        public BankPage() => InitializeComponent();
+
+        private void BankPage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            GameState.CalculateScale(Grid);
             DataContext = GameState.CurrentUser;
             CheckButtons();
         }
-
-        private void BankPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

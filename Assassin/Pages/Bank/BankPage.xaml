@@ -23,10 +23,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBox x:Name="TxtBank" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Height="190" Width="405" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10" />
-        <Button x:Name="BtnDeposit" Grid.Column="0" Width="125" Grid.Row="1" Margin="0,0,10,10" Content="_Deposit" Click="BtnDeposit_Click" />
-        <Button x:Name="BtnTakeLoan" Grid.Column="2" Width="125" Grid.Row="1" Margin="10,0,0,10" Content="_Take Out Loan" Click="BtnTakeLoan_Click" />
-        <Button x:Name="BtnWithdraw" Grid.Column="0" Width="125" Grid.Row="2" Margin="0,0,10,10" Content="_Withdraw" Click="BtnWithdraw_Click" />
-        <Button x:Name="BtnRepayLoan" Grid.Column="2" Width="125" Grid.Row="2" Margin="10,0,0,10" Content="_Repay Loan" Click="BtnRepayLoan_Click" />
+        <Button x:Name="BtnDeposit" Grid.Column="0" Width="145" Grid.Row="1" Content="_Deposit" Click="BtnDeposit_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnTakeLoan" Grid.Column="2" Width="145" Grid.Row="1" Content="_Take Out Loan" Click="BtnTakeLoan_Click" Margin="10,0,0,10" />
+        <Button x:Name="BtnWithdraw" Grid.Column="0" Width="145" Grid.Row="2" Content="_Withdraw" Click="BtnWithdraw_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnRepayLoan" Grid.Column="2" Width="145" Grid.Row="2" Content="_Repay Loan" Click="BtnRepayLoan_Click" Margin="10,0,0,10" />
         <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="3" BorderThickness="1,1,0,0">
             <TextBlock Text="Gold On Hand" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
@@ -51,6 +51,6 @@
         <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="6" Height="24" VerticalAlignment="Top" BorderThickness="1,1,1,1">
             <TextBlock x:Name="LblLoanOwed" Text="{Binding Path=GoldOnLoanToString, Mode=OneWay}" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
-        <Button x:Name="BtnBack" Grid.Column="2" Width="125" Grid.Row="6" Content="_Back" Click="BtnBack_Click" IsCancel="True" Margin="10,0,0,0" />
+        <Button x:Name="BtnBack" Grid.Column="2" Width="145" Grid.Row="5" Grid.RowSpan="2" Content="_Back" Click="BtnBack_Click" VerticalAlignment="Bottom" IsCancel="True" Margin="10,0,0,0" />
     </Grid>
 </Page>

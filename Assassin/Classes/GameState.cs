@@ -87,7 +87,7 @@ namespace Assassin.Classes
         {
             try
             {
-                User checkUser = AllUsers.Find(hero => hero.Name == username);
+                User checkUser = AllUsers.Find(hero => string.Equals(hero.Name, username, StringComparison.OrdinalIgnoreCase));
                 if (PBKDF2.ValidatePassword(password, checkUser.Password))
                 {
                     CurrentUser = checkUser;
