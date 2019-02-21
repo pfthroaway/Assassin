@@ -152,8 +152,6 @@ namespace Assassin.Pages.Bank
 
         private void TxtBank_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Integers);
 
-        private void BankDialogPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

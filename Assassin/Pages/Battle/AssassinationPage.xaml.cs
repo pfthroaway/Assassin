@@ -72,8 +72,6 @@ namespace Assassin.Pages.Battle
             GetEnemy();
         }
 
-        private void AssassinationPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

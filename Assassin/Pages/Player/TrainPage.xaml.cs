@@ -214,7 +214,6 @@ namespace Assassin.Pages.Player
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            GameState.CalculateScale(Grid);
             _originalUser = new User(GameState.CurrentUser);
             DataContext = GameState.CurrentUser;
             CheckButtons();

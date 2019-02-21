@@ -7,7 +7,5 @@ namespace Assassin.Pages.Admin
     public partial class AdminUsersPage
     {
         public AdminUsersPage() => InitializeComponent();
-
-        private void AdminUsersPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
     }
 }

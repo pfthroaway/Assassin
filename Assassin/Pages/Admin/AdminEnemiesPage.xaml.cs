@@ -7,7 +7,5 @@ namespace Assassin.Pages.Admin
     public partial class AdminEnemiesPage
     {
         public AdminEnemiesPage() => InitializeComponent();
-
-        private void AdminEnemiesPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
     }
 }

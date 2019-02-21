@@ -30,25 +30,10 @@ namespace Assassin.Classes
         internal static List<Drink> AllDrinks = new List<Drink>();
         internal static string AdminPassword = "";
         private static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
-        internal static MainWindow MainWindow { get; set; }
 
         #region Navigation
 
-        internal static double CurrentPageWidth { get; set; }
-        internal static double CurrentPageHeight { get; set; }
-
-        /// <summary>Calculates the scale needed for the MainWindow.</summary>
-        /// <param name="grid">Grid of current Page</param>
-        internal static void CalculateScale(Grid grid)
-        {
-            CurrentPageHeight = grid.ActualHeight;
-            CurrentPageWidth = grid.ActualWidth;
-            MainWindow.CalculateScale();
-
-            Page newPage = MainWindow.MainFrame.Content as Page;
-            if (newPage != null)
-                newPage.Style = (Style)MainWindow.FindResource("PageStyle");
-        }
+        internal static MainWindow MainWindow { get; set; }
 
         /// <summary>Navigates to selected Page.</summary>
         /// <param name="newPage">Page to navigate to.</param>
@@ -64,7 +49,7 @@ namespace Assassin.Classes
         #endregion Navigation
 
         /// <summary>Loads almost everything necessary for the game to function correctly.</summary>
-        internal static async void LoadAll()
+        internal static async Task LoadAll()
         {
             DatabaseInteraction.VerifyDatabaseIntegrity();
             AdminPassword = await DatabaseInteraction.LoadAdminPassword();

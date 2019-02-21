@@ -99,7 +99,6 @@ namespace Assassin.Pages.City
 
         private void GamePage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            GameState.CalculateScale(Grid);
             DataContext = GameState.CurrentUser;
         }
 

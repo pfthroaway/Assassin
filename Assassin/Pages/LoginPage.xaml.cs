@@ -60,8 +60,6 @@ namespace Assassin.Pages
 
         private void PswdPassword_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

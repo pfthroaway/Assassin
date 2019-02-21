@@ -127,7 +127,6 @@ namespace Assassin.Pages.Shopping
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            GameState.CalculateScale(Grid);
             UpdateBinding();
             CheckSell();
         }

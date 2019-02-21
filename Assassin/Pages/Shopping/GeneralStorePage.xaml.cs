@@ -20,7 +20,5 @@ namespace Assassin.Pages.Shopping
     public partial class GeneralStorePage : Page
     {
         public GeneralStorePage() => InitializeComponent();
-
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
     }
 }

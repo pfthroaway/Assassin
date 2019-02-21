@@ -6,7 +6,5 @@ namespace Assassin.Pages.Shopping
     public partial class PubPage
     {
         public PubPage() => InitializeComponent();
-
-        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e) => GameState.CalculateScale(Grid);
     }
 }

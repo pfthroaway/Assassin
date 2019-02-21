@@ -55,7 +55,6 @@ namespace Assassin.Pages.Player
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            GameState.CalculateScale(Grid);
             DataContext = GameState.CurrentUser;
             CheckButtons();
         }

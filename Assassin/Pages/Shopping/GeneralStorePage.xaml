@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
-      Title="The General Store"
-      Loaded="Page_Loaded">
+      Title="The General Store">
     <Grid x:Name="Grid" Margin="10">
     </Grid>
 </Page>

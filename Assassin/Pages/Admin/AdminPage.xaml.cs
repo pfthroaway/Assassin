@@ -24,8 +24,6 @@ namespace Assassin.Pages.Admin
 
         public AdminPage() => InitializeComponent();
 
-        private void AdminPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

@@ -71,7 +71,6 @@ namespace Assassin.Pages.Bank
 
         private void BankPage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            GameState.CalculateScale(Grid);
             DataContext = GameState.CurrentUser;
             CheckButtons();
         }

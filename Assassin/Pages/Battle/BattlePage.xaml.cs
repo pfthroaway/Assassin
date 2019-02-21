@@ -617,7 +617,6 @@ namespace Assassin.Pages.Battle
 
         private void BattlePage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            GameState.CalculateScale(Grid);
             BindLabels();
         }
 

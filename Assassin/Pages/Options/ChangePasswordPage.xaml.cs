@@ -51,10 +51,6 @@ namespace Assassin.Pages.Options
 
         private void Pswd_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 
-        private void HeroChangePasswordPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

@@ -45,8 +45,6 @@ namespace Assassin.Pages.Admin
             PswdAdmin.Focus();
         }
 
-        private void AdminLoginPage_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         private void pswdAdmin_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 
         private void pswdAdmin_PasswordChanged(object sender, RoutedEventArgs e) => BtnSubmit.IsEnabled =
