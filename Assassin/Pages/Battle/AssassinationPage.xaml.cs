@@ -43,7 +43,7 @@ namespace Assassin.Pages.Battle
             {
                 GameState.CurrentUser.Hunger++;
                 GameState.CurrentUser.Thirst++;
-
+                BtnAssassinate.IsEnabled = true;
                 GameState.CurrentEnemy = GameState.SelectEnemy();
 
                 Functions.AddTextToTextBox(TxtAssassinate, "You spot a " + GameState.CurrentEnemy + ".");
@@ -52,23 +52,24 @@ namespace Assassin.Pages.Battle
 
         #region Button-Click Methods
 
-        private void BtnAssassinate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new BattlePage());
+        private void BtnAssassinate_Click(object sender, RoutedEventArgs e)
+        {
+            BtnAssassinate.IsEnabled = false;
+            GameState.Navigate(new BattlePage());
+        }
 
         private void BtnNewVictim_Click(object sender, RoutedEventArgs e) => GetEnemy();
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e) => ClosePage();
+        private void BtnBack_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
 
         #endregion Button-Click Methods
 
         #region Page-Manipulation Methods
 
-        /// <summary>Closes the Page.</summary>
-        private void ClosePage() => GameState.GoBack();
-
         public AssassinationPage()
         {
             InitializeComponent();
-            TxtAssassinate.Text = "You go out in search of prey...";
+            TxtAssassinate.Text = "Thou dost go out in search of prey...";
             GetEnemy();
         }
 

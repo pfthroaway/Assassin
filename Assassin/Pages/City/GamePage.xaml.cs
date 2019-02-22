@@ -75,11 +75,7 @@ namespace Assassin.Pages.City
 
         private void BtnRob_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Fix Robbing
-            //BattlePage battlePage = new BattlePage();
-            //battlePage.RefToGamePage = this;
-            //battlePage.Show();
-            //this.Visibility = Visibility.Hidden;
+            //TODO Implement Robbing
         }
 
         private void BtnAssassinate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AssassinationPage());

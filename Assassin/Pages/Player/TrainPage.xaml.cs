@@ -7,7 +7,6 @@ namespace Assassin.Pages.Player
     /// <summary>Interaction logic for TrainPage.xaml</summary>
     public partial class TrainPage
     {
-        //TODO Fix training to not exceed 90.
         private User _originalUser = new User();
 
         #region Button-Manipulation Methods
@@ -18,17 +17,16 @@ namespace Assassin.Pages.Player
             BtnTrain.IsEnabled = GameState.CurrentUser.SkillPoints != _originalUser.SkillPoints;
             if (GameState.CurrentUser.SkillPoints > 0)
             {
-                EnablePlusButtons();
+                TogglePlusButtons(true);
                 if (GameState.CurrentUser.SkillPoints == _originalUser.SkillPoints)
                     DisableMinusButtons();
             }
             else
-                DisablePlusButtons();
+                TogglePlusButtons(false);
         }
 
         /// <summary>Disable Minus buttons.</summary>
         private void DisableMinusButtons()
-
         {
             BtnEnduranceMinus.IsEnabled = false;
             BtnLightWeaponsMinus.IsEnabled = false;
@@ -39,28 +37,17 @@ namespace Assassin.Pages.Player
             BtnStealthMinus.IsEnabled = false;
         }
 
-        /// <summary>Disables Plus buttons.</summary>
-        private void DisablePlusButtons()
+        /// <summary>Toggles the Plus buttons.</summary>
+        /// <param name="enabled">Should the Plus buttons be enabled?</param>
+        private void TogglePlusButtons(bool enabled)
         {
-            BtnEndurancePlus.IsEnabled = false;
-            BtnLightWeaponsPlus.IsEnabled = false;
-            BtnHeavyWeaponsPlus.IsEnabled = false;
-            BtnTwoHandedWeaponsPlus.IsEnabled = false;
-            BtnBlockingPlus.IsEnabled = false;
-            BtnSlippingPlus.IsEnabled = false;
-            BtnStealthPlus.IsEnabled = false;
-        }
-
-        /// <summary>Enables Plus buttons.</summary>
-        private void EnablePlusButtons()
-        {
-            BtnEndurancePlus.IsEnabled = true;
-            BtnLightWeaponsPlus.IsEnabled = true;
-            BtnHeavyWeaponsPlus.IsEnabled = true;
-            BtnTwoHandedWeaponsPlus.IsEnabled = true;
-            BtnBlockingPlus.IsEnabled = true;
-            BtnSlippingPlus.IsEnabled = true;
-            BtnStealthPlus.IsEnabled = true;
+            BtnEndurancePlus.IsEnabled = enabled;
+            BtnLightWeaponsPlus.IsEnabled = enabled && GameState.CurrentUser.LightWeaponSkill < 90;
+            BtnHeavyWeaponsPlus.IsEnabled = enabled && GameState.CurrentUser.HeavyWeaponSkill < 90;
+            BtnTwoHandedWeaponsPlus.IsEnabled = enabled && GameState.CurrentUser.TwoHandedWeaponSkill < 90;
+            BtnBlockingPlus.IsEnabled = enabled && GameState.CurrentUser.Blocking < 90;
+            BtnSlippingPlus.IsEnabled = enabled && GameState.CurrentUser.Slipping < 90;
+            BtnStealthPlus.IsEnabled = enabled && GameState.CurrentUser.Stealth < 90;
         }
 
         #endregion Button-Manipulation Methods
@@ -98,8 +85,7 @@ namespace Assassin.Pages.Player
             GameState.CurrentUser.SkillPoints++;
             GameState.CurrentUser.CurrentEndurance -= 20;
             GameState.CurrentUser.MaximumEndurance -= 20;
-            if (GameState.CurrentUser.MaximumEndurance == _originalUser.MaximumEndurance)
-                BtnEnduranceMinus.IsEnabled = false;
+            BtnEnduranceMinus.IsEnabled = GameState.CurrentUser.MaximumEndurance != _originalUser.MaximumEndurance;
             CheckButtons();
         }
 
@@ -115,8 +101,7 @@ namespace Assassin.Pages.Player
         private void BtnLightWeaponsMinus_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.LightWeaponSkill = DecreaseAttribute(GameState.CurrentUser.LightWeaponSkill);
-            if (GameState.CurrentUser.LightWeaponSkill == _originalUser.LightWeaponSkill)
-                BtnLightWeaponsMinus.IsEnabled = false;
+            BtnLightWeaponsMinus.IsEnabled = GameState.CurrentUser.LightWeaponSkill != _originalUser.LightWeaponSkill;
         }
 
         private void BtnLightWeaponsPlus_Click(object sender, RoutedEventArgs e)
@@ -128,8 +113,7 @@ namespace Assassin.Pages.Player
         private void BtnHeavyWeaponsMinus_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.HeavyWeaponSkill = DecreaseAttribute(GameState.CurrentUser.HeavyWeaponSkill);
-            if (GameState.CurrentUser.HeavyWeaponSkill == _originalUser.HeavyWeaponSkill)
-                BtnHeavyWeaponsMinus.IsEnabled = false;
+            BtnHeavyWeaponsMinus.IsEnabled = GameState.CurrentUser.HeavyWeaponSkill != _originalUser.HeavyWeaponSkill;
         }
 
         private void BtnHeavyWeaponsPlus_Click(object sender, RoutedEventArgs e)
@@ -141,8 +125,7 @@ namespace Assassin.Pages.Player
         private void BtnTwoHandedWeaponsMinus_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.TwoHandedWeaponSkill = DecreaseAttribute(GameState.CurrentUser.TwoHandedWeaponSkill);
-            if (GameState.CurrentUser.TwoHandedWeaponSkill == _originalUser.TwoHandedWeaponSkill)
-                BtnTwoHandedWeaponsMinus.IsEnabled = false;
+            BtnTwoHandedWeaponsMinus.IsEnabled = GameState.CurrentUser.TwoHandedWeaponSkill != _originalUser.TwoHandedWeaponSkill;
         }
 
         private void BtnTwoHandedWeaponsPlus_Click(object sender, RoutedEventArgs e)
@@ -154,8 +137,7 @@ namespace Assassin.Pages.Player
         private void BtnBlockingMinus_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.Blocking = DecreaseAttribute(GameState.CurrentUser.Blocking);
-            if (GameState.CurrentUser.Blocking == _originalUser.Blocking)
-                BtnBlockingMinus.IsEnabled = false;
+            BtnSlippingMinus.IsEnabled = GameState.CurrentUser.Blocking != _originalUser.Blocking;
         }
 
         private void BtnBlockingPlus_Click(object sender, RoutedEventArgs e)
@@ -167,8 +149,7 @@ namespace Assassin.Pages.Player
         private void BtnSlippingMinus_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.Slipping = DecreaseAttribute(GameState.CurrentUser.Slipping);
-            if (GameState.CurrentUser.Slipping == _originalUser.Slipping)
-                BtnSlippingMinus.IsEnabled = false;
+            BtnSlippingMinus.IsEnabled = GameState.CurrentUser.Slipping != _originalUser.Slipping;
         }
 
         private void BtnSlippingPlus_Click(object sender, RoutedEventArgs e)
@@ -180,8 +161,7 @@ namespace Assassin.Pages.Player
         private void BtnStealthMinus_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.Stealth = DecreaseAttribute(GameState.CurrentUser.Stealth);
-            if (GameState.CurrentUser.Stealth == _originalUser.Stealth)
-                BtnStealthMinus.IsEnabled = false;
+            BtnStealthMinus.IsEnabled = GameState.CurrentUser.Stealth != _originalUser.Stealth;
         }
 
         private void BtnStealthPlus_Click(object sender, RoutedEventArgs e)

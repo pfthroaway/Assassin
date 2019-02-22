@@ -39,9 +39,6 @@ namespace Assassin.Classes.Entities
             set { _skillPoints = value; OnPropertyChanged("SkillPoints"); OnPropertyChanged("SkillPointsToString"); }
         }
 
-        /// <summary><see cref="User"/>'s available skill points to spend, formatted</summary>
-        public string SkillPointsToString => SkillPoints.ToString("N0") + " Skill Points Available";
-
         /// <summary>Is the User alive?</summary>
         public bool Alive
         {
@@ -322,6 +319,9 @@ namespace Assassin.Classes.Entities
                 return new Weapon();
             }
         }
+
+        /// <summary><see cref="User"/>'s available skill points to spend, formatted</summary>
+        public string SkillPointsToString => SkillPoints.ToString("N0") + " Skill Points Available";
 
         #endregion Helper Properties
 

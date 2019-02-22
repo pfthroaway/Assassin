@@ -13,8 +13,11 @@ namespace Assassin.Pages.Options
         private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             if (PBKDF2.ValidatePassword(PswdCurrentPassword.Password, GameState.CurrentUser.Password))
+            {
                 if (PswdNewPassword.Password.Length >= 4 && PswdConfirmPassword.Password.Length >= 4)
+                {
                     if (PswdNewPassword.Password == PswdConfirmPassword.Password)
+                    {
                         if (PswdCurrentPassword.Password != PswdNewPassword.Password)
                         {
                             GameState.CurrentUser.Password = PBKDF2.HashPassword(PswdNewPassword.Password);
@@ -24,10 +27,13 @@ namespace Assassin.Pages.Options
                         }
                         else
                             GameState.DisplayNotification("The new password can't be the same as the current password.", "Assassin");
+                    }
                     else
                         GameState.DisplayNotification("Please ensure the new passwords match.", "Assassin");
+                }
                 else
                     GameState.DisplayNotification("Your password must be at least 4 characters.", "Assassin");
+            }
             else
                 GameState.DisplayNotification("Invalid current password.", "Assassin");
         }

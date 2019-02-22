@@ -29,7 +29,7 @@ namespace Assassin.Pages.Battle
         private void CheckButtons()
         {
             if (PlayerStamina > 0)
-                EnableButtons();
+                ToggleButtons(true);
             else
                 BtnDefend.IsEnabled = true;
         }
@@ -134,27 +134,17 @@ namespace Assassin.Pages.Battle
 
         #region Button Manipulation
 
-        /// <summary>Disable all the buttons.</summary>
-        private void DisableButtons()
+        /// <summary>Toggles all the battle Buttons.</summary>
+        /// <param name="enabled">Should the battle Buttons be enabled?</param>
+        private void ToggleButtons(bool enabled)
         {
-            BtnAttack.IsEnabled = false;
-            BtnBerserk.IsEnabled = false;
-            BtnFlee.IsEnabled = false;
-            BtnLunge.IsEnabled = false;
-            BtnParry.IsEnabled = false;
-            BtnQuickCombat.IsEnabled = false;
-        }
-
-        /// <summary>Enable all the buttons.</summary>
-        private void EnableButtons()
-        {
-            BtnAttack.IsEnabled = true;
-            BtnFlee.IsEnabled = true;
-            BtnLunge.IsEnabled = true;
-            BtnParry.IsEnabled = true;
-            BtnDefend.IsEnabled = true;
-            BtnQuickCombat.IsEnabled = true;
-            BtnBerserk.IsEnabled = PlayerStamina >= 2;
+            BtnAttack.IsEnabled = enabled;
+            BtnBerserk.IsEnabled = enabled && PlayerStamina >= 2;
+            BtnDefend.IsEnabled = enabled;
+            BtnFlee.IsEnabled = enabled;
+            BtnLunge.IsEnabled = enabled;
+            BtnParry.IsEnabled = enabled;
+            BtnQuickCombat.IsEnabled = enabled;
         }
 
         #endregion Button Manipulation
@@ -178,8 +168,7 @@ namespace Assassin.Pages.Battle
             int enemyFirst = Functions.GenerateRandomNumber(1, 100);
             _enemyStance = EnemyStance();
 
-            DisableButtons();
-            BtnDefend.IsEnabled = false;
+            ToggleButtons(false);
 
             if (playerFirst >= enemyFirst) //if player goes first
             {
@@ -479,9 +468,8 @@ namespace Assassin.Pages.Battle
         /// <summary>Ends the battle.</summary>
         private void EndBattle()
         {
-            DisableButtons();
+            ToggleButtons(false);
             BtnInventory.IsEnabled = false;
-            BtnDefend.IsEnabled = false;
             _battleOver = true;
             BtnExit.IsEnabled = true;
         }
