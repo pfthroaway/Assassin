@@ -7,6 +7,7 @@ namespace Assassin.Pages.Player
     /// <summary>Interaction logic for TrainPage.xaml</summary>
     public partial class TrainPage
     {
+        //TODO Fix training to not exceed 90.
         private User _originalUser = new User();
 
         #region Button-Manipulation Methods

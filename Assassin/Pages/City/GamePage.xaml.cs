@@ -1,9 +1,9 @@
 ﻿using Assassin.Classes;
+using Assassin.Classes.Entities;
 using Assassin.Pages.Bank;
 using Assassin.Pages.Battle;
 using Assassin.Pages.Player;
 using Assassin.Pages.Shopping;
-using Extensions;
 using System.ComponentModel;
 using System.Windows;
 
@@ -12,6 +12,7 @@ namespace Assassin.Pages.City
     /// <summary>Interaction logic for GamePage.xaml</summary>
     public partial class GamePage : INotifyPropertyChanged
     {
+        /// <summary>If the character is newly created, display this text.</summary>
         internal void NewUser() => TxtGame.Text =
                 $"Creare An Vita, {GameState.CurrentUser.Name}!\n\nYou enter the city of thieves to take your place among the legends!";
 
@@ -23,52 +24,58 @@ namespace Assassin.Pages.City
 
         #endregion Data-Binding
 
-        /// <summary>Adds text to the TxtGame Textbox.</summary>
-        /// <param name="newText">Text to be added</param>
-        internal void AddTextTt(string newText) => Functions.AddTextToTextBox(TxtGame, newText);
-
         #region Button-Click Methods
 
         private void BtnExit_Click(object sender, RoutedEventArgs e) => ClosePage();
 
         private void BtnMessages_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement messages.
         }
 
         private void BtnOptions_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Options.
         }
 
         private void BtnPub_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Pub
         }
 
         private void BtnInn_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Inn
         }
 
         private void BtnJail_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Jail
         }
 
         private void BtnGuild_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Guilds.
         }
 
         private void BtnOthers_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Others
         }
 
         private void BtnMystic_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Mystic
         }
 
         private void BtnChapel_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Chapel
         }
 
         private void BtnRob_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Fix Robbing
             //BattlePage battlePage = new BattlePage();
             //battlePage.RefToGamePage = this;
             //battlePage.Show();
@@ -89,6 +96,7 @@ namespace Assassin.Pages.City
 
         #region Page-Manipulation Methods
 
+        /// <summary>Closes the Page and saves the current <see cref="User"/>.</summary>
         private async void ClosePage()
         {
             GameState.GoBack();
@@ -97,10 +105,7 @@ namespace Assassin.Pages.City
 
         public GamePage() => InitializeComponent();
 
-        private void GamePage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            DataContext = GameState.CurrentUser;
-        }
+        private void GamePage_OnLoaded(object sender, RoutedEventArgs e) => DataContext = GameState.CurrentUser;
 
         #endregion Page-Manipulation Methods
     }

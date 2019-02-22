@@ -7,7 +7,7 @@
       Title="Battle"
       Loaded="BattlePage_OnLoaded"
       Style="{StaticResource PageStyle}">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

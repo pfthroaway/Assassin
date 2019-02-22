@@ -60,10 +60,10 @@ namespace Assassin.Classes.Items
         /// <summary>Initializes a new instance of the <see cref="Armor"/> class.</summary>
         internal Armor()
         {
-            //Name = "Clothes";
-            //Defense = 4;
-            //Value = 0;
-            //Hidden = false;
+            Name = "Clothes";
+            Defense = 4;
+            Value = 0;
+            Hidden = false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Armor"/> class using Property values.</summary>

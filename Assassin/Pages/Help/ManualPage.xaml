@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Style="{StaticResource PageStyle}"
         Title="Manual">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

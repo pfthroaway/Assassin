@@ -7,7 +7,7 @@
       Title="Weapons 'R' Us"
       Style="{StaticResource PageStyle}"
       Loaded="Page_Loaded">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -38,12 +38,12 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,10">
-            <RadioButton x:Name="RadLight" Content="Light" Checked="RadLight_Checked" Margin="0,0,20,0" />
-            <RadioButton x:Name="RadHeavy" Content="Heavy" Checked="RadHeavy_Checked" Margin="0,0,20,0" />
+            <RadioButton x:Name="RadLight" Content="Light" Checked="RadLight_Checked" Margin="0,10,0,10" />
+            <RadioButton x:Name="RadHeavy" Content="Heavy" Checked="RadHeavy_Checked" Margin="0,0,0,10" />
             <RadioButton x:Name="RadTwoH" Content="Two-Handed" Checked="RadTwoH_Checked" />
         </StackPanel>
         <TextBlock x:Name="LblGold" Grid.Column="0" Grid.Row="1" Text="{Binding Path=GoldOnHandToStringWithText}" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,20" />
-        <TextBox x:Name="TxtWeapon" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Width="456" Height="245" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtWeapon" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Width="456" Height="245" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10" />
         <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" Width="145" Content="_Back" HorizontalAlignment="Center" IsCancel="True" Click="BtnBack_Click" />
     </Grid>
 </Page>

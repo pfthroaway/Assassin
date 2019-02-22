@@ -6,6 +6,6 @@
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
       Title="The General Store">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
     </Grid>
 </Page>

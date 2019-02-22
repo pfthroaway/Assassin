@@ -73,7 +73,7 @@ namespace Assassin.Classes.Entities
         /// <summary>Amount of gold the Entity has in their possession, formatted.</summary>
         public string GoldOnHandToString => GoldOnHand.ToString("N0");
 
-        /// <summary>Amount of gold the Entity has in their possession, formatted.</summary>
+        /// <summary>Amount of gold the Entity has in their possession, formatted, with preceding text.</summary>
         public string GoldOnHandToStringWithText => $"Gold on Hand: {GoldOnHandToString}";
 
         /// <summary>Entity's skill at blocking.</summary>

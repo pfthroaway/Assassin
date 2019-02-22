@@ -159,7 +159,7 @@ namespace Assassin.Classes.Entities
         public int Lockpicks
         {
             get => _lockpicks;
-            set { _lockpicks = value; OnPropertyChanged("Lockpicks"); }
+            set { _lockpicks = value; OnPropertyChanged("Lockpicks"); OnPropertyChanged("LockpicksToString"); OnPropertyChanged("LockpicksToStringWithText"); }
         }
 
         /// <summary>Does the <see cref="User"/> have a shovel?</summary>
@@ -195,7 +195,7 @@ namespace Assassin.Classes.Entities
         public int GoldOnLoan
         {
             get => _goldOnLoan;
-            set { _goldOnLoan = value; OnPropertyChanged("GoldOnLoan"); OnPropertyChanged("LoanAvailable"); OnPropertyChanged("LoanAvailableToString"); }
+            set { _goldOnLoan = value; OnPropertyChanged("GoldOnLoan"); OnPropertyChanged("GoldOnLoanToString"); OnPropertyChanged("LoanAvailable"); OnPropertyChanged("LoanAvailableToString"); }
         }
 
         /// <summary><see cref="User"/>'s skill with light weapons.</summary>
@@ -276,6 +276,12 @@ namespace Assassin.Classes.Entities
 
         /// <summary>Amount of gold the <see cref="User"/> can take as a loan from the bank, formatted.</summary>
         public string LoanAvailableToString => (LoanAvailable - GoldOnLoan).ToString("N0");
+
+        /// <summary>Amount of lockpicks a <see cref="User"/> has, formatted.</summary>
+        public string LockpicksToString => Lockpicks.ToString("N0");
+
+        /// <summary>Amount of lockpicks a <see cref="User"/> has, formatted, with preceding text.</summary>
+        public string LockpicksToStringWithText => $"Lockpicks on Hand: {LockpicksToString}";
 
         /// <summary><see cref="User"/>'s skill with their currently equipped weapon.</summary>
         public int SelectedWeaponSkill

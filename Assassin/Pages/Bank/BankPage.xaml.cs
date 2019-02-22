@@ -10,18 +10,16 @@ namespace Assassin.Pages.Bank
     {
         #region Data-Binding
 
+        /// <summary>Event that executes if a Property value has changed so that the UI can properly be updated.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this,
-            new PropertyChangedEventArgs(property));
+        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
+        /// <param name="property">Name of Property whose value has changed</param>
+        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 
         #region Display Manipulation
-
-        /// <summary>Adds text to the TxtBank Textbox.</summary>
-        /// <param name="newText">Text to be added</param>
-        internal void AddTextTt(string newText) => Functions.AddTextToTextBox(TxtBank, newText);
 
         /// <summary>Checks what buttons should be enabled.</summary>
         internal void CheckButtons()
@@ -39,6 +37,7 @@ namespace Assassin.Pages.Bank
         {
             BankDialogPage bankDialogPage = new BankDialogPage();
             bankDialogPage.LoadPage(maximum, type);
+            bankDialogPage.RefToBankPage = this;
             GameState.Navigate(bankDialogPage);
         }
 
@@ -67,9 +66,14 @@ namespace Assassin.Pages.Bank
             await GameState.SaveUser(GameState.CurrentUser);
         }
 
-        public BankPage() => InitializeComponent();
+        public BankPage()
+        {
+            InitializeComponent();
+            TxtBank.Text = "You enter the bank. The teller greets you.\n\n" +
+                "Welcome to The Bank, the only secure place to store gold in the city!";
+        }
 
-        private void BankPage_OnLoaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             DataContext = GameState.CurrentUser;
             CheckButtons();

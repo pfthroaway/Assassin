@@ -1,4 +1,5 @@
 ﻿using Assassin.Classes;
+using Assassin.Classes.Entities;
 using Assassin.Classes.Enums;
 using Assassin.Classes.Items;
 using Extensions;
@@ -30,7 +31,7 @@ namespace Assassin.Pages.Shopping
             }
         }
 
-        /// <summary>The <see cref="Weapon"/> the <see cref="Classes.Entities.User"/> currently has equipped of the selected type.</summary>
+        /// <summary>The <see cref="Weapon"/> the <see cref="User"/> currently has equipped of the selected type.</summary>
         public Weapon CurrentWeapon
         {
             get => _currentWeapon; set
@@ -49,6 +50,7 @@ namespace Assassin.Pages.Shopping
 
         protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
+        /// <summary>Updates the Page's binding.</summary>
         private void UpdateBinding()
         {
             DataContext = GameState.CurrentUser;
@@ -56,10 +58,6 @@ namespace Assassin.Pages.Shopping
         }
 
         #endregion Data-Binding
-
-        /// <summary>Adds text to the TextBox.</summary>
-        /// <param name="text">Text to be added</param>
-        private void AddTextTt(string text) => Functions.AddTextToTextBox(TxtWeapon, text);
 
         #region Purchase/Sell
 
@@ -70,12 +68,12 @@ namespace Assassin.Pages.Shopping
         private void CheckSell() => BtnSell.IsEnabled = CurrentWeapon.SellValue > 0;
 
         /// <summary>Asks if the current <see cref="User"/>'s wants to sell their <see cref="Weapon"/>.</summary>
-        private bool AskSell() => GameState.YesNoNotification($"Art thou sure thou want to sell thy {CurrentWeapon} for { CurrentWeapon.SellValueToString} gold?", "Assassin");
+        private bool AskSell() => GameState.YesNoNotification($"Art thou sure thou want to sell thy {CurrentWeapon.Name} for { CurrentWeapon.SellValueToString} gold?", "Assassin");
 
         /// <summary>Sells the current <see cref="User"/>'s <see cref="Weapon"/>.</summary>
         private void Sell()
         {
-            AddTextTt($"Thou hast sold thy {CurrentWeapon} for {CurrentWeapon.SellValueToString} gold.");
+            Functions.AddTextToTextBox(TxtWeapon, $"Thou hast sold thy {CurrentWeapon.Name} for {CurrentWeapon.SellValueToString} gold.");
             GameState.CurrentUser.GoldOnHand += CurrentWeapon.SellValue;
             switch (CurrentWeapon.Type)
             {
@@ -102,7 +100,7 @@ namespace Assassin.Pages.Shopping
         /// <summary>Purchases the selected <see cref="Weapon"/>.</summary>
         private void Purchase()
         {
-            AddTextTt($"Thou hast purchased the {SelectedWeapon} for {SelectedWeapon.Value} gold.");
+            Functions.AddTextToTextBox(TxtWeapon, $"Thou hast purchased the {SelectedWeapon.Name} for {SelectedWeapon.ValueToString} gold.");
             GameState.CurrentUser.GoldOnHand -= SelectedWeapon.Value;
 
             switch (SelectedWeapon.Type)
@@ -132,29 +130,35 @@ namespace Assassin.Pages.Shopping
 
         #region Checked-Changed
 
-        private void RadLight_Checked(object sender, RoutedEventArgs e)
+        /// <summary>Checks which <see cref="Weapon"/> type to be displayed for purchase when a radio button's checked status changes.</summary>
+        /// <param name="type"><see cref="WeaponType"/> to determine which <see cref="Weapon"/> type to display.</param>
+        private void CheckedChanged(WeaponType type)
         {
-            _weaponsList = GameState.AllWeapons.FindAll(wpn => wpn.Type == WeaponType.Light && !wpn.Hidden);
+            _weaponsList = GameState.AllWeapons.FindAll(wpn => wpn.Type == type && !wpn.Hidden);
             LstWeapon.SelectedIndex = 0;
-            CurrentWeapon = GameState.CurrentUser.LightWeapon;
+            switch (type)
+            {
+                case (WeaponType.Light):
+                    CurrentWeapon = GameState.CurrentUser.LightWeapon;
+                    break;
+
+                case (WeaponType.Heavy):
+                    CurrentWeapon = GameState.CurrentUser.HeavyWeapon;
+                    break;
+
+                case (WeaponType.TwoHanded):
+                    CurrentWeapon = GameState.CurrentUser.TwoHandedWeapon;
+                    break;
+            }
+
             UpdateBinding();
         }
 
-        private void RadHeavy_Checked(object sender, RoutedEventArgs e)
-        {
-            _weaponsList = GameState.AllWeapons.FindAll(wpn => wpn.Type == WeaponType.Heavy && !wpn.Hidden);
-            CurrentWeapon = GameState.CurrentUser.HeavyWeapon;
-            UpdateBinding();
-            LstWeapon.SelectedIndex = 0;
-        }
+        private void RadLight_Checked(object sender, RoutedEventArgs e) => CheckedChanged(WeaponType.Light);
 
-        private void RadTwoH_Checked(object sender, RoutedEventArgs e)
-        {
-            _weaponsList = GameState.AllWeapons.FindAll(wpn => wpn.Type == WeaponType.TwoHanded && !wpn.Hidden);
-            CurrentWeapon = GameState.CurrentUser.TwoHandedWeapon;
-            UpdateBinding();
-            LstWeapon.SelectedIndex = 0;
-        }
+        private void RadHeavy_Checked(object sender, RoutedEventArgs e) => CheckedChanged(WeaponType.Heavy);
+
+        private void RadTwoH_Checked(object sender, RoutedEventArgs e) => CheckedChanged(WeaponType.TwoHanded);
 
         #endregion Checked-Changed
 
@@ -176,7 +180,7 @@ namespace Assassin.Pages.Shopping
 
         private void BtnSell_Click(object sender, RoutedEventArgs e)
         {
-            if (GameState.YesNoNotification($"Art thou sure thou want to sell thy {CurrentWeapon} for {CurrentWeapon.SellValue} gold?", "Assassin"))
+            if (AskSell())
                 Sell();
         }
 
@@ -199,7 +203,12 @@ namespace Assassin.Pages.Shopping
 
         #region Page-Manipulation Methods
 
-        public WeaponsRUsPage() => InitializeComponent();
+        public WeaponsRUsPage()
+        {
+            InitializeComponent();
+            TxtWeapon.Text = "Thou hast entered Weapons 'R Us. The weaponsmith greets you.\n\n" +
+                "Weapons 'R Us is the name, tools of destruction is our game.";
+        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

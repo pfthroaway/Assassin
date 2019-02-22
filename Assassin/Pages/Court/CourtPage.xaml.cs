@@ -54,7 +54,7 @@ namespace Assassin.Pages.Court
             _courtText.Add("Defense. . .");
             int guilty = Functions.GenerateRandomNumber(1, 100);
             _courtText.Add("The judge finds you. . .");
-            if (guilty <= 100 - GameState.CurrentUser.Level * 5)
+            if (guilty <= 100 - (GameState.CurrentUser.Level * 5))
                 _courtText.Add("innocent!");
             else
             {

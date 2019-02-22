@@ -1,8 +1,6 @@
 ﻿using Assassin.Classes;
 using Assassin.Pages.Admin;
 using Assassin.Pages.Help;
-using System;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Assassin.Pages
@@ -12,7 +10,7 @@ namespace Assassin.Pages
     {
         #region Menu Click Methods
 
-        private void MnuFileExit_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
+        private void MnuFileExit_Click(object sender, RoutedEventArgs e) => Close();
 
         private void MnuAdmin_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AdminLoginPage());
 

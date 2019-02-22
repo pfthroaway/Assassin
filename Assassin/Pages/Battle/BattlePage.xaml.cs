@@ -615,10 +615,7 @@ namespace Assassin.Pages.Battle
 
         public BattlePage() => InitializeComponent();
 
-        private void BattlePage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            BindLabels();
-        }
+        private void BattlePage_OnLoaded(object sender, RoutedEventArgs e) => BindLabels();
 
         #endregion Page-Manipulation Methods
     }

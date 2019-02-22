@@ -13,7 +13,7 @@ namespace Assassin.Pages.Bank
         private int _maximum, _textAmount;
         private string _type = "";
 
-        internal BankPage RefToBankPage { private get; set; }
+        internal BankPage RefToBankPage { get; set; }
 
         /// <summary>Load the necessary data for the Page.</summary>
         /// <param name="maximum">Maximum amount of gold to be used.</param>
@@ -71,7 +71,7 @@ namespace Assassin.Pages.Bank
         /// <summary>Take out a loan.</summary>
         private void TakeOutLoan()
         {
-            GameState.CurrentUser.GoldOnLoan += _textAmount + _textAmount / 20;
+            GameState.CurrentUser.GoldOnLoan += _textAmount + (_textAmount / 20);
             GameState.CurrentUser.GoldOnHand += _textAmount;
             ClosePage($"You take out a loan for {_textAmount:N0} gold.");
         }
@@ -137,8 +137,7 @@ namespace Assassin.Pages.Bank
         private void ClosePage(string text)
         {
             if (text.Length > 0)
-                RefToBankPage.AddTextTt(text);
-            RefToBankPage.CheckButtons();
+                Functions.AddTextToTextBox(RefToBankPage.TxtBank, text);
             GameState.GoBack();
         }
 

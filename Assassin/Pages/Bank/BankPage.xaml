@@ -5,8 +5,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="Bank"
+      Loaded="Page_Loaded"
       Style="{StaticResource PageStyle}">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -30,25 +31,25 @@
             <TextBlock Text="Gold On Hand" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="3" BorderThickness="1,1,1,0">
-            <TextBlock x:Name="LblGoldOnHand" Text="{Binding Path=GoldOnHandToString, Mode=OneWay}" VerticalAlignment="Center" TextAlignment="Center" />
+            <TextBlock Text="{Binding Path=GoldOnHandToString}" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="4" BorderThickness="1,1,0,0">
             <TextBlock Text="Gold In Bank" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="4" BorderThickness="1,1,1,0">
-            <TextBlock x:Name="LblGoldInBank" Text="{Binding Path=GoldInBankToString, Mode=OneWay}" VerticalAlignment="Center" TextAlignment="Center" />
+            <TextBlock Text="{Binding Path=GoldInBankToString}" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="5" BorderThickness="1,1,0,0">
             <TextBlock Text="Available Loan" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="5" BorderThickness="1,1,1,0">
-            <TextBlock x:Name="LblLoanAvailable" Text="{Binding Path=LoanAvailableToString, Mode=OneWay}" VerticalAlignment="Center" TextAlignment="Center" />
+            <TextBlock Text="{Binding Path=LoanAvailableToString}" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="6" Height="24" VerticalAlignment="Top" BorderThickness="1,1,0,1">
             <TextBlock Text="Loan Owed" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="6" Height="24" VerticalAlignment="Top" BorderThickness="1,1,1,1">
-            <TextBlock x:Name="LblLoanOwed" Text="{Binding Path=GoldOnLoanToString, Mode=OneWay}" VerticalAlignment="Center" TextAlignment="Center" />
+            <TextBlock Text="{Binding Path=GoldOnLoanToString}" VerticalAlignment="Center" TextAlignment="Center" />
         </Border>
         <Button x:Name="BtnBack" Grid.Column="2" Width="145" Grid.Row="5" Grid.RowSpan="2" Content="_Back" Click="BtnBack_Click" VerticalAlignment="Bottom" IsCancel="True" Margin="10,0,0,0" />
     </Grid>

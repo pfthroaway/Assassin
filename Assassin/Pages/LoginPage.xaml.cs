@@ -14,6 +14,7 @@ namespace Assassin.Pages
     {
         #region Login
 
+        /// <summary>Upon successful login, clear TextBoxes and navigate to the main game.</summary>
         internal void Login()
         {
             TxtUsername.Text = "";

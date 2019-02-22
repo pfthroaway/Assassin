@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       Title="Bank"
       Style="{StaticResource PageStyle}">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" x:Name="LblDialog" Height="100" Margin="0,0,0,20" TextWrapping="Wrap" Width="345" />
+        <TextBlock x:Name="LblDialog" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Height="100" Margin="0,0,0,20" TextWrapping="Wrap" Width="345" />
         <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TxtBank" Width="125" Margin="0,0,0,20" TextAlignment="Center" MaxLength="6" PreviewKeyDown="TxtBank_PreviewKeyDown" GotFocus="TxtBank_GotFocus" />
         <Button x:Name="BtnAction" Grid.Column="0" Grid.Row="2" Width="125" Margin="0,0,20,0" Click="BtnAction_Click" IsDefault="True" />
         <Button x:Name="BtnCancel" Grid.Column="1" Grid.Row="2" Width="125" Content="_Cancel" IsCancel="True" Click="BtnCancel_Click" />

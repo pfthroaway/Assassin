@@ -6,6 +6,6 @@
       mc:Ignorable="d"
       Title="MysticPage"
       Style="{StaticResource PageStyle}">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
     </Grid>
 </Page>

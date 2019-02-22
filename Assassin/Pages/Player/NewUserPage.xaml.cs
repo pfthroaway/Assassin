@@ -33,7 +33,7 @@ namespace Assassin.Pages.Player
         {
             if (_createUser.SkillPoints > 0)
             {
-                EnablePlusButtons();
+                TogglePlusButtons(true);
                 BtnCreate.IsEnabled = false;
 
                 if (_createUser.SkillPoints == _defaultUser.SkillPoints)
@@ -46,7 +46,7 @@ namespace Assassin.Pages.Player
             }
             else
             {
-                DisablePlusButtons();
+                TogglePlusButtons(false);
                 BtnReset.IsEnabled = true;
 
                 BtnCreate.IsEnabled = TxtUsername.Text.Length >= 1 && PswdConfirm.Password.Length >= 1 && PswdPassword.Password.Length >= 1;
@@ -66,28 +66,17 @@ namespace Assassin.Pages.Player
             BtnStealthMinus.IsEnabled = false;
         }
 
-        /// <summary>Disables Plus buttons.</summary>
-        private void DisablePlusButtons()
+        /// <summary>Toggles the Plus buttons.</summary>
+        /// <param name="enabled">Should the Plus buttons be enabled?</param>
+        private void TogglePlusButtons(bool enabled)
         {
-            BtnEndurancePlus.IsEnabled = false;
-            BtnLightWeaponsPlus.IsEnabled = false;
-            BtnHeavyWeaponsPlus.IsEnabled = false;
-            BtnTwoHandedWeaponsPlus.IsEnabled = false;
-            BtnBlockingPlus.IsEnabled = false;
-            BtnSlippingPlus.IsEnabled = false;
-            BtnStealthPlus.IsEnabled = false;
-        }
-
-        /// <summary>Enables Plus buttons.</summary>
-        private void EnablePlusButtons()
-        {
-            BtnEndurancePlus.IsEnabled = true;
-            BtnLightWeaponsPlus.IsEnabled = true;
-            BtnHeavyWeaponsPlus.IsEnabled = true;
-            BtnTwoHandedWeaponsPlus.IsEnabled = true;
-            BtnBlockingPlus.IsEnabled = true;
-            BtnSlippingPlus.IsEnabled = true;
-            BtnStealthPlus.IsEnabled = true;
+            BtnEndurancePlus.IsEnabled = enabled;
+            BtnLightWeaponsPlus.IsEnabled = enabled;
+            BtnHeavyWeaponsPlus.IsEnabled = enabled;
+            BtnTwoHandedWeaponsPlus.IsEnabled = enabled;
+            BtnBlockingPlus.IsEnabled = enabled;
+            BtnSlippingPlus.IsEnabled = enabled;
+            BtnStealthPlus.IsEnabled = enabled;
         }
 
         #endregion Button-Manipulation Methods
@@ -125,8 +114,7 @@ namespace Assassin.Pages.Player
             _createUser.SkillPoints++;
             _createUser.CurrentEndurance -= 20;
             _createUser.MaximumEndurance -= 20;
-            if (_createUser.MaximumEndurance == _defaultUser.MaximumEndurance)
-                BtnEnduranceMinus.IsEnabled = false;
+            BtnEnduranceMinus.IsEnabled = _createUser.MaximumEndurance != _defaultUser.MaximumEndurance;
             CheckButtons();
         }
 
@@ -245,7 +233,7 @@ namespace Assassin.Pages.Player
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
             DisableMinusButtons();
-            EnablePlusButtons();
+            TogglePlusButtons(true);
             _createUser = new User(_defaultUser);
             DataContext = _createUser;
             TxtUsername.Clear();

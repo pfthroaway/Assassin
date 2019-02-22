@@ -69,11 +69,11 @@ namespace Assassin.Classes.Items
         /// <summary>Initializes a new instance of the <see cref="Weapon"/> class.</summary>
         public Weapon()
         {
-            //    Name = "Hands";
-            //    Type = WeaponType.Light;
-            //    Damage = 6;
-            //    Value = 0;
-            //    Hidden = true;
+            Name = "Hands";
+            Type = WeaponType.Light;
+            Damage = 6;
+            Value = 0;
+            Hidden = true;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Weapon"/> class using Property values.</summary>

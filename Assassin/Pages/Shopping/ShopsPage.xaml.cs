@@ -1,5 +1,4 @@
 ﻿using Assassin.Classes;
-using System.ComponentModel;
 using System.Windows;
 
 namespace Assassin.Pages.Shopping
@@ -7,8 +6,6 @@ namespace Assassin.Pages.Shopping
     /// <summary>Interaction logic for ShopsPage.xaml</summary>
     public partial class ShopsPage
     {
-        internal City.GamePage RefToGamePage { get; set; }
-
         #region Button-Click Methods
 
         private void BtnArmory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ArmoryPage());

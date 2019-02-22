@@ -7,7 +7,7 @@
    Title="New User"
    Style="{StaticResource PageStyle}"
    Loaded="Page_Loaded">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -29,7 +29,7 @@
         <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Width="300" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="4" Text="Confirm Password:" TextAlignment="Center" Margin="0,0,0,5" />
         <PasswordBox x:Name="PswdConfirm" Grid.Column="0" Grid.Row="5" Width="300" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
-        <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=SkillPointsToString, Mode=OneWay}" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=SkillPointsToString}" Margin="0,0,0,10" />
         <GroupBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Header="Skills" Margin="20,0,0,10">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
@@ -55,7 +55,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Light Weapons" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
                 <Button x:Name="BtnLightWeaponsMinus" Grid.Column="1" Grid.Row="1" Width="30" Height="30" Content="-" Click="BtnLightWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
                 <TextBlock Grid.Column="2" Grid.Row="1" MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding Path=LightWeaponSkill, Mode=TwoWay}" Margin="0,0,10,5" />
-                <Button x:Name="BtnLightWeaponsPlus" Grid.Column="3" Grid.Row="1" Width="30" Height="30" Content="-" Click="BtnLightWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+                <Button x:Name="BtnLightWeaponsPlus" Grid.Column="3" Grid.Row="1" Width="30" Height="30" Content="+" Click="BtnLightWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Heavy Weapons" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
                 <Button x:Name="BtnHeavyWeaponsMinus" Grid.Column="1" Grid.Row="2" Width="30" Height="30" Content="-" Click="BtnHeavyWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
                 <TextBlock Grid.Column="2" Grid.Row="2" MinWidth="60" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=HeavyWeaponSkill, Mode=TwoWay}" Margin="0,0,10,5" />

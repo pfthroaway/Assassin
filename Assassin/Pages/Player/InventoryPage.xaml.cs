@@ -1,5 +1,6 @@
 ﻿using Assassin.Classes;
 using Assassin.Classes.Enums;
+using Assassin.Classes.Items;
 using System.Windows;
 
 namespace Assassin.Pages.Player
@@ -16,8 +17,8 @@ namespace Assassin.Pages.Player
             BtnDrinkPotion.IsEnabled = GameState.CurrentUser.Potion.Name != "None";
         }
 
-        /// <summary>Equips a <see cref="Classes.Items.Weapon"/></summary>
-        /// <param name="type">Weapon type to equip.</param>
+        /// <summary>Equips a <see cref="Weapon"/></summary>
+        /// <param name="type"><see cref="WeaponType"/> to equip.</param>
         private void EquipWeapon(WeaponType type)
         {
             GameState.CurrentUser.CurrentWeapon = type;
