@@ -453,6 +453,7 @@ namespace Assassin.Pages.Battle
 
         #region Flee Attempts
 
+        ///TODO Fix bug in attempting to flee.
         /// <summary>The User attempts to flee.</summary>
         /// <returns>Whether the User successfully fled</returns>
         private bool PlayerFlee() => Functions.GenerateRandomNumber(1, 100) <= GameState.CurrentUser.Slipping;
