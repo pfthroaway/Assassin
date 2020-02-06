@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
       Title="Assassin">
-    <Grid Margin="40">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -21,10 +21,10 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" TextAlignment="Center" Text="Assassin" FontFamily="Viner Hand ITC" FontSize="35" />
         <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Username:" TextAlignment="Center" Margin="0,0,0,5" />
-        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="300" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" MaxLength="20" TextChanged="TxtUsername_TextChanged" PreviewKeyDown="TxtUsername_PreviewKeyDown" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="410" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" MaxLength="20" TextChanged="TxtUsername_TextChanged" PreviewKeyDown="TxtUsername_PreviewKeyDown" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="Password:" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Width="300" HorizontalContentAlignment="Center" BorderThickness="1" PasswordChanged="PswdPassword_TextChanged" GotFocus="PswdPassword_GotFocus" Margin="0,0,0,20" />
-        <Button x:Name="BtnLogin" Grid.Column="0" Grid.Row="5" Width="145" Click="BtnLogin_Click" Content="_Login" IsDefault="True" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False" Margin="0,0,10,0" />
-        <Button x:Name="BtnNewUser" Grid.Column="1" Grid.Row="5" Width="145" Click="BtnNewUser_Click" Content="_New User" />
+        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Width="410" HorizontalContentAlignment="Center" BorderThickness="1" PasswordChanged="PswdPassword_TextChanged" GotFocus="PswdPassword_GotFocus" Margin="0,0,0,20" />
+        <Button x:Name="BtnLogin" Grid.Column="0" Grid.Row="5" Width="200" Click="BtnLogin_Click" Content="_Login" IsDefault="True" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="False" Margin="0,0,10,0" />
+        <Button x:Name="BtnNewUser" Grid.Column="1" Grid.Row="5" Width="200" Click="BtnNewUser_Click" Content="_New User" />
     </Grid>
 </Page>

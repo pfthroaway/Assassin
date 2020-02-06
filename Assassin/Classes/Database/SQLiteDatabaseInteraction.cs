@@ -7,6 +7,7 @@ using Extensions.DataTypeHelpers;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -18,11 +19,11 @@ namespace Assassin.Classes.Database
         // ReSharper disable once InconsistentNaming
         private const string _DATABASENAME = "Assassin.sqlite";
 
-        private readonly string _con = $"Data Source = {_DATABASENAME}; foreign keys = TRUE; Version=3";
+        private static readonly string DatabaseLocation = Path.Combine(AppData.Location, _DATABASENAME);
+        private readonly string _con = $"Data Source = {DatabaseLocation}; foreign keys = TRUE; Version=3";
 
         /// <summary>Verifies that the requested database exists and that its file size is greater than zero. If not, it extracts the embedded database file to the local output folder.</summary>
-        public void VerifyDatabaseIntegrity() => Functions.VerifyFileIntegrity(Assembly.GetExecutingAssembly().GetManifestResourceStream($"Assassin.{_DATABASENAME}"),
-                _DATABASENAME);
+        public void VerifyDatabaseIntegrity() => Functions.VerifyFileIntegrity(Assembly.GetExecutingAssembly().GetManifestResourceStream($"Assassin.{_DATABASENAME}"), _DATABASENAME, AppData.Location);
 
         #region Load
 

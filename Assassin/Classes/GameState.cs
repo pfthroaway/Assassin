@@ -7,6 +7,7 @@ using Extensions.Encryption;
 using Extensions.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,10 +49,18 @@ namespace Assassin.Classes
 
         #endregion Navigation
 
+        /// <summary>Handles verification of required files.</summary>
+        internal static void FileManagement()
+        {
+            if (!Directory.Exists(AppData.Location))
+                Directory.CreateDirectory(AppData.Location);
+            DatabaseInteraction.VerifyDatabaseIntegrity();
+        }
+
         /// <summary>Loads almost everything necessary for the game to function correctly.</summary>
         internal static async Task LoadAll()
         {
-            DatabaseInteraction.VerifyDatabaseIntegrity();
+            FileManagement();
             AdminPassword = await DatabaseInteraction.LoadAdminPassword();
             AllArmor = await DatabaseInteraction.LoadArmor();
             AllWeapons = await DatabaseInteraction.LoadWeapons();

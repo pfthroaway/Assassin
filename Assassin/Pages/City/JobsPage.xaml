@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Jobs"
         Style="{StaticResource PageStyle}">
-    <Grid Margin="10">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -16,9 +16,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtJob" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Height="200" Width="395" Margin="0,0,0,10" />
-        <Button x:Name="BtnAccept" Grid.Column="0" Grid.Row="1" Width="125" Click="BtnAccept_Click" Content="_Accept" IsDefault="True" Margin="0,0,5,0" />
-        <Button x:Name="BtnDecline" Grid.Column="1" Grid.Row="1" Width="125" Click="BtnDecline_Click" Content="_Decline" Margin="5,0,5,0" />
-        <Button x:Name="BtnLeaveTable" Grid.Column="2" Grid.Row="1" Width="125" Click="BtnLeaveTable_Click" Content="_Leave Table" IsCancel="True" Margin="5,0,0,0" />
+        <TextBox x:Name="TxtJob" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Height="200" Width="620" Margin="0,0,0,10" />
+        <Button x:Name="BtnAccept" Grid.Column="0" Grid.Row="1" Width="200" Click="BtnAccept_Click" Content="_Accept" IsDefault="True" Margin="0,0,5,0" />
+        <Button x:Name="BtnDecline" Grid.Column="1" Grid.Row="1" Width="200" Click="BtnDecline_Click" Content="_Decline" Margin="5,0,5,0" />
+        <Button x:Name="BtnLeaveTable" Grid.Column="2" Grid.Row="1" Width="200" Click="BtnLeaveTable_Click" Content="_Leave Table" IsCancel="True" Margin="5,0,0,0" />
     </Grid>
 </Page>

@@ -7,7 +7,7 @@
       Title="TrainPage"
       Style="{StaticResource PageStyle}"
       Loaded="Page_Loaded">
-    <Grid Margin="10">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -26,37 +26,37 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Endurance" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
-        <Button x:Name="BtnEnduranceMinus" Grid.Column="1" Grid.Row="0" Width="30" Height="30" Content="-" Click="BtnEnduranceMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
+        <Button x:Name="BtnEnduranceMinus" Grid.Column="1" Grid.Row="0" Width="50" Height="50" Content="-" Click="BtnEnduranceMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
         <TextBlock MinWidth="60" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding Path=MaximumEndurance, Mode=TwoWay}" Margin="0,0,10,5" />
-        <Button x:Name="BtnEndurancePlus" Grid.Column="3" Grid.Row="0" Width="30" Height="30" Content="+" Click="BtnEndurancePlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+        <Button x:Name="BtnEndurancePlus" Grid.Column="3" Grid.Row="0" Width="50" Height="50" Content="+" Click="BtnEndurancePlus_Click" IsEnabled="False" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Light Weapons" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
-        <Button x:Name="BtnLightWeaponsMinus" Grid.Column="1" Grid.Row="1" Width="30" Height="30" Content="-" Click="BtnLightWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
+        <Button x:Name="BtnLightWeaponsMinus" Grid.Column="1" Grid.Row="1" Width="50" Height="50" Content="-" Click="BtnLightWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
         <TextBlock Grid.Column="2" Grid.Row="1" MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding Path=LightWeaponSkill, Mode=TwoWay}" Margin="0,0,10,5" />
-        <Button x:Name="BtnLightWeaponsPlus" Grid.Column="3" Grid.Row="1" Width="30" Height="30" Content="+" Click="BtnLightWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+        <Button x:Name="BtnLightWeaponsPlus" Grid.Column="3" Grid.Row="1" Width="50" Height="50" Content="+" Click="BtnLightWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Heavy Weapons" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
-        <Button x:Name="BtnHeavyWeaponsMinus" Grid.Column="1" Grid.Row="2" Width="30" Height="30" Content="-" Click="BtnHeavyWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
+        <Button x:Name="BtnHeavyWeaponsMinus" Grid.Column="1" Grid.Row="2" Width="50" Height="50" Content="-" Click="BtnHeavyWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
         <TextBlock Grid.Column="2" Grid.Row="2" MinWidth="60" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=HeavyWeaponSkill, Mode=TwoWay}" Margin="0,0,10,5" />
-        <Button Grid.Column="3" Grid.Row="2" x:Name="BtnHeavyWeaponsPlus" Width="30" Height="30" Content="+" Click="BtnHeavyWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+        <Button Grid.Column="3" Grid.Row="2" x:Name="BtnHeavyWeaponsPlus" Width="50" Height="50" Content="+" Click="BtnHeavyWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="3" Text="Two-Handed Weapons" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
-        <Button x:Name="BtnTwoHandedWeaponsMinus" Grid.Column="1" Grid.Row="3" Width="30" Height="30" Content="-" Click="BtnTwoHandedWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
+        <Button x:Name="BtnTwoHandedWeaponsMinus" Grid.Column="1" Grid.Row="3" Width="50" Height="50" Content="-" Click="BtnTwoHandedWeaponsMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
         <TextBlock MinWidth="60" Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=TwoHandedWeaponSkill, Mode=TwoWay}" Margin="0,0,10,5" />
-        <Button x:Name="BtnTwoHandedWeaponsPlus" Grid.Column="3" Grid.Row="3" Width="30" Height="30" Content="+" Click="BtnTwoHandedWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+        <Button x:Name="BtnTwoHandedWeaponsPlus" Grid.Column="3" Grid.Row="3" Width="50" Height="50" Content="+" Click="BtnTwoHandedWeaponsPlus_Click" IsEnabled="False" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="4" Text="Blocking" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
-        <Button x:Name="BtnBlockingMinus" Grid.Column="1" Grid.Row="4" Width="30" Height="30" Content="-" Click="BtnBlockingMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
+        <Button x:Name="BtnBlockingMinus" Grid.Column="1" Grid.Row="4" Width="50" Height="50" Content="-" Click="BtnBlockingMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
         <TextBlock MinWidth="60" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=Blocking, Mode=TwoWay}" Margin="0,0,10,5" />
-        <Button x:Name="BtnBlockingPlus" Grid.Column="3" Grid.Row="4" Width="30" Height="30" Content="+" Click="BtnBlockingPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+        <Button x:Name="BtnBlockingPlus" Grid.Column="3" Grid.Row="4" Width="50" Height="50" Content="+" Click="BtnBlockingPlus_Click" IsEnabled="False" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="5" Text="Slipping" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,5" />
-        <Button x:Name="BtnSlippingMinus" Grid.Column="1" Grid.Row="5" Width="30" Height="30" Content="-" Click="BtnSlippingMinus_Click" IsEnabled="False" Margin="0,0,10,5" />
+        <Button x:Name="BtnSlippingMinus" Grid.Column="1" Grid.Row="5" Width="50" Height="50" Content="-" Click="BtnSlippingMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
         <TextBlock Grid.Column="2" Grid.Row="5" MinWidth="60" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=Slipping, Mode=TwoWay}" Margin="0,0,10,5" />
-        <Button x:Name="BtnSlippingPlus" Grid.Column="3" Grid.Row="5" Width="30" Height="30" Content="+" Click="BtnSlippingPlus_Click" IsEnabled="False" Margin="0,0,0,5" />
+        <Button x:Name="BtnSlippingPlus" Grid.Column="3" Grid.Row="5" Width="50" Height="50" Content="+" Click="BtnSlippingPlus_Click" IsEnabled="False" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="6" Text="Stealth" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,10" />
-        <Button x:Name="BtnStealthMinus" Grid.Column="1" Grid.Row="6" Width="30" Height="30" Content="-" Click="BtnStealthMinus_Click" IsEnabled="False" Margin="0,0,10,10" />
+        <Button x:Name="BtnStealthMinus" Grid.Column="1" Grid.Row="6" Width="50" Height="50" Content="-" Click="BtnStealthMinus_Click" IsEnabled="False" Margin="0,0,10,0" />
         <TextBlock Grid.Column="2" Grid.Row="6" MinWidth="60" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding Path=Stealth, Mode=TwoWay}" Margin="0,0,10,10" />
-        <Button x:Name="BtnStealthPlus" Grid.Column="3" Grid.Row="6" Width="30" Height="30" Content="+" Click="BtnStealthPlus_Click" IsEnabled="False" Margin="0,0,0,10" />
+        <Button x:Name="BtnStealthPlus" Grid.Column="3" Grid.Row="6" Width="50" Height="50" Content="+" Click="BtnStealthPlus_Click" IsEnabled="False" Margin="0" />
         <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="4" Text="{Binding SkillPointsToString}" HorizontalAlignment="Center" Margin="0,0,0,10" />
         <StackPanel Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="BtnTrain" Width="145" Content="_Train" Click="BtnTrain_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
-            <Button x:Name="BtnCancel" Width="145" Content="C_ancel" Click="BtnCancel_Click" IsCancel="True" />
+            <Button x:Name="BtnTrain" Width="200" Content="_Train" Click="BtnTrain_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnCancel" Width="200" Content="C_ancel" Click="BtnCancel_Click" IsCancel="True" />
         </StackPanel>
     </Grid>
 </Page>
