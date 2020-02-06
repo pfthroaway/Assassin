@@ -30,7 +30,7 @@ namespace Assassin.Classes.Database
         /// <returns>Admin password</returns>
         public async Task<string> LoadAdminPassword()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Admin");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Admin");
             string pass = "";
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -45,7 +45,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Armor"/></returns>
         public async Task<List<Armor>> LoadArmor()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Armor");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Armor");
             List<Armor> allArmor = new List<Armor>();
             if (ds.Tables[0].Rows.Count > 0)
                 allArmor.AddRange(from DataRow dr in ds.Tables[0].Rows select new Armor(dr["ArmorName"].ToString(), Int32Helper.Parse(dr["ArmorDefense"]), Int32Helper.Parse(dr["ArmorValue"]), BoolHelper.Parse(dr["Hidden"])));
@@ -57,7 +57,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Drink"/>s</returns>
         public async Task<List<Drink>> LoadDrinks()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Drinks");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Drinks");
             List<Drink> allDrinks = new List<Drink>();
             if (ds.Tables[0].Rows.Count > 0)
                 allDrinks.AddRange(from DataRow dr in ds.Tables[0].Rows select new Drink(new Drink(dr["DrinkName"].ToString(), Int32Helper.Parse(dr["RestoreThirst"]), Int32Helper.Parse(dr["DrinkValue"]))));
@@ -69,7 +69,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Enemy"/></returns>
         public async Task<List<Enemy>> LoadEnemies()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Enemies");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Enemies");
             List<Enemy> allEnemies = new List<Enemy>();
             if (ds.Tables[0].Rows.Count > 0)
                 allEnemies.AddRange(from DataRow dr in ds.Tables[0].Rows select new Enemy(dr["EnemyName"].ToString(), Int32Helper.Parse(dr["Level"]), Int32Helper.Parse(dr["Endurance"]), Int32Helper.Parse(dr["Endurance"]), new Weapon(GameState.AllWeapons.Find(wpn => wpn.Name == dr["Weapon"].ToString())), new Armor(GameState.AllArmor.Find(armr => armr.Name == dr["Armor"].ToString())), Int32Helper.Parse(dr["Gold"]), Int32Helper.Parse(dr["Attack"]), Int32Helper.Parse(dr["Blocking"]), Int32Helper.Parse(dr["Slipping"])));
@@ -81,7 +81,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Food"/></returns>
         public async Task<List<Food>> LoadFood()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Food");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Food");
             List<Food> allFood = new List<Food>();
             if (ds.Tables[0].Rows.Count > 0)
                 allFood.AddRange(from DataRow dr in ds.Tables[0].Rows select new Food(new Food(dr["FoodName"].ToString(), Int32Helper.Parse(dr["RestoreHunger"]), Int32Helper.Parse(dr["FoodValue"]))));
@@ -93,7 +93,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Guild"/>s</returns>
         public async Task<List<Guild>> LoadGuilds()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Guilds");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Guilds");
             List<Guild> allGuilds = new List<Guild>();
 
             if (ds.Tables[0].Rows.Count > 0)
@@ -106,7 +106,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Potion"/>s</returns>
         public async Task<List<Potion>> LoadPotions()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Potions");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Potions");
             List<Potion> allPotions = new List<Potion>();
 
             if (ds.Tables[0].Rows.Count > 0)
@@ -119,7 +119,7 @@ namespace Assassin.Classes.Database
         /// <returns>All Ranks</returns>
         public async Task<List<string>> LoadRanks()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Ranks");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Ranks");
             List<string> allRanks = new List<string>();
 
             if (ds.Tables[0].Rows.Count > 0)
@@ -135,7 +135,7 @@ namespace Assassin.Classes.Database
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "SELECT * FROM Users WHERE [Username] = @name" };
             cmd.Parameters.AddWithValue("@name", username);
-            DataSet ds = await SQLite.FillDataSet(_con, cmd);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
             User user = new User();
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -187,7 +187,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="User"/>s</returns>
         public async Task<List<User>> LoadUsers()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Users");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Users");
             List<User> allUsers = new List<User>();
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -240,7 +240,7 @@ namespace Assassin.Classes.Database
         /// <returns>All <see cref="Weapon"/>s</returns>
         public async Task<List<Weapon>> LoadWeapons()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Weapons");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Weapons");
             List<Weapon> allWeapons = new List<Weapon>();
 
             if (ds.Tables[0].Rows.Count > 0)
@@ -271,7 +271,7 @@ namespace Assassin.Classes.Database
             cmd.Parameters.AddWithValue("@password", newUser.Password);
             cmd.Parameters.AddWithValue("@oldName", oldUser.Name);
 
-            return await SQLite.ExecuteCommand(_con, cmd);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
         /// <summary>Adds a new <see cref="User"/> to the database.</summary>
@@ -321,7 +321,7 @@ namespace Assassin.Classes.Database
             cmd.Parameters.AddWithValue("@henchmenLevel4", newUser.HenchmenLevel4.ToString());
             cmd.Parameters.AddWithValue("@henchmenLevel5", newUser.HenchmenLevel5.ToString());
 
-            return await SQLite.ExecuteCommand(_con, cmd);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
         /// <summary>Saves the current <see cref="User"/>.</summary>
@@ -366,7 +366,7 @@ namespace Assassin.Classes.Database
             cmd.Parameters.AddWithValue("@henchmenLevel5", saveUser.HenchmenLevel5.ToString());
             cmd.Parameters.AddWithValue("@name", saveUser.Name);
 
-            return await SQLite.ExecuteCommand(_con, cmd);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
         #endregion User Management
