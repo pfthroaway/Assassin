@@ -13,7 +13,7 @@ namespace Assassin.Models.Items
         public int HealAmount
         {
             get => _healAmount;
-            set { _healAmount = value; OnPropertyChanged("HealAmount"); }
+            set { _healAmount = value; NotifyPropertyChanged(nameof(HealAmount)); }
         }
 
         #endregion Properties

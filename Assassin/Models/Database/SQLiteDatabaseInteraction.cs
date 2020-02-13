@@ -4,6 +4,7 @@ using Assassin.Models.Items;
 using Extensions;
 using Extensions.DatabaseHelp;
 using Extensions.DataTypeHelpers;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -24,6 +25,203 @@ namespace Assassin.Models.Database
 
         /// <summary>Verifies that the requested database exists and that its file size is greater than zero. If not, it extracts the embedded database file to the local output folder.</summary>
         public void VerifyDatabaseIntegrity() => Functions.VerifyFileIntegrity(Assembly.GetExecutingAssembly().GetManifestResourceStream($"Assassin.{_DATABASENAME}"), _DATABASENAME, AppData.Location);
+
+        /// <summary>Changes the admin password in the database.</summary>
+        /// <param name="newPass">New password</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> ChangeAdminPassword(string newPass)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Admin SET AdminPassword = @newPass" };
+            cmd.Parameters.AddWithValue("@newPass", newPass);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        #region Enemy Management
+
+        /// <summary>Deletes an <see cref="Enemy"/> from the database.</summary>
+        /// <param name="enemyDelete"><see cref="Enemy"/> to be deleted from the database</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> DeleteEnemy(Enemy enemyDelete)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Enemies WHERE [EnemyName] = @name" };
+            cmd.Parameters.AddWithValue("@name", enemyDelete.Name);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Adds a new <see cref="Enemy"/> to the database.</summary>
+        /// <param name="enemyNew"><see cref="Enemy"/> to be added to the database</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> NewEnemy(Enemy enemyNew)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Enemies([EnemyName], [Level], [Endurance], [Weapon], [Armor], [Gold], [WeaponSkill], [Blocking], [Slipping])VALUES(@name, @level, @endurance, @weapon, @armor, @gold, @weaponSkill, @blocking, @slipping)" };
+
+            cmd.Parameters.AddWithValue("@name", enemyNew.Name);
+            cmd.Parameters.AddWithValue("@level", enemyNew.Level);
+            cmd.Parameters.AddWithValue("@endurance", enemyNew.MaximumEndurance);
+            cmd.Parameters.AddWithValue("@weapon", enemyNew.Weapon.Name);
+            cmd.Parameters.AddWithValue("@armor", enemyNew.Armor.Name);
+            cmd.Parameters.AddWithValue("@gold", enemyNew.GoldOnHand);
+            cmd.Parameters.AddWithValue("@weaponSkill", enemyNew.WeaponSkill);
+            cmd.Parameters.AddWithValue("@blocking", enemyNew.Blocking);
+            cmd.Parameters.AddWithValue("@slipping", enemyNew.Slipping);
+
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Saves an <see cref="Enemy"/> to the database.</summary>
+        /// <param name="oldEnemy">Enemy to be replaced</param>
+        /// <param name="newEnemy">Enemy to be saved</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> SaveEnemy(Enemy newEnemy, Enemy oldEnemy)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Enemies SET [EnemyName] = @name, [Level] = @level, [Endurance] = @endurance, [Weapon] = @weapon, [Armor] = @armor, [Gold] = @gold, [WeaponSkill] = @weaponSkill, [Blocking] = @blocking, [Slipping] = @slipping WHERE [EnemyName] = @oldName" };
+
+            cmd.Parameters.AddWithValue("@name", newEnemy.Name);
+            cmd.Parameters.AddWithValue("@level", newEnemy.Level);
+            cmd.Parameters.AddWithValue("@endurance", newEnemy.MaximumEndurance);
+            cmd.Parameters.AddWithValue("@weapon", newEnemy.Weapon.Name);
+            cmd.Parameters.AddWithValue("@armor", newEnemy.Armor.Name);
+            cmd.Parameters.AddWithValue("@gold", newEnemy.GoldOnHand);
+            cmd.Parameters.AddWithValue("@weaponSkill", newEnemy.WeaponSkill);
+            cmd.Parameters.AddWithValue("@blocking", newEnemy.Blocking);
+            cmd.Parameters.AddWithValue("@slipping", newEnemy.Slipping);
+            cmd.Parameters.AddWithValue("@oldName", oldEnemy.Name);
+
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        #endregion Enemy Management
+
+        #region Guild Management
+
+        /// <summary><see cref="User"/> applies for membership with a <see cref="Guild"/>.</summary>
+        /// <param name="joinUser"><see cref="User"/> applying to join the <see cref="Guild"/>.</param>
+        /// <param name="joinGuild"><see cref="Guild"/> being applied to</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> ApplyToGuild(User joinUser, Guild joinGuild)
+        {
+            string guildID = $"Guild{joinGuild.ID}Members";
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO Applications([Username], [Guild])VALUES(@name, @guild)" };
+            cmd.Parameters.AddWithValue("@name", joinUser.Name);
+            cmd.Parameters.AddWithValue("@guild", joinGuild.ID);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary><see cref="User"/> is approved for membership with a <see cref="Guild"/>.</summary>
+        /// <param name="approveUser"><see cref="User"/> approved to join the <see cref="Guild"/>.</param>
+        /// <param name="approveGuild"><see cref="Guild"/> being joined</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> ApproveGuildApplication(User approveUser, Guild approveGuild)
+        {
+            return await DeleteGuildApplication(approveUser, approveGuild) && await SendMessage(new Message(await SQLiteHelper.GetNextIndex(_con, "Messages"), approveGuild.Name, approveUser.Name, $"Your application to join the {approveGuild.Name.Replace("'", "''")} guild has been approved. Welcome!", DateTime.UtcNow, true)) && await MemberJoinsGuild(approveUser, approveGuild);
+        }
+
+        /// <summary>Deletes a <see cref="User"/>'s application to a<see cref= "Guild" />.</ summary >
+        /// <param name="deleteUser"><see cref="User"/> whose application is deleted</param>
+        /// <param name="deleteGuild"><see cref="Guild"/> from which the <see cref="User"/>'s application was deleted</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> DeleteGuildApplication(User deleteUser, Guild deleteGuild)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM Applications WHERE [Username] = @name AND [Guild] = @guild" };
+            cmd.Parameters.AddWithValue("@name", deleteUser.Name);
+            cmd.Parameters.AddWithValue("@guild", deleteGuild.ID);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Denies a <see cref="User"/>'s application to a<see cref= "Guild" />.</ summary >
+        /// <param name="denyUser"><see cref="User"/> whose application is denied</param>
+        /// <param name="denyGuild"><see cref="Guild"/> from which the <see cref="User"/>'s application was denied</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> DenyGuildApplication(User denyUser, Guild denyGuild)
+        {
+            return await DeleteGuildApplication(denyUser, denyGuild) && await SendMessage(new Message(await SQLiteHelper.GetNextIndex(_con, "Messages"), denyGuild.Name, denyUser.Name, $"Your application to join the {denyGuild.Name.Replace("'", "''")} guild has been denied.", DateTime.UtcNow, true));
+        }
+
+        /// <summary>Checks whether the <see cref="User"/> has applied to the selected <see cref="Guild"/>.</summary>
+        /// <param name="checkUser"><see cref="User"/> to check if has applied to the <see cref="Guild"/>.</param>
+        /// <param name="checkGuild"><see cref="Guild"/> being joined</param>
+        /// <returns>True if has applied</returns>
+        public async Task<bool> HasAppliedToGuild(User checkUser, Guild checkGuild)
+        {
+            string guildID = $"Guild{checkGuild.ID}Members";
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"SELECT * FROM {guildID} Where [Username] = @name" };
+            cmd.Parameters.AddWithValue("@name", checkUser.Name);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
+            return ds.Tables[0].Rows.Count > 0;
+        }
+
+        /// <summary>Member of a <see cref="Guild"/> gains membership with that <see cref="Guild"/>, applied to database.</summary>
+        /// <param name="joinUser"><see cref="User"/> joining the <see cref="Guild"/>.</param>
+        /// <param name="joinGuild"><see cref="Guild"/> being joined</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> MemberJoinsGuild(User joinUser, Guild joinGuild)
+        {
+            string guildID = $"Guild{joinGuild.ID}Members";
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO {guildID}([Username])VALUES(@name)" };
+            cmd.Parameters.AddWithValue("@name", joinUser.Name);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Member of a <see cref="Guild"/> terminates membership with that <see cref="Guild"/>, applied to database.</summary>
+        /// <param name="leaveUser"><see cref="User"/> leaving the <see cref="Guild"/>.</param>
+        /// <param name="leaveGuild"><see cref="Guild"/> being left</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> MemberLeavesGuild(User leaveUser, Guild leaveGuild)
+        {
+            string guildID = $"Guild{leaveGuild.ID}Members";
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM {guildID} WHERE [Username] = @name" };
+            cmd.Parameters.AddWithValue("@name", leaveUser.Name);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Saves a <see cref="Guild"/>.</summary>
+        /// <param name="guildSave"><see cref="Guild"/> to be saved</param>
+        public async Task<bool> SaveGuild(Guild guildSave)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Guilds SET [GuildName] = @guildName, [Guildmaster] = @guildmaster, [GuildFee] = @guildFee, [GuildGold] = @guildGold, [HenchmenLevel1] = @henchmenLevel1, [HenchmenLevel2] = @henchmenLevel2, [HenchmenLevel3] = @henchmenLevel3, [HenchmenLevel4] = @henchmenLevel4, [HenchmenLevel5] = @henchmenLevel5 WHERE [ID] = @id" };
+
+            cmd.Parameters.AddWithValue("@guildName", guildSave.Name);
+            cmd.Parameters.AddWithValue("@guildmaster", guildSave.Master);
+            cmd.Parameters.AddWithValue("@guildFee", guildSave.Fee);
+            cmd.Parameters.AddWithValue("@guildGold", guildSave.Gold);
+            cmd.Parameters.AddWithValue("@henchmenLevel1", guildSave.HenchmenLevel1.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel2", guildSave.HenchmenLevel2.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel3", guildSave.HenchmenLevel3.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel4", guildSave.HenchmenLevel4.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel5", guildSave.HenchmenLevel5.ToString());
+            cmd.Parameters.AddWithValue("@id", guildSave.ID);
+
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        #endregion Guild Management
+
+        #region Jail Management
+
+        /// <summary>Frees a <see cref="JailedUser"/> from Jail.</summary>
+        /// <param name="jailUser"><see cref="JailedUser"/> to be freed</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> FreeFromJail(JailedUser jailUser)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM Jail WHERE [Username] = @name" };
+            cmd.Parameters.AddWithValue("@name", jailUser.Name);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Sends a <see cref="JailedUser"/> to Jail.</summary>
+        /// <param name="jailUser"><see cref="JailedUser"/> to be jailed</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> SendToJail(JailedUser jailUser)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO Jail([Username], [Reason], [Fine], [DateJailed])VALUES(@name, @reason, @fine, @dateJailed)" };
+            cmd.Parameters.AddWithValue("@name", jailUser.Name);
+            cmd.Parameters.AddWithValue("@reason", jailUser.Reason);
+            cmd.Parameters.AddWithValue("@fine", jailUser.Fine);
+            cmd.Parameters.AddWithValue("@dateJailed", jailUser.DateJailed);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        #endregion Jail Management
 
         #region Load
 
@@ -103,6 +301,34 @@ namespace Assassin.Models.Database
             return allGuilds.OrderBy(guild => guild.ID).ToList();
         }
 
+        /// <summary>Loads all <see cref="JailedUser"/>s.</summary>
+        ///<returns>All <see cref="JailedUser"/>s</returns>
+        public async Task<List<JailedUser>> LoadJailedUsers()
+        {
+            List<JailedUser> jailedUsers = new List<JailedUser>();
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Jail");
+
+            if (ds.Tables[0].Rows.Count > 0)
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                    jailedUsers.Add(new JailedUser(dr["Username"].ToString(), EnumHelper.Parse<Crime>(dr["Reason"].ToString()), Int32Helper.Parse(dr["Fine"]), DateTimeHelper.Parse(dr["DateJailed"])));
+
+            return jailedUsers;
+        }
+
+        /// <summary>Loads all <see cref="Message"/>s for specified <see cref="User"/>.</summary>
+        /// <param name="loadUser"><see cref="User"/> whose <see cref="Message"/>s are to be loaded</param>
+        /// <returns>List of all <see cref="Message"/>s for the specified <see cref="User"/></returns>
+        public async Task<List<Message>> LoadMessages(User loadUser)
+        {
+            List<Message> messages = new List<Message>();
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Messages WHERE UserTo={loadUser.Name}");
+
+            if (ds.Tables[0].Rows.Count > 0)
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                    messages.Add(new Message(Int32Helper.Parse(dr["ID"].ToString()), dr["UserFrom"].ToString(), loadUser.Name, dr["Message"].ToString(), DateTimeHelper.Parse(dr["DateSent"].ToString()), BoolHelper.Parse(dr["GuildMessage"])));
+            return messages;
+        }
+
         /// <summary>Loads all <see cref="Potion"/>s from the database.</summary>
         /// <returns>All <see cref="Potion"/>s</returns>
         public async Task<List<Potion>> LoadPotions()
@@ -139,47 +365,7 @@ namespace Assassin.Models.Database
             DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
             User user = new User();
             if (ds.Tables[0].Rows.Count > 0)
-            {
-                DataRow dr = ds.Tables[0].Rows[0];
-                user = new User
-                {
-                    Name = dr["Username"].ToString(),
-                    Password = dr["Password"].ToString(),
-                    Level = Int32Helper.Parse(dr["Level"]),
-                    Experience = Int32Helper.Parse(dr["Experience"]),
-                    SkillPoints = Int32Helper.Parse(dr["SkillPoints"]),
-                    Alive = BoolHelper.Parse(dr["Alive"]),
-                    CurrentLocation = dr["Location"].ToString(),
-                    CurrentEndurance = Int32Helper.Parse(dr["CurrentEndurance"]),
-                    MaximumEndurance = Int32Helper.Parse(dr["MaximumEndurance"]),
-                    Hunger = Int32Helper.Parse(dr["Hunger"]),
-                    Thirst = Int32Helper.Parse(dr["Thirst"]),
-                    CurrentWeapon = EnumHelper.Parse<WeaponType>(dr["CurrentWeapon"].ToString()),
-                    LightWeapon = GameState.AllWeapons.Find(weapon => weapon.Name == dr["LightWeapon"].ToString()),
-                    HeavyWeapon = GameState.AllWeapons.Find(weapon => weapon.Name == dr["HeavyWeapon"].ToString()),
-                    TwoHandedWeapon = GameState.AllWeapons.Find(weapon => weapon.Name == dr["TwoHandedWeapon"].ToString()),
-                    Armor = GameState.AllArmor.Find(armor => armor.Name == dr["Armor"].ToString()),
-                    Potion = GameState.AllPotions.Find(potion => potion.Name == dr["Potion"].ToString()),
-                    Lockpicks = Int32Helper.Parse(dr["Lockpicks"]),
-                    GoldOnHand = Int32Helper.Parse(dr["GoldOnHand"]),
-                    GoldInBank = Int32Helper.Parse(dr["GoldInBank"]),
-                    GoldOnLoan = Int32Helper.Parse(dr["GoldOnLoan"]),
-                    Shovel = BoolHelper.Parse(dr["Shovel"]),
-                    Lantern = BoolHelper.Parse(dr["Lantern"]),
-                    Amulet = BoolHelper.Parse(dr["Amulet"]),
-                    LightWeaponSkill = Int32Helper.Parse(dr["LightWeaponSkill"]),
-                    HeavyWeaponSkill = Int32Helper.Parse(dr["HeavyWeaponSkill"]),
-                    TwoHandedWeaponSkill = Int32Helper.Parse(dr["TwoHandedWeaponSkill"]),
-                    Blocking = Int32Helper.Parse(dr["Blocking"]),
-                    Slipping = Int32Helper.Parse(dr["Slipping"]),
-                    Stealth = Int32Helper.Parse(dr["Stealth"]),
-                    HenchmenLevel1 = Int32Helper.Parse(dr["HenchmenLevel1"]),
-                    HenchmenLevel2 = Int32Helper.Parse(dr["HenchmenLevel2"]),
-                    HenchmenLevel3 = Int32Helper.Parse(dr["HenchmenLevel3"]),
-                    HenchmenLevel4 = Int32Helper.Parse(dr["HenchmenLevel4"]),
-                    HenchmenLevel5 = Int32Helper.Parse(dr["HenchmenLevel5"])
-                };
-            }
+                user = AssignUserFromDataRow(ds.Tables[0].Rows[0]);
 
             return user;
         }
@@ -191,48 +377,8 @@ namespace Assassin.Models.Database
             DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Users");
             List<User> allUsers = new List<User>();
             if (ds.Tables[0].Rows.Count > 0)
-            {
-                allUsers.AddRange(
-                    from DataRow dr in ds.Tables[0].Rows
-                    select new User
-                    {
-                        Name = dr["Username"].ToString(),
-                        Password = dr["Password"].ToString(),
-                        Level = Int32Helper.Parse(dr["Level"]),
-                        Experience = Int32Helper.Parse(dr["Experience"]),
-                        SkillPoints = Int32Helper.Parse(dr["SkillPoints"]),
-                        Alive = BoolHelper.Parse(dr["Alive"]),
-                        CurrentLocation = dr["Location"].ToString(),
-                        CurrentEndurance = Int32Helper.Parse(dr["CurrentEndurance"]),
-                        MaximumEndurance = Int32Helper.Parse(dr["MaximumEndurance"]),
-                        Hunger = Int32Helper.Parse(dr["Hunger"]),
-                        Thirst = Int32Helper.Parse(dr["Thirst"]),
-                        CurrentWeapon = EnumHelper.Parse<WeaponType>(dr["CurrentWeapon"].ToString()),
-                        LightWeapon = GameState.AllWeapons.Find(weapon => weapon.Name == dr["LightWeapon"].ToString()),
-                        HeavyWeapon = GameState.AllWeapons.Find(weapon => weapon.Name == dr["HeavyWeapon"].ToString()),
-                        TwoHandedWeapon = GameState.AllWeapons.Find(weapon => weapon.Name == dr["TwoHandedWeapon"].ToString()),
-                        Armor = GameState.AllArmor.Find(armor => armor.Name == dr["Armor"].ToString()),
-                        Potion = GameState.AllPotions.Find(potion => potion.Name == dr["Potion"].ToString()),
-                        Lockpicks = Int32Helper.Parse(dr["Lockpicks"]),
-                        GoldOnHand = Int32Helper.Parse(dr["GoldOnHand"]),
-                        GoldInBank = Int32Helper.Parse(dr["GoldInBank"]),
-                        GoldOnLoan = Int32Helper.Parse(dr["GoldOnLoan"]),
-                        Shovel = BoolHelper.Parse(dr["Shovel"]),
-                        Lantern = BoolHelper.Parse(dr["Lantern"]),
-                        Amulet = BoolHelper.Parse(dr["Amulet"]),
-                        LightWeaponSkill = Int32Helper.Parse(dr["LightWeaponSkill"]),
-                        HeavyWeaponSkill = Int32Helper.Parse(dr["HeavyWeaponSkill"]),
-                        TwoHandedWeaponSkill = Int32Helper.Parse(dr["TwoHandedWeaponSkill"]),
-                        Blocking = Int32Helper.Parse(dr["Blocking"]),
-                        Slipping = Int32Helper.Parse(dr["Slipping"]),
-                        Stealth = Int32Helper.Parse(dr["Stealth"]),
-                        HenchmenLevel1 = Int32Helper.Parse(dr["HenchmenLevel1"]),
-                        HenchmenLevel2 = Int32Helper.Parse(dr["HenchmenLevel2"]),
-                        HenchmenLevel3 = Int32Helper.Parse(dr["HenchmenLevel3"]),
-                        HenchmenLevel4 = Int32Helper.Parse(dr["HenchmenLevel4"]),
-                        HenchmenLevel5 = Int32Helper.Parse(dr["HenchmenLevel5"])
-                    });
-            }
+                allUsers.AddRange(from DataRow dr in ds.Tables[0].Rows
+                                  select AssignUserFromDataRow(dr));
 
             return allUsers.OrderBy(user => user.Name).ToList();
         }
@@ -254,7 +400,85 @@ namespace Assassin.Models.Database
 
         #endregion Load
 
+        #region Message Management
+
+        /// <summary>Deletes a <see cref="Message"/> from the database.</summary>
+        /// <param name="message"><see cref="Message"/> to be deleted</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> DeleteMessage(Message message)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM Messages WHERE [ID] = @id" };
+            cmd.Parameters.AddWithValue("@id", message.ID);
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Sends a <see cref="Message"/> between <see cref="User"/>s.</summary>
+        /// <param name="message"><see cref="Message"/> sent</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> SendMessage(Message message)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO Messages([UserTo], [UserFrom], [Message], [DateSent], [GuildMessage])VALUES(@userTo, @userFrom, @message, @dateSent, @guildMessage)" };
+            cmd.Parameters.AddWithValue("@userTo", message.UserTo);
+            cmd.Parameters.AddWithValue("@userFrom", message.UserFrom);
+            cmd.Parameters.AddWithValue("@message", message.Contents);
+            cmd.Parameters.AddWithValue("@dateSent", message.DateSent);
+            cmd.Parameters.AddWithValue("@guildMessage", Int32Helper.Parse(message.GuildMessage));
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        #endregion Message Management
+
         #region User Management
+
+        // TODO Finish copying User Management
+        // TODO Check all methods for proper usage.
+
+        /// <summary>Assigns a <see cref="User"/> from a DataRow.</summary>
+        /// <param name="dr">DataRow containing <see cref="User"/></param>
+        /// <returns>Assigned <see cref="User"/></returns>
+        private User AssignUserFromDataRow(DataRow dr)
+        {
+            User newUser = new User
+            {
+                Name = dr["Username"].ToString(),
+                Password = dr["Password"].ToString(),
+                Level = Int32Helper.Parse(dr["Level"].ToString()),
+                Experience = Int32Helper.Parse(dr["Experience"].ToString()),
+                SkillPoints = Int32Helper.Parse(dr["SkillPoints"].ToString()),
+                Alive = BoolHelper.Parse(dr["Alive"]),
+                CurrentEndurance = Int32Helper.Parse(dr["CurrentEndurance"].ToString()),
+                CurrentLocation = EnumHelper.Parse<SleepLocation>(dr["Location"].ToString()),
+                MaximumEndurance = Int32Helper.Parse(dr["MaximumEndurance"].ToString()),
+                Hunger = Int32Helper.Parse(dr["Hunger"].ToString()),
+                Thirst = Int32Helper.Parse(dr["Thirst"].ToString()),
+                CurrentWeaponType = EnumHelper.Parse<WeaponType>(dr["CurrentWeapon"].ToString()),
+                LightWeapon = GameState.AllWeapons.Find(newWeapon => newWeapon.Name == dr["LightWeapon"].ToString()),
+                HeavyWeapon = GameState.AllWeapons.Find(newWeapon => newWeapon.Name == dr["HeavyWeapon"].ToString()),
+                TwoHandedWeapon = GameState.AllWeapons.Find(newWeapon => newWeapon.Name == dr["TwoHandedWeapon"].ToString()),
+                Armor = GameState.AllArmor.Find(newArmor => newArmor.Name == dr["Armor"].ToString()),
+                Potion = GameState.AllPotions.Find(newPotion => newPotion.Name == dr["Potion"].ToString()),
+                Lockpicks = Int32Helper.Parse(dr["Lockpicks"].ToString()),
+                GoldOnHand = Int32Helper.Parse(dr["GoldOnHand"].ToString()),
+                GoldInBank = Int32Helper.Parse(dr["GoldInBank"].ToString()),
+                GoldOnLoan = Int32Helper.Parse(dr["GoldOnLoan"].ToString()),
+                Shovel = BoolHelper.Parse(dr["Shovel"]),
+                Lantern = BoolHelper.Parse(dr["Lantern"]),
+                Amulet = BoolHelper.Parse(dr["Amulet"]),
+                LightWeaponSkill = Int32Helper.Parse(dr["LightWeaponSkill"].ToString()),
+                HeavyWeaponSkill = Int32Helper.Parse(dr["HeavyWeaponSkill"].ToString()),
+                TwoHandedWeaponSkill = Int32Helper.Parse(dr["TwoHandedWeaponSkill"].ToString()),
+                Blocking = Int32Helper.Parse(dr["Blocking"].ToString()),
+                Slipping = Int32Helper.Parse(dr["Slipping"].ToString()),
+                Stealth = Int32Helper.Parse(dr["Stealth"].ToString()),
+                HenchmenLevel1 = Int32Helper.Parse(dr["HenchmenLevel1"].ToString()),
+                HenchmenLevel2 = Int32Helper.Parse(dr["HenchmenLevel2"].ToString()),
+                HenchmenLevel3 = Int32Helper.Parse(dr["HenchmenLevel3"].ToString()),
+                HenchmenLevel4 = Int32Helper.Parse(dr["HenchmenLevel4"].ToString()),
+                HenchmenLevel5 = Int32Helper.Parse(dr["HenchmenLevel5"].ToString())
+            };
+
+            return newUser;
+        }
 
         /// <summary>Changes a <see cref="User"/>'s details in the database.</summary>
         /// <param name="oldUser"><see cref="User"/> to be updated</param>
@@ -297,7 +521,7 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@maximumEndurance", newUser.MaximumEndurance.ToString());
             cmd.Parameters.AddWithValue("@hunger", newUser.Hunger.ToString());
             cmd.Parameters.AddWithValue("@thirst", newUser.Thirst.ToString());
-            cmd.Parameters.AddWithValue("@currentWeapon", newUser.CurrentWeapon);
+            cmd.Parameters.AddWithValue("@currentWeapon", newUser.CurrentWeaponType);
             cmd.Parameters.AddWithValue("@lightWeapon", newUser.LightWeapon.Name);
             cmd.Parameters.AddWithValue("@heavyWeapon", newUser.HeavyWeapon.Name);
             cmd.Parameters.AddWithValue("@twoHandedWeapon", newUser.TwoHandedWeapon.Name);
@@ -341,7 +565,7 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@maximumEndurance", saveUser.MaximumEndurance.ToString());
             cmd.Parameters.AddWithValue("@hunger", saveUser.Hunger.ToString());
             cmd.Parameters.AddWithValue("@thirst", saveUser.Thirst.ToString());
-            cmd.Parameters.AddWithValue("@currentWeapon", saveUser.CurrentWeapon);
+            cmd.Parameters.AddWithValue("@currentWeapon", saveUser.CurrentWeaponType);
             cmd.Parameters.AddWithValue("@lightWeapon", saveUser.LightWeapon.Name);
             cmd.Parameters.AddWithValue("@heavyWeapon", saveUser.HeavyWeapon.Name);
             cmd.Parameters.AddWithValue("@twoHandedWeapon", saveUser.TwoHandedWeapon.Name);

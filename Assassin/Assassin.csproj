@@ -82,10 +82,13 @@
     <Compile Include="Models\Entities\Employer.cs" />
     <Compile Include="Models\Entities\IEntity.cs" />
     <Compile Include="Models\Entities\LivingEntity.cs" />
+    <Compile Include="Models\Enums\Crime.cs" />
+    <Compile Include="Models\Enums\SleepLocation.cs" />
     <Compile Include="Models\Enums\Stance.cs" />
     <Compile Include="Models\Enums\WeaponType.cs" />
     <Compile Include="Models\Items\IItem.cs" />
     <Compile Include="Models\Items\Item.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>

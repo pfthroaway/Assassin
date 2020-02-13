@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Please enter the administrator password:" Margin="0,0,0,5" />
         <PasswordBox x:Name="PswdAdmin" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="250" Margin="0,0,0,10" PasswordChanged="pswdAdmin_PasswordChanged" HorizontalContentAlignment="Center" GotFocus="pswdAdmin_GotFocus" />
-        <Button x:Name="BtnSubmit" Grid.Column="0" Grid.Row="2" Width="125" Content="_Submit" Click="BtnSubmit_Click" IsDefault="True" IsEnabled="False" />
+        <Button x:Name="Btnvoidmit" Grid.Column="0" Grid.Row="2" Width="125" Content="_voidmit" Click="Btnvoidmit_Click" IsDefault="True" IsEnabled="False" />
         <Button x:Name="BtnCancel" Grid.Column="1" Grid.Row="2" Width="125" Content="_Cancel" Click="BtnCancel_Click" IsCancel="True" />
     </Grid>
 </Page>

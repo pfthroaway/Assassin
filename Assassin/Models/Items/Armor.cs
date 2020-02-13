@@ -16,9 +16,9 @@ namespace Assassin.Models.Items
             set
             {
                 _defense = value;
-                OnPropertyChanged("Defense");
-                OnPropertyChanged("DefenseToString");
-                OnPropertyChanged("DefenseToStringWithText");
+                NotifyPropertyChanged(nameof(Defense));
+                NotifyPropertyChanged("DefenseToString");
+                NotifyPropertyChanged("DefenseToStringWithText");
             }
         }
 

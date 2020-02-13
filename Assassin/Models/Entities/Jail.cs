@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace Assassin.Models.Entities
 {
     /// <summary>Represents the <see cref="Jail"/>, where all <see cref="User"/>s who are arrested are taken.</summary>
-    internal class Jail : INotifyPropertyChanged
+    internal class Jail : BaseINPC
     {
         private List<JailedUser> _jailedList;
 
@@ -12,14 +12,14 @@ namespace Assassin.Models.Entities
         internal List<JailedUser> JailedList
         {
             get => _jailedList;
-            set { _jailedList = value; OnPropertyChanged("JailedList"); }
+            set { _jailedList = value; NotifyPropertyChanged("JailedList"); }
         }
 
         #region Data-Binding
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        protected void NotifyPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 

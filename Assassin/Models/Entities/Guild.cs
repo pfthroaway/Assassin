@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace Assassin.Models.Entities
 {
     /// <summary>Represents a <see cref="Guild"/> that a <see cref="User"/> can join.</summary>
-    internal class Guild : INotifyPropertyChanged
+    internal class Guild : BaseINPC
     {
         private int _id, _fee, _gold, _henchmenLevel1, _henchmenLevel2, _henchmenLevel3, _henchmenLevel4, _henchmenLevel5;
         private string _name, _master;
@@ -17,77 +17,77 @@ namespace Assassin.Models.Entities
         public int ID
         {
             get => _id;
-            set { _id = value; OnPropertyChanged("ID"); }
+            set { _id = value; NotifyPropertyChanged("ID"); }
         }
 
         /// <summary>Name of the <see cref="Guild"/>.</summary>
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged("Name"); }
         }
 
         /// <summary>Master of the <see cref="Guild"/>.</summary>
         public string Master
         {
             get => _master;
-            set { _master = value; OnPropertyChanged("Master"); }
+            set { _master = value; NotifyPropertyChanged("Master"); }
         }
 
         /// <summary>Fee paid to join the <see cref="Guild"/>.</summary>
         public int Fee
         {
             get => _fee;
-            set { _fee = value; OnPropertyChanged("Fee"); }
+            set { _fee = value; NotifyPropertyChanged("Fee"); }
         }
 
         /// <summary>Gold owned by the <see cref="Guild"/>.</summary>
         public int Gold
         {
             get => _gold;
-            set { _gold = value; OnPropertyChanged("Gold"); }
+            set { _gold = value; NotifyPropertyChanged("Gold"); }
         }
 
         /// <summary>Members in the <see cref="Guild"/>.</summary>
         public List<string> Members
         {
             get => _members;
-            set { _members = value; OnPropertyChanged("Members"); }
+            set { _members = value; NotifyPropertyChanged("Members"); }
         }
 
         /// <summary>Amount of level 1 henchmen hired by the <see cref="Guild"/>.</summary>
         public int HenchmenLevel1
         {
             get => _henchmenLevel1;
-            set { _henchmenLevel1 = value; OnPropertyChanged("HenchmenLevel1"); }
+            set { _henchmenLevel1 = value; NotifyPropertyChanged("HenchmenLevel1"); }
         }
 
         /// <summary>Amount of level 2 henchmen hired by the <see cref="Guild"/>.</summary>
         public int HenchmenLevel2
         {
             get => _henchmenLevel2;
-            set { _henchmenLevel2 = value; OnPropertyChanged("HenchmenLevel2"); }
+            set { _henchmenLevel2 = value; NotifyPropertyChanged("HenchmenLevel2"); }
         }
 
         /// <summary>Amount of level 3 henchmen hired by the <see cref="Guild"/>.</summary>
         public int HenchmenLevel3
         {
             get => _henchmenLevel3;
-            set { _henchmenLevel3 = value; OnPropertyChanged("HenchmenLevel3"); }
+            set { _henchmenLevel3 = value; NotifyPropertyChanged("HenchmenLevel3"); }
         }
 
         /// <summary>Amount of level 4 henchmen hired by the <see cref="Guild"/>.</summary>
         public int HenchmenLevel4
         {
             get => _henchmenLevel4;
-            set { _henchmenLevel4 = value; OnPropertyChanged("HenchmenLevel4"); }
+            set { _henchmenLevel4 = value; NotifyPropertyChanged("HenchmenLevel4"); }
         }
 
         /// <summary>Amount of level 5 henchmen hired by the <see cref="Guild"/>.</summary>
         public int HenchmenLevel5
         {
             get => _henchmenLevel5;
-            set { _henchmenLevel5 = value; OnPropertyChanged("HenchmenLevel5"); }
+            set { _henchmenLevel5 = value; NotifyPropertyChanged("HenchmenLevel5"); }
         }
 
         #endregion Properties
@@ -96,7 +96,7 @@ namespace Assassin.Models.Entities
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        protected void NotifyPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 

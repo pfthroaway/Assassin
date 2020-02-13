@@ -6,9 +6,14 @@ namespace Assassin.Models.Entities
     /// <summary>Represents a <see cref="User"/> in the game.</summary>
     public class User : LivingEntity
     {
-        private string _password, _currentLocation;
+        //TODO Finish BaseINPC on all classes
+        //TODO Check all properties to make sure they're used right.
+
+        private string _password;
+
         private int _experience, _skillPoints, _hunger, _thirst, _lockpicks, _goldInBank, _goldOnLoan, _lightWeaponSkill, _heavyWeaponSkill, _twoHandedWeaponSkill, _stealth, _henchmenLevel1, _henchmenLevel2, _henchmenLevel3, _henchmenLevel4, _henchmenLevel5;
         private bool _alive, _shovel, _lantern, _amulet;
+        private SleepLocation _currentLocation;
         private WeaponType _currentWeapon;
         private Weapon _lightWeapon, _heavyWeapon, _twoHandedWeapon;
         private Potion _potion;
@@ -19,7 +24,7 @@ namespace Assassin.Models.Entities
         public string Password
         {
             get => _password;
-            set { _password = value; OnPropertyChanged("Password"); }
+            set { _password = value; NotifyPropertyChanged(nameof(Password)); }
         }
 
         /// <summary>Rank of User</summary>
@@ -29,28 +34,28 @@ namespace Assassin.Models.Entities
         public int Experience
         {
             get => _experience;
-            set { _experience = value; OnPropertyChanged("Experience"); }
+            set { _experience = value; NotifyPropertyChanged(nameof(Experience)); }
         }
 
         /// <summary><see cref="User"/>'s available skill points to spend</summary>
         public int SkillPoints
         {
             get => _skillPoints;
-            set { _skillPoints = value; OnPropertyChanged("SkillPoints"); OnPropertyChanged("SkillPointsToString"); }
+            set { _skillPoints = value; NotifyPropertyChanged(nameof(SkillPoints), nameof(SkillPointsToString)); }
         }
 
         /// <summary>Is the User alive?</summary>
         public bool Alive
         {
             get => _alive;
-            set { _alive = value; OnPropertyChanged("Alive"); }
+            set { _alive = value; NotifyPropertyChanged(nameof(Alive)); }
         }
 
         /// <summary>Current location of the <see cref="User"/>.</summary>
-        public string CurrentLocation
+        public SleepLocation CurrentLocation
         {
             get => _currentLocation;
-            set { _currentLocation = value; OnPropertyChanged("CurrentLocation"); }
+            set { _currentLocation = value; NotifyPropertyChanged(nameof(CurrentLocation)); }
         }
 
         /// <summary>Amount of hunger a <see cref="User"/> has.</summary>
@@ -60,8 +65,7 @@ namespace Assassin.Models.Entities
             set
             {
                 _hunger = value;
-                OnPropertyChanged("Hunger");
-                OnPropertyChanged("HungerToString");
+                NotifyPropertyChanged(nameof(Hunger), nameof(HungerToString));
             }
         }
 
@@ -72,8 +76,7 @@ namespace Assassin.Models.Entities
             set
             {
                 _thirst = value;
-                OnPropertyChanged("Thirst");
-                OnPropertyChanged("ThirstToString");
+                NotifyPropertyChanged(nameof(Thirst), nameof(ThirstToString));
             }
         }
 
@@ -117,53 +120,53 @@ namespace Assassin.Models.Entities
             }
         }
 
-        /// <summary>Weapon type of <see cref="User"/>'s currently equipped weapon.</summary>
-        public WeaponType CurrentWeapon
+        /// <summary>Weapon type of <see cref="User"/>'s currently equipped <see cref="Weapon"/>.</summary>
+        public WeaponType CurrentWeaponType
         {
             get => _currentWeapon;
-            set { _currentWeapon = value; OnPropertyChanged("SelectedWeapon"); }
+            set { _currentWeapon = value; NotifyPropertyChanged(nameof(CurrentWeaponType)); }
         }
 
-        /// <summary><see cref="User"/>'s light weapon.</summary>
+        /// <summary><see cref="User"/>'s light <see cref="Weapon"/>.</summary>
         public Weapon LightWeapon
         {
             get => _lightWeapon;
-            set { _lightWeapon = value; OnPropertyChanged("LightWeapon"); }
+            set { _lightWeapon = value; NotifyPropertyChanged(nameof(LightWeapon)); }
         }
 
         /// <summary><see cref="User"/>'s heavy weapon.</summary>
         public Weapon HeavyWeapon
         {
             get => _heavyWeapon;
-            set { _heavyWeapon = value; OnPropertyChanged("HeavyWeapon"); }
+            set { _heavyWeapon = value; NotifyPropertyChanged(nameof(HeavyWeapon)); }
         }
 
         /// <summary><see cref="User"/>'s two-handed weapon.</summary>
         public Weapon TwoHandedWeapon
         {
             get => _twoHandedWeapon;
-            set { _twoHandedWeapon = value; OnPropertyChanged("TwoHandedWeapon"); }
+            set { _twoHandedWeapon = value; NotifyPropertyChanged(nameof(TwoHandedWeapon)); }
         }
 
         /// <summary>User's potion.</summary>
         public Potion Potion
         {
             get => _potion;
-            set { _potion = value; OnPropertyChanged("Potion"); }
+            set { _potion = value; NotifyPropertyChanged(nameof(Potion)); }
         }
 
         /// <summary>Amount of lockpicks a <see cref="User"/> has.</summary>
         public int Lockpicks
         {
             get => _lockpicks;
-            set { _lockpicks = value; OnPropertyChanged("Lockpicks"); OnPropertyChanged("LockpicksToString"); OnPropertyChanged("LockpicksToStringWithText"); }
+            set { _lockpicks = value; NotifyPropertyChanged(nameof(Lockpicks), nameof(LockpicksToString), nameof(LockpicksToStringWithText)); }
         }
 
         /// <summary>Does the <see cref="User"/> have a shovel?</summary>
         public bool Shovel
         {
             get => _shovel;
-            set { _shovel = value; OnPropertyChanged("Shovel"); }
+            set { _shovel = value; NotifyPropertyChanged(nameof(Shovel)); }
         }
 
         /// <summary>Does the <see cref="User"/> have a lantern?</summary>
@@ -171,91 +174,91 @@ namespace Assassin.Models.Entities
         public bool Lantern
         {
             get => _lantern;
-            set { _lantern = value; OnPropertyChanged("Lantern"); }
+            set { _lantern = value; NotifyPropertyChanged(nameof(Lantern)); }
         }
 
         /// <summary>Does the <see cref="User"/> have an amulet?</summary>
         public bool Amulet
         {
             get => _amulet;
-            set { _amulet = value; OnPropertyChanged("Amulet"); }
+            set { _amulet = value; NotifyPropertyChanged(nameof(Amulet)); }
         }
 
         /// <summary>Amount of gold the <see cref="User"/> has in the bank.</summary>
         public int GoldInBank
         {
             get => _goldInBank;
-            set { _goldInBank = value; OnPropertyChanged("GoldInBank"); }
+            set { _goldInBank = value; NotifyPropertyChanged(nameof(GoldInBank)); }
         }
 
         /// <summary>Amount of gold the <see cref="User"/> has taken as a loan from the bank.</summary>
         public int GoldOnLoan
         {
             get => _goldOnLoan;
-            set { _goldOnLoan = value; OnPropertyChanged("GoldOnLoan"); OnPropertyChanged("GoldOnLoanToString"); OnPropertyChanged("LoanAvailable"); OnPropertyChanged("LoanAvailableToString"); }
+            set { _goldOnLoan = value; NotifyPropertyChanged(nameof(GoldOnLoan), nameof(GoldOnLoanToString), nameof(LoanAvailable), nameof(LoanAvailableToString)); }
         }
 
         /// <summary><see cref="User"/>'s skill with light weapons.</summary>
         public int LightWeaponSkill
         {
             get => _lightWeaponSkill;
-            set { _lightWeaponSkill = value; OnPropertyChanged("LightWeaponSkill"); }
+            set { _lightWeaponSkill = value; NotifyPropertyChanged(nameof(LightWeaponSkill)); }
         }
 
         /// <summary><see cref="User"/>'s skill with heavy weapons.</summary>
         public int HeavyWeaponSkill
         {
             get => _heavyWeaponSkill;
-            set { _heavyWeaponSkill = value; OnPropertyChanged("HeavyWeaponSkill"); }
+            set { _heavyWeaponSkill = value; NotifyPropertyChanged(nameof(HeavyWeaponSkill)); }
         }
 
         /// <summary><see cref="User"/>'s skill with two-handed weapons.</summary>
         public int TwoHandedWeaponSkill
         {
             get => _twoHandedWeaponSkill;
-            set { _twoHandedWeaponSkill = value; OnPropertyChanged("TwoHandedWeaponSkill"); }
+            set { _twoHandedWeaponSkill = value; NotifyPropertyChanged(nameof(TwoHandedWeaponSkill)); }
         }
 
         /// <summary><see cref="User"/>'s skill at being stealthy.</summary>
         public int Stealth
         {
             get => _stealth;
-            set { _stealth = value; OnPropertyChanged("Stealth"); }
+            set { _stealth = value; NotifyPropertyChanged(nameof(Stealth)); }
         }
 
         /// <summary>Amount of level 1 henchmen hired by the <see cref="User"/>.</summary>
         public int HenchmenLevel1
         {
             get => _henchmenLevel1;
-            set { _henchmenLevel1 = value; OnPropertyChanged("HenchmenLevel1"); }
+            set { _henchmenLevel1 = value; NotifyPropertyChanged(nameof(HenchmenLevel1)); }
         }
 
         /// <summary>Amount of level 2 henchmen hired by the <see cref="User"/>.</summary>
         public int HenchmenLevel2
         {
             get => _henchmenLevel2;
-            set { _henchmenLevel2 = value; OnPropertyChanged("HenchmenLevel2"); }
+            set { _henchmenLevel2 = value; NotifyPropertyChanged(nameof(HenchmenLevel2)); }
         }
 
         /// <summary>Amount of level 3 henchmen hired by the <see cref="User"/>.</summary>
         public int HenchmenLevel3
         {
             get => _henchmenLevel3;
-            set { _henchmenLevel3 = value; OnPropertyChanged("HenchmenLevel3"); }
+            set { _henchmenLevel3 = value; NotifyPropertyChanged(nameof(HenchmenLevel3)); }
         }
 
         /// <summary>Amount of level 4 henchmen hired by the <see cref="User"/>.</summary>
         public int HenchmenLevel4
         {
             get => _henchmenLevel4;
-            set { _henchmenLevel4 = value; OnPropertyChanged("HenchmenLevel4"); }
+            set { _henchmenLevel4 = value; NotifyPropertyChanged(nameof(HenchmenLevel4)); }
         }
 
         /// <summary>Amount of level 5 henchmen hired by the <see cref="User"/>.</summary>
         public int HenchmenLevel5
         {
             get => _henchmenLevel5;
-            set { _henchmenLevel5 = value; OnPropertyChanged("HenchmenLevel5"); }
+            set { _henchmenLevel5 = value; NotifyPropertyChanged(nameof(HenchmenLevel5)); }
         }
 
         #endregion Properties
@@ -285,7 +288,7 @@ namespace Assassin.Models.Entities
         {
             get
             {
-                switch (CurrentWeapon)
+                switch (CurrentWeaponType)
                 {
                     case WeaponType.Light:
                         return LightWeaponSkill;
@@ -301,11 +304,11 @@ namespace Assassin.Models.Entities
         }
 
         /// <summary><see cref="User"/>'s currently equipped weapon.</summary>
-        public Weapon SelectedWeapon
+        public Weapon CurrentWeapon
         {
             get
             {
-                switch (CurrentWeapon)
+                switch (CurrentWeaponType)
                 {
                     case WeaponType.Light:
                         return LightWeapon;
@@ -386,13 +389,13 @@ namespace Assassin.Models.Entities
             Experience = 0;
             SkillPoints = 5;
             Alive = true;
-            CurrentLocation = "Streets";
+            CurrentLocation = SleepLocation.Streets;
             CurrentEndurance = 100;
             MaximumEndurance = 100;
             Hunger = 0;
             Thirst = 0;
 
-            CurrentWeapon = WeaponType.Light;
+            CurrentWeaponType = WeaponType.Light;
             LightWeapon = new Weapon();
             HeavyWeapon = new Weapon();
             TwoHandedWeapon = new Weapon();
@@ -456,7 +459,7 @@ namespace Assassin.Models.Entities
         /// <param name="henchmenLevel3">Amount of Level 3 Henchmen employed by the <see cref="User"/></param>
         /// <param name="henchmenLevel4">Amount of Level 4 Henchmen employed by the <see cref="User"/></param>
         /// <param name="henchmenLevel5">Amount of Level 5 Henchmen employed by the <see cref="User"/></param>
-        internal User(string name, string password, int level, int experience, int skillPoints, bool alive, string currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
+        internal User(string name, string password, int level, int experience, int skillPoints, bool alive, SleepLocation currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
         {
             Name = name;
             Password = password;
@@ -470,7 +473,7 @@ namespace Assassin.Models.Entities
             Hunger = hunger;
             Thirst = thirst;
 
-            CurrentWeapon = currentWeapon;
+            CurrentWeaponType = currentWeapon;
             LightWeapon = lightWeapon;
             HeavyWeapon = heavyWeapon;
             TwoHandedWeapon = twoHandedWeapon;
@@ -500,7 +503,7 @@ namespace Assassin.Models.Entities
 
         /// <summary>Replaces this instance of <see cref="User"/> with another instance.</summary>
         /// <param name="other"><see cref="User"/> to replace this instance.</param>
-        internal User(User other) : this(other.Name, other.Password, other.Level, other.Experience, other.SkillPoints, other.Alive, other.CurrentLocation, other.CurrentEndurance, other.MaximumEndurance, other.Hunger, other.Thirst, other.CurrentWeapon, other.LightWeapon, other.HeavyWeapon, other.TwoHandedWeapon, other.Armor, other.Potion, other.Lockpicks, other.GoldOnHand, other.GoldInBank, other.GoldOnLoan, other.Shovel, other.Lantern, other.Amulet, other.LightWeaponSkill, other.HeavyWeaponSkill, other.TwoHandedWeaponSkill, other.Blocking, other.Slipping, other.Stealth, other.HenchmenLevel1, other.HenchmenLevel2, other.HenchmenLevel3, other.HenchmenLevel4, other.HenchmenLevel5)
+        internal User(User other) : this(other.Name, other.Password, other.Level, other.Experience, other.SkillPoints, other.Alive, other.CurrentLocation, other.CurrentEndurance, other.MaximumEndurance, other.Hunger, other.Thirst, other.CurrentWeaponType, other.LightWeapon, other.HeavyWeapon, other.TwoHandedWeapon, other.Armor, other.Potion, other.Lockpicks, other.GoldOnHand, other.GoldInBank, other.GoldOnLoan, other.Shovel, other.Lantern, other.Amulet, other.LightWeaponSkill, other.HeavyWeaponSkill, other.TwoHandedWeaponSkill, other.Blocking, other.Slipping, other.Stealth, other.HenchmenLevel1, other.HenchmenLevel2, other.HenchmenLevel3, other.HenchmenLevel4, other.HenchmenLevel5)
         { }
 
         #endregion Constructors

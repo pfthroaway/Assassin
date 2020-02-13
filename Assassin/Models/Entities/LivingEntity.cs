@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Assassin.Models.Entities
 {
-    public abstract class LivingEntity : IEntity, INotifyPropertyChanged
+    public abstract class LivingEntity : BaseINPC, IEntity
     {
         #region Fields
 
@@ -19,28 +19,28 @@ namespace Assassin.Models.Entities
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged(nameof(Name)); }
         }
 
         /// <summary>Level of this Entity.</summary>
         public int Level
         {
             get => _level;
-            set { _level = value; OnPropertyChanged("Level"); }
+            set { _level = value; NotifyPropertyChanged(nameof(Level)); }
         }
 
         /// <summary>Entity's current amount of health.</summary>
         public int CurrentEndurance
         {
             get => _currentEndurance;
-            set { _currentEndurance = value; OnPropertyChanged("EnduranceToString"); }
+            set { _currentEndurance = value; NotifyPropertyChanged(nameof(EnduranceToString)); }
         }
 
         /// <summary>Entity's maxmimum amount of health.</summary>
         public int MaximumEndurance
         {
             get => _maximumEndurance;
-            set { _maximumEndurance = value; OnPropertyChanged("MaximumEndurance"); OnPropertyChanged("EnduranceToString"); }
+            set { _maximumEndurance = value; NotifyPropertyChanged(nameof(MaximumEndurance)); NotifyPropertyChanged(nameof(EnduranceToString)); }
         }
 
         /// <summary>Amount of gold the Entity has in their possession.</summary>
@@ -50,9 +50,9 @@ namespace Assassin.Models.Entities
             set
             {
                 _goldOnHand = value;
-                OnPropertyChanged("GoldOnHand");
-                OnPropertyChanged("GoldOnHandToString");
-                OnPropertyChanged("GoldOnHandToStringWithText");
+                NotifyPropertyChanged(nameof(GoldOnHand));
+                NotifyPropertyChanged(nameof(GoldOnHandToString));
+                NotifyPropertyChanged(nameof(GoldOnHandToStringWithText));
             }
         }
 
@@ -60,7 +60,7 @@ namespace Assassin.Models.Entities
         public Armor Armor
         {
             get => _armor;
-            set { _armor = value; OnPropertyChanged("Armor"); }
+            set { _armor = value; NotifyPropertyChanged(nameof(Armor)); }
         }
 
         #endregion Modifying Properties Properties
@@ -80,14 +80,14 @@ namespace Assassin.Models.Entities
         public int Blocking
         {
             get => _blocking;
-            set { _blocking = value; OnPropertyChanged("Blocking"); }
+            set { _blocking = value; NotifyPropertyChanged(nameof(Blocking)); }
         }
 
         /// <summary>Entity's skill at dodging and running away.</summary>
         public int Slipping
         {
             get => _slipping;
-            set { _slipping = value; OnPropertyChanged("Slipping"); }
+            set { _slipping = value; NotifyPropertyChanged(nameof(Slipping)); }
         }
 
         #endregion Helper Properties
@@ -100,14 +100,6 @@ namespace Assassin.Models.Entities
         public abstract string TakeDamage(int damage);
 
         #endregion Health Manipulation
-
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         public override string ToString() => Name;
     }

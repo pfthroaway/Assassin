@@ -1,64 +1,88 @@
-﻿using System.ComponentModel;
+﻿using Assassin.Models.Enums;
+using System;
 
 namespace Assassin.Models.Entities
 {
-    internal class JailedUser : INotifyPropertyChanged
+    ///<summary>Represents a <see cref="User"/> who is in Jail.</summary>
+    internal class JailedUser : BaseINPC
     {
-        private string _username, _reason;
+        private string _name;
+        private Crime _reason;
         private int _fine;
+        private DateTime _dateJailed;
 
         #region Properties
 
-        public string Username
+        /// <summary>Name of the <see cref="JailedUser"/>.</summary>
+        public string Name
         {
-            get => _username;
-            set { _username = value; OnPropertyChanged("Username"); }
+            get => _name;
+            set { _name = value; NotifyPropertyChanged(nameof(Name)); }
         }
 
-        public string Reason
+        /// <summary>Reason the <see cref="JailedUser"/> is in Jail.</summary>
+        public Crime Reason
         {
             get => _reason;
-            set { _reason = value; OnPropertyChanged("Reason"); }
+            set { _reason = value; NotifyPropertyChanged(nameof(Reason)); }
         }
 
+        /// <summary>Amount of gold required to release the <see cref="JailedUser"/> from Jail.</summary>
         public int Fine
         {
             get => _fine;
-            set { _fine = value; OnPropertyChanged("Fine"); OnPropertyChanged("FineToString"); }
+            set
+            {
+                _fine = value; NotifyPropertyChanged(nameof(Fine));
+                NotifyPropertyChanged(nameof(FineToString));
+            }
         }
 
         public string FineToString => Fine.ToString("N0");
 
+        /// <summary>Date the <see cref="JailedUser"/> was incarcerated in UTC.</summary>
+        public DateTime DateJailed
+        {
+            get => _dateJailed; set
+            {
+                _dateJailed = value;
+                NotifyPropertyChanged(nameof(DateJailed));
+            }
+        }
+
         #endregion Properties
 
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
+        /// <summary>Date the <see cref="JailedUser"/> was incarcerated in local time.</summary>
+        public DateTime LocalDateJailed => TimeZone.CurrentTimeZone.ToLocalTime(DateJailed);
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a default instance of JailedUser.
-        /// </summary>
+        /// <summary>Initializes a default instance of <see cref="JailedUser"/>.</summary>
         public JailedUser()
         {
         }
 
-        /// <summary>
-        /// Initializes an instance of JailedUser by assigning Properties.
-        /// </summary>
-        /// <param name="username">Username</param>
+        /// <summary>Initializes an instance of <see cref="JailedUser"/> by assigning Properties.</summary>
+        /// <param name="name">Username</param>
         /// <param name="reason">Reason jailed</param>
         /// <param name="fine">Fine</param>
-        public JailedUser(string username, string reason, int fine)
+        /// <param name="dateJailed">Date the <see cref="JailedUser"/> was incarcerated in UTC</param>
+        public JailedUser(string name, Crime reason, int fine, DateTime dateJailed)
         {
-            Username = username;
+            Name = name;
             Reason = reason;
             Fine = fine;
+            DateJailed = dateJailed;
+        }
+
+        /// <summary>Replaces this instance of <see cref="JailedUser"/> with another instance.</summary>
+        /// <param name="other">Instance of <see cref="JailedUser"/> to replace this instance</param>
+        public JailedUser(JailedUser other)
+        {
+            Name = other.Name;
+            Reason = other.Reason;
+            Fine = other.Fine;
+            DateJailed = other.DateJailed;
         }
 
         #endregion Constructors

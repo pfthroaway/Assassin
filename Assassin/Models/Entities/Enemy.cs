@@ -15,14 +15,14 @@ namespace Assassin.Models.Entities
         public Weapon Weapon
         {
             get => _weapon;
-            set { _weapon = value; OnPropertyChanged("Weapon"); }
+            set { _weapon = value; NotifyPropertyChanged(nameof(Weapon)); }
         }
 
         /// <summary><see cref="Enemy"/>'s skill with their Weapon.</summary>
         public int WeaponSkill
         {
             get => _weaponSkill;
-            set { _weaponSkill = value; OnPropertyChanged("WeaponSkill"); }
+            set { _weaponSkill = value; NotifyPropertyChanged(nameof(WeaponSkill)); }
         }
 
         #endregion Properties

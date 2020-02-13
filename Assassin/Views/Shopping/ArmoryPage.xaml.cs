@@ -4,6 +4,7 @@ using Assassin.Models.Items;
 using Extensions;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,7 +23,7 @@ namespace Assassin.Views.Shopping
             set
             {
                 _selectedArmor = value;
-                OnPropertyChanged("SelectedArmor");
+                NotifyPropertyChanged("SelectedArmor");
                 GrpSelected.DataContext = SelectedArmor;
             }
         }
@@ -31,7 +32,25 @@ namespace Assassin.Views.Shopping
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
+        /// <param name="propertyNames">The names of the properties to update in the UI.</param>
+        protected void NotifyPropertyChanged(params string[] propertyNames)
+        {
+            if (PropertyChanged != null)
+            {
+                foreach (string propertyName in propertyNames)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+
+        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
+        /// <param name="propertyName">The optional name of the property to update in the UI. If this is left blank, the name will be taken from the calling member via the CallerMemberName attribute.</param>
+        protected virtual void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         /// <summary>Updates the Page's binding.</summary>
         private void UpdateBinding()

@@ -1,6 +1,4 @@
-﻿using Assassin.Models;
-
-namespace Assassin.Views.Shopping
+﻿namespace Assassin.Views.Shopping
 {
     /// <summary>Interaction logic for PubPage.xaml</summary>
     public partial class PubPage

@@ -15,7 +15,7 @@ namespace Assassin.Models.Items
         public WeaponType Type
         {
             get => _type;
-            set { _type = value; OnPropertyChanged("Type"); }
+            set { _type = value; NotifyPropertyChanged(nameof(Type)); }
         }
 
         /// <summary>Damage of <see cref="Weapon"/>.</summary>
@@ -25,9 +25,9 @@ namespace Assassin.Models.Items
             set
             {
                 _damage = value;
-                OnPropertyChanged("Damage");
-                OnPropertyChanged("DamageToString");
-                OnPropertyChanged("DamageToStringWithText");
+                NotifyPropertyChanged(nameof(Damage));
+                NotifyPropertyChanged("DamageToString");
+                NotifyPropertyChanged("DamageToStringWithText");
             }
         }
 

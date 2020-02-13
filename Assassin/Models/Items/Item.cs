@@ -3,7 +3,7 @@
 namespace Assassin.Models.Items
 {
     /// <summary>Represents an <see cref="Item"/> in the game.</summary>
-    public abstract class Item : IItem, INotifyPropertyChanged
+    public abstract class Item : BaseINPC, IItem
     {
         private string _name;
         private int _value;
@@ -15,7 +15,7 @@ namespace Assassin.Models.Items
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged(nameof(Name)); }
         }
 
         /// <summary>Value of <see cref="Item"/>.</summary>
@@ -25,12 +25,7 @@ namespace Assassin.Models.Items
             set
             {
                 _value = value;
-                OnPropertyChanged("Value");
-                OnPropertyChanged("ValueToString");
-                OnPropertyChanged("ValueToStringWithText");
-                OnPropertyChanged("SellValue");
-                OnPropertyChanged("SellValueToString");
-                OnPropertyChanged("SellValueToStringWithText");
+                NotifyPropertyChanged(nameof(Value), nameof(ValueToString), nameof(ValueToStringWithText), nameof(SellValue), nameof(SellValueToString), nameof(SellValueToStringWithText));
             }
         }
 
@@ -38,7 +33,7 @@ namespace Assassin.Models.Items
         public bool Hidden
         {
             get => _hidden;
-            set { _hidden = value; OnPropertyChanged("Hidden"); }
+            set { _hidden = value; NotifyPropertyChanged(nameof(Hidden)); }
         }
 
         #endregion Properties
@@ -67,13 +62,5 @@ namespace Assassin.Models.Items
         public override string ToString() => Name;
 
         #endregion Overrides
-
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
     }
 }

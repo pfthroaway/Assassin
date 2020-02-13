@@ -10,7 +10,7 @@ namespace Assassin.Views.Options
     {
         #region Button-Click Methods
 
-        private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        private async void Btnvoidmit_Click(object sender, RoutedEventArgs e)
         {
             if (PBKDF2.ValidatePassword(PswdCurrentPassword.Password, GameState.CurrentUser.Password))
             {
@@ -53,7 +53,7 @@ namespace Assassin.Views.Options
             PswdCurrentPassword.Focus();
         }
 
-        private void PswdChanged(object sender, RoutedEventArgs e) => BtnSubmit.IsEnabled = PswdCurrentPassword.Password.Length > 0 && PswdNewPassword.Password.Length > 0 && PswdConfirmPassword.Password.Length > 0;
+        private void PswdChanged(object sender, RoutedEventArgs e) => Btnvoidmit.IsEnabled = PswdCurrentPassword.Password.Length > 0 && PswdNewPassword.Password.Length > 0 && PswdConfirmPassword.Password.Length > 0;
 
         private void Pswd_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 

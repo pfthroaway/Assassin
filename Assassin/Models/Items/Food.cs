@@ -13,7 +13,7 @@ namespace Assassin.Models.Items
         public int RestoreHunger
         {
             get => _restoreHunger;
-            set { _restoreHunger = value; OnPropertyChanged("RestoreHunger"); }
+            set { _restoreHunger = value; NotifyPropertyChanged(nameof(RestoreHunger)); }
         }
 
         #endregion Properties

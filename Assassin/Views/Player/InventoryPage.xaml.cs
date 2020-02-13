@@ -11,9 +11,9 @@ namespace Assassin.Views.Player
         /// <summary>Checks which Buttons should be enabled.</summary>
         private void CheckButtons()
         {
-            BtnEquipLight.IsEnabled = GameState.CurrentUser.CurrentWeapon != WeaponType.Light;
-            BtnEquipHeavy.IsEnabled = GameState.CurrentUser.CurrentWeapon != WeaponType.Heavy;
-            BtnEquipTwoHanded.IsEnabled = GameState.CurrentUser.CurrentWeapon != WeaponType.TwoHanded;
+            BtnEquipLight.IsEnabled = GameState.CurrentUser.CurrentWeaponType != WeaponType.Light;
+            BtnEquipHeavy.IsEnabled = GameState.CurrentUser.CurrentWeaponType != WeaponType.Heavy;
+            BtnEquipTwoHanded.IsEnabled = GameState.CurrentUser.CurrentWeaponType != WeaponType.TwoHanded;
             BtnDrinkPotion.IsEnabled = GameState.CurrentUser.Potion.Name != "None";
         }
 
@@ -21,7 +21,7 @@ namespace Assassin.Views.Player
         /// <param name="type"><see cref="WeaponType"/> to equip.</param>
         private void EquipWeapon(WeaponType type)
         {
-            GameState.CurrentUser.CurrentWeapon = type;
+            GameState.CurrentUser.CurrentWeaponType = type;
             CheckButtons();
         }
 
