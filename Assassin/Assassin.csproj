@@ -76,304 +76,304 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppData.cs" />
-    <Compile Include="Classes\BaseINPC.cs" />
-    <Compile Include="Classes\Database\IDatabaseInteraction.cs" />
-    <Compile Include="Classes\Database\SQLiteDatabaseInteraction.cs" />
-    <Compile Include="Classes\Entities\Employer.cs" />
-    <Compile Include="Classes\Entities\IEntity.cs" />
-    <Compile Include="Classes\Entities\LivingEntity.cs" />
-    <Compile Include="Classes\Enums\Stance.cs" />
-    <Compile Include="Classes\Enums\WeaponType.cs" />
-    <Compile Include="Classes\Items\IItem.cs" />
-    <Compile Include="Classes\Items\Item.cs" />
-    <Compile Include="Pages\LoginPage.xaml.cs">
+    <Compile Include="Models\BaseINPC.cs" />
+    <Compile Include="Models\Database\IDatabaseInteraction.cs" />
+    <Compile Include="Models\Database\SQLiteDatabaseInteraction.cs" />
+    <Compile Include="Models\Entities\Employer.cs" />
+    <Compile Include="Models\Entities\IEntity.cs" />
+    <Compile Include="Models\Entities\LivingEntity.cs" />
+    <Compile Include="Models\Enums\Stance.cs" />
+    <Compile Include="Models\Enums\WeaponType.cs" />
+    <Compile Include="Models\Items\IItem.cs" />
+    <Compile Include="Models\Items\Item.cs" />
+    <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\GeneralStorePage.xaml.cs">
+    <Compile Include="Views\Shopping\GeneralStorePage.xaml.cs">
       <DependentUpon>GeneralStorePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\PubPage.xaml.cs">
+    <Compile Include="Views\Shopping\PubPage.xaml.cs">
       <DependentUpon>PubPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Help\AboutPage.xaml.cs">
+    <Compile Include="Views\Help\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Admin\AdminEnemiesPage.xaml.cs">
+    <Compile Include="Views\Admin\AdminEnemiesPage.xaml.cs">
       <DependentUpon>AdminEnemiesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Admin\AdminGuildPage.xaml.cs">
+    <Compile Include="Views\Admin\AdminGuildPage.xaml.cs">
       <DependentUpon>AdminGuildPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Admin\AdminUsersPage.xaml.cs">
+    <Compile Include="Views\Admin\AdminUsersPage.xaml.cs">
       <DependentUpon>AdminUsersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Bank\BankDialogPage.xaml.cs">
+    <Compile Include="Views\Bank\BankDialogPage.xaml.cs">
       <DependentUpon>BankDialogPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Bank\BankPage.xaml.cs">
+    <Compile Include="Views\Bank\BankPage.xaml.cs">
       <DependentUpon>BankPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\BarPage.xaml.cs">
+    <Compile Include="Views\Shopping\BarPage.xaml.cs">
       <DependentUpon>BarPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Options\ChangePasswordPage.xaml.cs">
+    <Compile Include="Views\Options\ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Entities\Jail.cs" />
-    <Compile Include="Classes\Entities\JailedUser.cs" />
-    <Compile Include="Pages\Court\CourtPage.xaml.cs">
+    <Compile Include="Models\Entities\Jail.cs" />
+    <Compile Include="Models\Entities\JailedUser.cs" />
+    <Compile Include="Views\Court\CourtPage.xaml.cs">
       <DependentUpon>CourtPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\GuildDonatePage.xaml.cs">
+    <Compile Include="Views\Guilds\GuildDonatePage.xaml.cs">
       <DependentUpon>GuildDonatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\GuildListPage.xaml.cs">
+    <Compile Include="Views\Guilds\GuildListPage.xaml.cs">
       <DependentUpon>GuildListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\GuildManagePage.xaml.cs">
+    <Compile Include="Views\Guilds\GuildManagePage.xaml.cs">
       <DependentUpon>GuildManagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\GuildOptionsPage.xaml.cs">
+    <Compile Include="Views\Guilds\GuildOptionsPage.xaml.cs">
       <DependentUpon>GuildOptionsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\GuildTransferPage.xaml.cs">
+    <Compile Include="Views\Guilds\GuildTransferPage.xaml.cs">
       <DependentUpon>GuildTransferPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\GuildPage.xaml.cs">
+    <Compile Include="Views\Guilds\GuildPage.xaml.cs">
       <DependentUpon>GuildPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Help\HelpPage.xaml.cs">
+    <Compile Include="Views\Help\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\HireHenchmenPage.xaml.cs">
+    <Compile Include="Views\Guilds\HireHenchmenPage.xaml.cs">
       <DependentUpon>HireHenchmenPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\City\JobsPage.xaml.cs">
+    <Compile Include="Views\City\JobsPage.xaml.cs">
       <DependentUpon>JobsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\ManageApplicationsPage.xaml.cs">
+    <Compile Include="Views\Guilds\ManageApplicationsPage.xaml.cs">
       <DependentUpon>ManageApplicationsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Help\ManualPage.xaml.cs">
+    <Compile Include="Views\Help\ManualPage.xaml.cs">
       <DependentUpon>ManualPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Guilds\MembersPage.xaml.cs">
+    <Compile Include="Views\Guilds\MembersPage.xaml.cs">
       <DependentUpon>MembersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\MysticPage.xaml.cs">
+    <Compile Include="Views\Shopping\MysticPage.xaml.cs">
       <DependentUpon>MysticPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Battle\RaidPage.xaml.cs">
+    <Compile Include="Views\Battle\RaidPage.xaml.cs">
       <DependentUpon>RaidPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Battle\RobPage.xaml.cs">
+    <Compile Include="Views\Battle\RobPage.xaml.cs">
       <DependentUpon>RobPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\WeaponsRUsPage.xaml.cs">
+    <Compile Include="Views\Shopping\WeaponsRUsPage.xaml.cs">
       <DependentUpon>WeaponsRUsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SplashWindow.xaml.cs">
+    <Compile Include="Views\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\ThievesGuildPage.xaml.cs">
+    <Compile Include="Views\Shopping\ThievesGuildPage.xaml.cs">
       <DependentUpon>ThievesGuildPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Player\TrainPage.xaml.cs">
+    <Compile Include="Views\Player\TrainPage.xaml.cs">
       <DependentUpon>TrainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\City\JailPage.xaml.cs">
+    <Compile Include="Views\City\JailPage.xaml.cs">
       <DependentUpon>JailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Player\InventoryPage.xaml.cs">
+    <Compile Include="Views\Player\InventoryPage.xaml.cs">
       <DependentUpon>InventoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\ArmoryPage.xaml.cs">
+    <Compile Include="Views\Shopping\ArmoryPage.xaml.cs">
       <DependentUpon>ArmoryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shopping\ShopsPage.xaml.cs">
+    <Compile Include="Views\Shopping\ShopsPage.xaml.cs">
       <DependentUpon>ShopsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Battle\AssassinationPage.xaml.cs">
+    <Compile Include="Views\Battle\AssassinationPage.xaml.cs">
       <DependentUpon>AssassinationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Battle\BattlePage.xaml.cs">
+    <Compile Include="Views\Battle\BattlePage.xaml.cs">
       <DependentUpon>BattlePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\City\GamePage.xaml.cs">
+    <Compile Include="Views\City\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Admin\AdminLoginPage.xaml.cs">
+    <Compile Include="Views\Admin\AdminLoginPage.xaml.cs">
       <DependentUpon>AdminLoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Admin\AdminPage.xaml.cs">
+    <Compile Include="Views\Admin\AdminPage.xaml.cs">
       <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Entities\User.cs" />
-    <Compile Include="Classes\Items\Weapon.cs" />
-    <Compile Include="Pages\Player\NewUserPage.xaml.cs">
+    <Compile Include="Models\Entities\User.cs" />
+    <Compile Include="Models\Items\Weapon.cs" />
+    <Compile Include="Views\Player\NewUserPage.xaml.cs">
       <DependentUpon>NewUserPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pages\LoginPage.xaml">
+    <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\GeneralStorePage.xaml">
+    <Page Include="Views\Shopping\GeneralStorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\PubPage.xaml">
+    <Page Include="Views\Shopping\PubPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Help\AboutPage.xaml">
+    <Page Include="Views\Help\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Admin\AdminEnemiesPage.xaml">
+    <Page Include="Views\Admin\AdminEnemiesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Admin\AdminGuildPage.xaml">
+    <Page Include="Views\Admin\AdminGuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Admin\AdminUsersPage.xaml">
+    <Page Include="Views\Admin\AdminUsersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Bank\BankDialogPage.xaml">
+    <Page Include="Views\Bank\BankDialogPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Bank\BankPage.xaml">
+    <Page Include="Views\Bank\BankPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\BarPage.xaml">
+    <Page Include="Views\Shopping\BarPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Options\ChangePasswordPage.xaml">
+    <Page Include="Views\Options\ChangePasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Court\CourtPage.xaml">
+    <Page Include="Views\Court\CourtPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\GuildDonatePage.xaml">
+    <Page Include="Views\Guilds\GuildDonatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\GuildListPage.xaml">
+    <Page Include="Views\Guilds\GuildListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\GuildManagePage.xaml">
+    <Page Include="Views\Guilds\GuildManagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\GuildOptionsPage.xaml">
+    <Page Include="Views\Guilds\GuildOptionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\GuildTransferPage.xaml">
+    <Page Include="Views\Guilds\GuildTransferPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\GuildPage.xaml">
+    <Page Include="Views\Guilds\GuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Help\HelpPage.xaml">
+    <Page Include="Views\Help\HelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\HireHenchmenPage.xaml">
+    <Page Include="Views\Guilds\HireHenchmenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\City\JobsPage.xaml">
+    <Page Include="Views\City\JobsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\ManageApplicationsPage.xaml">
+    <Page Include="Views\Guilds\ManageApplicationsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Help\ManualPage.xaml">
+    <Page Include="Views\Help\ManualPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Guilds\MembersPage.xaml">
+    <Page Include="Views\Guilds\MembersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\MysticPage.xaml">
+    <Page Include="Views\Shopping\MysticPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Battle\RaidPage.xaml">
+    <Page Include="Views\Battle\RaidPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Battle\RobPage.xaml">
+    <Page Include="Views\Battle\RobPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\WeaponsRUsPage.xaml">
+    <Page Include="Views\Shopping\WeaponsRUsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SplashWindow.xaml">
+    <Page Include="Views\SplashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\ThievesGuildPage.xaml">
+    <Page Include="Views\Shopping\ThievesGuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Player\TrainPage.xaml">
+    <Page Include="Views\Player\TrainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\City\JailPage.xaml">
+    <Page Include="Views\City\JailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Player\InventoryPage.xaml">
+    <Page Include="Views\Player\InventoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\ArmoryPage.xaml">
+    <Page Include="Views\Shopping\ArmoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Shopping\ShopsPage.xaml">
+    <Page Include="Views\Shopping\ShopsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Battle\AssassinationPage.xaml">
+    <Page Include="Views\Battle\AssassinationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Battle\BattlePage.xaml">
+    <Page Include="Views\Battle\BattlePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\City\GamePage.xaml">
+    <Page Include="Views\City\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Admin\AdminLoginPage.xaml">
+    <Page Include="Views\Admin\AdminLoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Admin\AdminPage.xaml">
+    <Page Include="Views\Admin\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -381,23 +381,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Items\Armor.cs" />
-    <Compile Include="Classes\Items\Drink.cs" />
-    <Compile Include="Classes\Entities\Enemy.cs" />
-    <Compile Include="Classes\Items\Food.cs" />
-    <Compile Include="Classes\GameState.cs" />
-    <Compile Include="Classes\Entities\Guild.cs" />
-    <Compile Include="Pages\MainWindow.xaml.cs">
+    <Compile Include="Models\Items\Armor.cs" />
+    <Compile Include="Models\Items\Drink.cs" />
+    <Compile Include="Models\Entities\Enemy.cs" />
+    <Compile Include="Models\Items\Food.cs" />
+    <Compile Include="Models\GameState.cs" />
+    <Compile Include="Models\Entities\Guild.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\Player\NewUserPage.xaml">
+    <Page Include="Views\Player\NewUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Items\Potion.cs" />
+    <Compile Include="Models\Items\Potion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -427,7 +427,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Pages\Assassin.ico" />
+    <Resource Include="Views\Assassin.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Assassin.png" />

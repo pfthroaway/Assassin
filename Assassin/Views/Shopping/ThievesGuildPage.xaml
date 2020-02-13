@@ -1,0 +1,25 @@
+﻿<Page x:Class="Assassin.Views.Shopping.ThievesGuildPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="Thieves Guild"
+      Style="{StaticResource PageStyle}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtThieves" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="550" Height="150" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=GoldOnHandToStringWithText}" TextAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=LockpicksToStringWithText}" TextAlignment="Center" Margin="0,0,0,10" />
+        <Button x:Name="BtnPurchase" Grid.Column="0" Grid.Row="2" Width="145" Click="BtnPurchase_Click" Content="_Purchase" IsEnabled="False" />
+        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="2" Width="145" Content="_Back" IsCancel="True" Click="BtnBack_Click" />
+    </Grid>
+</Page>

@@ -1,0 +1,30 @@
+﻿<Page x:Class="Assassin.Views.Help.ManualPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Style="{StaticResource PageStyle}"
+        Title="Manual">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtManual" Grid.Column="0" Grid.Row="0" Grid.RowSpan="6" Width="600" Height="400" ScrollViewer.VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,10,0" />
+        <Button x:Name="BtnIntroduction" Grid.Column="1" Grid.Row="0" Width="200" Click="BtnIntroduction_Click" Content="_Introduction" />
+        <Button x:Name="BtnCity" Grid.Column="1" Grid.Row="1" Width="200" Click="BtnCity_Click" Content="_The City" />
+        <Button x:Name="BtnSkills" Grid.Column="1" Grid.Row="2" Width="200" Click="BtnSkills_Click" Content="_Skills" />
+        <Button x:Name="BtnPlaying" Grid.Column="1" Grid.Row="3" Width="200" Click="BtnPlaying_Click" Content="_Playing" />
+        <Button x:Name="BtnCombat" Grid.Column="1" Grid.Row="4" Width="200" Click="BtnCombat_Click" Content="_Combat" />
+        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="5" Width="200" Click="BtnBack_Click" Content="_Back" IsCancel="True" />
+    </Grid>
+</Page>
