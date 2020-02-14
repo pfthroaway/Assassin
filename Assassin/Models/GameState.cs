@@ -366,17 +366,11 @@ namespace Assassin.Models
             {
                 AllUsers.Add(newUser);
                 AllUsers = AllUsers.OrderBy(user => user.Name).ToList();
-                AllGuilds[0].Members.Add(newUser.Name);
                 success = true;
             }
 
             return success;
         }
-
-        /// <summary>Saves the current User.</summary>
-        /// /// <param name="saveUser">User to be saved.</param>
-        /// <returns>True if successful</returns>
-        internal static async Task<bool> SaveUser(User saveUser) => await DatabaseInteraction.SaveUser(saveUser);
 
         #endregion User Management
 
