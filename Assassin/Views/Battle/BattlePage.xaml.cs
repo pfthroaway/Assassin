@@ -98,13 +98,13 @@ namespace Assassin.Views.Battle
         public int PlayerStamina
         {
             get => _playerStamina;
-            set { _playerStamina = value; NotifyPropertyChanged("PlayerStaminaToString"); }
+            set { _playerStamina = value; NotifyPropertyChanged(nameof(PlayerStaminaToString)); }
         }
 
         public int EnemyStamina
         {
             get => _enemyStamina;
-            set { _enemyStamina = value; NotifyPropertyChanged("EnemyStaminaToString"); }
+            set { _enemyStamina = value; NotifyPropertyChanged(nameof(EnemyStaminaToString)); }
         }
 
         public string PlayerStaminaToString => GetStaminaText(PlayerStamina);
@@ -616,7 +616,7 @@ namespace Assassin.Views.Battle
             if (_battleOver)
             {
                 GameState.GoBack();
-                await GameState.SaveUser(GameState.CurrentUser);
+                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
             }
         }
 

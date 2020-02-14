@@ -4,7 +4,7 @@ using System;
 namespace Assassin.Models.Entities
 {
     ///<summary>Represents a <see cref="User"/> who is in Jail.</summary>
-    internal class JailedUser : BaseINPC
+    public class JailedUser : BaseINPC
     {
         private string _name;
         private Crime _reason;
@@ -77,13 +77,7 @@ namespace Assassin.Models.Entities
 
         /// <summary>Replaces this instance of <see cref="JailedUser"/> with another instance.</summary>
         /// <param name="other">Instance of <see cref="JailedUser"/> to replace this instance</param>
-        public JailedUser(JailedUser other)
-        {
-            Name = other.Name;
-            Reason = other.Reason;
-            Fine = other.Fine;
-            DateJailed = other.DateJailed;
-        }
+        public JailedUser(JailedUser other) : this(other.Name, other.Reason, other.Fine, other.DateJailed) { }
 
         #endregion Constructors
     }

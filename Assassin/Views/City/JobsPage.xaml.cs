@@ -64,7 +64,7 @@ namespace Assassin.Views.City
             int selectedEmployer = Functions.GenerateRandomNumber(0, _employers.Count - 1);
             _currentEmployer = _employers[selectedEmployer];
             Functions.AddTextToTextBox(TxtJob, _currentEmployer + " approaches you.");
-            GameState.CurrentEnemy = GameState.SelectEnemy();
+            GameState.SelectEnemy();
             _bounty = Functions.GenerateRandomNumber(GameState.CurrentEnemy.GoldOnHand, GameState.CurrentEnemy.GoldOnHand * 2);
             Functions.AddTextToTextBox(TxtJob,
                 $"\"Greetings, {GameState.CurrentUser.Name}.\"\n" +

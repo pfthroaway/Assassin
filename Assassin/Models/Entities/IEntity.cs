@@ -3,7 +3,7 @@
 namespace Assassin.Models.Entities
 {
     /// <summary>Represents all required information for every living entity.</summary>
-    internal interface IEntity
+    public interface IEntity
     {
         #region Modifying Properties
 

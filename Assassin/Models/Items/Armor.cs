@@ -16,9 +16,7 @@ namespace Assassin.Models.Items
             set
             {
                 _defense = value;
-                NotifyPropertyChanged(nameof(Defense));
-                NotifyPropertyChanged("DefenseToString");
-                NotifyPropertyChanged("DefenseToStringWithText");
+                NotifyPropertyChanged(nameof(Defense), nameof(DefenseToString), nameof(DefenseToStringWithText));
             }
         }
 
@@ -38,8 +36,8 @@ namespace Assassin.Models.Items
 
         public static bool Equals(Armor left, Armor right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
             return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Defense == right.Defense && left.Value == right.Value && left.Hidden == right.Hidden;
         }
 

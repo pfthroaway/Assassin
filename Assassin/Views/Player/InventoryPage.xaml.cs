@@ -49,7 +49,7 @@ namespace Assassin.Views.Player
         private async void ClosePage()
         {
             GameState.GoBack();
-            await GameState.SaveUser(GameState.CurrentUser);
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         public InventoryPage() => InitializeComponent();

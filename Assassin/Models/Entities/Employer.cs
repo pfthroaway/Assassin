@@ -1,7 +1,7 @@
 ﻿namespace Assassin.Models.Entities
 {
-    /// <summary>Represents someone who offers the User a job.</summary>
-    internal class Employer
+    /// <summary>Represents someone who offers the <see cref="User"/> a job.</summary>
+    public class Employer
     {
         #region Properties
 

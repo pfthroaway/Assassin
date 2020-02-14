@@ -185,7 +185,7 @@ namespace Assassin.Views.Player
         private async void ClosePage(bool save = false)
         {
             if (save)
-                await GameState.SaveUser(GameState.CurrentUser);
+                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
             else
                 GameState.CurrentUser = _originalUser;
             GameState.GoBack();

@@ -15,11 +15,10 @@ using System.Threading.Tasks;
 
 namespace Assassin.Models.Database
 {
+    /// <summary><summary>Represents all SQLite database interactions required by the game.</summary>
     internal class SQLiteDatabaseInteraction : IDatabaseInteraction
     {
-        // ReSharper disable once InconsistentNaming
         private const string _DATABASENAME = "Assassin.sqlite";
-
         private static readonly string DatabaseLocation = Path.Combine(AppData.Location, _DATABASENAME);
         private readonly string _con = $"Data Source = {DatabaseLocation}; foreign keys = TRUE; Version=3";
 
@@ -430,9 +429,6 @@ namespace Assassin.Models.Database
 
         #region User Management
 
-        // TODO Finish copying User Management
-        // TODO Check all methods for proper usage.
-
         /// <summary>Assigns a <see cref="User"/> from a DataRow.</summary>
         /// <param name="dr">DataRow containing <see cref="User"/></param>
         /// <returns>Assigned <see cref="User"/></returns>
@@ -496,6 +492,16 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@password", newUser.Password);
             cmd.Parameters.AddWithValue("@oldName", oldUser.Name);
 
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Deletes a <see cref="User"/> from the database.</summary>
+        /// <param name="userDelete"><see cref="User"/> to be deleted.</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> DeleteUser(User userDelete)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Users WHERE [Username] = @name" };
+            cmd.Parameters.AddWithValue("@name", userDelete.Name);
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
@@ -592,6 +598,27 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@name", saveUser.Name);
 
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Changes an <see cref="User"/>'s name and then saves the<see cref= "User" /> to the database.</summary>
+        /// <param name="userSave"><see cref="User"/> to be saved</param>
+        /// <param name="newName">New name for <see cref="User"/></param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> SaveUser(User userSave, string newName)
+        {
+            if (userSave.Name != newName)
+            {
+                SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Users SET [Username] = @newName WHERE [Username] = @oldName" };
+                cmd.Parameters.AddWithValue("@newName", newName);
+                cmd.Parameters.AddWithValue("@oldName", userSave.Name);
+                if (await SQLiteHelper.ExecuteCommand(_con, cmd))
+                {
+                    userSave.Name = newName;
+                    return await SaveUser(userSave);
+                }
+                return false;
+            }
+            return true;
         }
 
         #endregion User Management

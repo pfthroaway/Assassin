@@ -44,7 +44,7 @@ namespace Assassin.Views.Battle
                 GameState.CurrentUser.Hunger++;
                 GameState.CurrentUser.Thirst++;
                 BtnAssassinate.IsEnabled = true;
-                GameState.CurrentEnemy = GameState.SelectEnemy();
+                GameState.SelectEnemy();
 
                 Functions.AddTextToTextBox(TxtAssassinate, "You spot a " + GameState.CurrentEnemy + ".");
             }

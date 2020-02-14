@@ -27,7 +27,7 @@ namespace Assassin.Views.Shopping
             set
             {
                 _selectedWeapon = value;
-                NotifyPropertyChanged("SelectedWeapon");
+                NotifyPropertyChanged(nameof(SelectedWeapon));
                 GrpSelected.DataContext = SelectedWeapon;
             }
         }
@@ -38,7 +38,7 @@ namespace Assassin.Views.Shopping
             get => _currentWeapon; set
             {
                 _currentWeapon = value;
-                NotifyPropertyChanged("CurrentWeapon");
+                NotifyPropertyChanged(nameof(CurrentWeapon));
                 GrpCurrent.DataContext = CurrentWeapon;
             }
         }
@@ -206,7 +206,7 @@ namespace Assassin.Views.Shopping
         private async void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             GameState.GoBack();
-            await GameState.SaveUser(GameState.CurrentUser);
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         private void LstWeapon_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using Assassin.Models.Enums;
 using Assassin.Models.Items;
+using System;
 
 namespace Assassin.Models.Entities
 {
@@ -328,30 +329,58 @@ namespace Assassin.Models.Entities
 
         #endregion Helper Properties
 
+        /// <summary>Determines if the <see cref="User"/> can do an action.</summary>
+        /// <returns>If the <see cref="User"/> can do an action</returns>
+        public bool CanDoAction() => Hunger < 24 && Thirst < 24;
+
+        /// <summary>Displays text about the <see cref="User"/>'s current hunger and thirst.</summary>
+        /// <returns>text about the <see cref="User"/>'s current hunger and thirst</returns>
+        public string DisplayHungerThirstText()
+        {
+            if (Hunger >= 24 && Thirst >= 24)
+                return "You are too hungry and thirsty to continue.";
+            else if (Hunger >= 24)
+                return "You are too hungry to continue.";
+            else if (Thirst >= 24)
+                return "You are too thirsty to continue.";
+            else if (Hunger > 0 && Hunger % 5 == 0)
+                return $"You are {GameState.GetHunger(Hunger).ToLower()}.";
+            else if (Thirst > 0 && Thirst % 5 == 0)
+                return $"You are {GameState.GetThirst(Thirst).ToLower()}.";
+
+            return "";
+        }
+
         /// <summary>Gains experience for the <see cref="User"/>.</summary>
         /// <param name="experience">Experience gained</param>
         /// <returns>String based on experience gain</returns>
-        internal string GainExperience(int experience)
+        public string GainExperience(int experience)
         {
             int oldExperience = Experience;
-            string experienceText = "You have earned " + experience + " experience from the battle.";
+            string experienceText = $"You have earned {experience} experience from the battle.";
             string levelText = "";
 
             Experience += experience;
             if (oldExperience / 10 < Experience / 10)
             {
                 Level++;
-                levelText = " You have gained a level! You are now a " + GameState.AllRanks[Level] + "!";
+                levelText = $" You have gained a level! You are now a {Rank}!";
             }
 
-            //if past maximum exp
+            //if past maximum exp, set to maximum
             if (Experience > 100)
-            {
                 Experience = 100;
-                //set to maximum
-            }
 
             return experienceText + levelText;
+        }
+
+        /// <summary>Gains hunger and thirst, and returns text regarding their new hunger and thirst states.</summary>
+        /// <returns>Text regarding new hunger and thirst states</returns>
+        public string GainHungerThirst()
+        {
+            Hunger++;
+            Thirst++;
+            return DisplayHungerThirstText();
         }
 
         #region Health Manipulation
@@ -359,12 +388,12 @@ namespace Assassin.Models.Entities
         /// <summary>The <see cref="User"/> heals themselves.</summary>
         /// <param name="healAmount">Amount of health restored.</param>
         /// <returns>Message regarding damage taken</returns>
-        internal string Heal(int healAmount)
+        public string Heal(int healAmount)
         {
             CurrentEndurance += healAmount;
             if (CurrentEndurance > MaximumEndurance)
                 CurrentEndurance = MaximumEndurance;
-            return "You heal for " + healAmount + " damage.";
+            return $"You heal {healAmount:N0} damage.";
         }
 
         /// <summary>The <see cref="User"/> takes damage.</summary>
@@ -373,15 +402,69 @@ namespace Assassin.Models.Entities
         public override string TakeDamage(int damage)
         {
             CurrentEndurance -= damage;
-            return "You take " + damage + " damage.";
+            return $"You take {damage:N0} damage.";
         }
 
         #endregion Health Manipulation
 
+        #region Override Operators
+
+        public static bool Equals(User left, User right)
+        {
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
+            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase)
+                && left.Level == right.Level
+                && (left.Experience == right.Experience)
+                && (left.SkillPoints == right.SkillPoints)
+                && (left.Alive == right.Alive)
+                && (left.CurrentLocation == right.CurrentLocation)
+                && (left.CurrentEndurance == right.CurrentEndurance)
+                && (left.MaximumEndurance == right.MaximumEndurance)
+                && (left.Hunger == right.Hunger)
+                && (left.Thirst == right.Thirst)
+                && (left.CurrentWeaponType == right.CurrentWeaponType)
+                && (left.LightWeapon == right.LightWeapon)
+                && (left.HeavyWeapon == right.HeavyWeapon)
+                && (left.TwoHandedWeapon == right.TwoHandedWeapon)
+                && (left.Armor == right.Armor)
+                && (left.Potion == right.Potion)
+                && (left.Lockpicks == right.Lockpicks)
+                && (left.GoldOnHand == right.GoldOnHand)
+                && (left.GoldInBank == right.GoldInBank)
+                && (left.GoldOnLoan == right.GoldOnLoan)
+                && (left.Shovel == right.Shovel)
+                && (left.Lantern == right.Lantern)
+                && (left.Amulet == right.Amulet)
+                && (left.LightWeaponSkill == right.LightWeaponSkill)
+                && (left.HeavyWeaponSkill == right.HeavyWeaponSkill)
+                && (left.TwoHandedWeaponSkill == right.TwoHandedWeaponSkill)
+                && (left.Blocking == right.Blocking)
+                && (left.Slipping == right.Slipping)
+                && (left.Stealth == right.Stealth)
+                && (left.HenchmenLevel1 == right.HenchmenLevel1)
+                && (left.HenchmenLevel2 == right.HenchmenLevel2)
+                && (left.HenchmenLevel3 == right.HenchmenLevel3)
+                && (left.HenchmenLevel4 == right.HenchmenLevel4)
+                && (left.HenchmenLevel5 == right.HenchmenLevel5);
+        }
+
+        public override bool Equals(object obj) => Equals(this, obj as User);
+
+        public bool Equals(User other) => Equals(this, other);
+
+        public static bool operator ==(User left, User right) => Equals(left, right);
+
+        public static bool operator !=(User left, User right) => !Equals(left, right);
+
+        public override int GetHashCode() => base.GetHashCode() ^ 17;
+
+        #endregion Override Operators
+
         #region Constructors
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
-        internal User()
+        public User()
         {
             Name = "";
             Password = "";
@@ -459,7 +542,7 @@ namespace Assassin.Models.Entities
         /// <param name="henchmenLevel3">Amount of Level 3 Henchmen employed by the <see cref="User"/></param>
         /// <param name="henchmenLevel4">Amount of Level 4 Henchmen employed by the <see cref="User"/></param>
         /// <param name="henchmenLevel5">Amount of Level 5 Henchmen employed by the <see cref="User"/></param>
-        internal User(string name, string password, int level, int experience, int skillPoints, bool alive, SleepLocation currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
+        public User(string name, string password, int level, int experience, int skillPoints, bool alive, SleepLocation currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
         {
             Name = name;
             Password = password;
@@ -503,7 +586,7 @@ namespace Assassin.Models.Entities
 
         /// <summary>Replaces this instance of <see cref="User"/> with another instance.</summary>
         /// <param name="other"><see cref="User"/> to replace this instance.</param>
-        internal User(User other) : this(other.Name, other.Password, other.Level, other.Experience, other.SkillPoints, other.Alive, other.CurrentLocation, other.CurrentEndurance, other.MaximumEndurance, other.Hunger, other.Thirst, other.CurrentWeaponType, other.LightWeapon, other.HeavyWeapon, other.TwoHandedWeapon, other.Armor, other.Potion, other.Lockpicks, other.GoldOnHand, other.GoldInBank, other.GoldOnLoan, other.Shovel, other.Lantern, other.Amulet, other.LightWeaponSkill, other.HeavyWeaponSkill, other.TwoHandedWeaponSkill, other.Blocking, other.Slipping, other.Stealth, other.HenchmenLevel1, other.HenchmenLevel2, other.HenchmenLevel3, other.HenchmenLevel4, other.HenchmenLevel5)
+        public User(User other) : this(other.Name, other.Password, other.Level, other.Experience, other.SkillPoints, other.Alive, other.CurrentLocation, other.CurrentEndurance, other.MaximumEndurance, other.Hunger, other.Thirst, other.CurrentWeaponType, other.LightWeapon, other.HeavyWeapon, other.TwoHandedWeapon, other.Armor, other.Potion, other.Lockpicks, other.GoldOnHand, other.GoldInBank, other.GoldOnLoan, other.Shovel, other.Lantern, other.Amulet, other.LightWeaponSkill, other.HeavyWeaponSkill, other.TwoHandedWeaponSkill, other.Blocking, other.Slipping, other.Stealth, other.HenchmenLevel1, other.HenchmenLevel2, other.HenchmenLevel3, other.HenchmenLevel4, other.HenchmenLevel5)
         { }
 
         #endregion Constructors

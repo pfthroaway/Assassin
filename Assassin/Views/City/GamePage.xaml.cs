@@ -115,7 +115,7 @@ namespace Assassin.Views.City
         private async void ClosePage()
         {
             GameState.GoBack();
-            await GameState.SaveUser(GameState.CurrentUser);
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         public GamePage() => InitializeComponent();

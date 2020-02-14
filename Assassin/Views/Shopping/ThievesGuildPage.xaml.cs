@@ -43,7 +43,7 @@ namespace Assassin.Views.Shopping
         private async void BtnBack_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             GameState.GoBack();
-            await GameState.SaveUser(GameState.CurrentUser);
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         private void BtnPurchase_Click(object sender, System.Windows.RoutedEventArgs e)

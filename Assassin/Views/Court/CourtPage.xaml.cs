@@ -1,4 +1,5 @@
 ﻿using Assassin.Models;
+using Assassin.Models.Enums;
 using Assassin.Views.City;
 using Extensions;
 using System;
@@ -82,7 +83,7 @@ namespace Assassin.Views.Court
                 ? "You don't have the money required to pay the fine."
                 : "You decide it is best to spend the night in jail.");
 
-            GameState.CurrentUser.CurrentLocation = "Jail";
+            GameState.CurrentUser.CurrentLocation = SleepLocation.Jail;
             _blnFinished = true;
             ClosePage();
         }
@@ -116,7 +117,7 @@ namespace Assassin.Views.Court
             if (_blnFinished)
             {
                 GameState.GoBack();
-                await GameState.SaveUser(GameState.CurrentUser);
+                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
             }
             else
                 GameState.DisplayNotification("You must first make a decision.", "Assassin");

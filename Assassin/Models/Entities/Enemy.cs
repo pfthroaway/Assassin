@@ -4,7 +4,7 @@ using System;
 namespace Assassin.Models.Entities
 {
     /// <summary>Represents an <see cref="Enemy"/> a <see cref="User"/> fights.</summary>
-    internal class Enemy : LivingEntity
+    public class Enemy : LivingEntity
     {
         private int _weaponSkill;
         private Weapon _weapon = new Weapon();
@@ -27,13 +27,26 @@ namespace Assassin.Models.Entities
 
         #endregion Properties
 
+        #region Health Manipulation
+
+        /// <summary>The <see cref="Enemy"/> takes damage.</summary>
+        /// <param name="damage">Amount of damage taken.</param>
+        /// <returns>Message regarding damage taken</returns>
+        public override string TakeDamage(int damage)
+        {
+            CurrentEndurance -= damage;
+            return $"The {Name} takes {damage:N0} damage.";
+        }
+
+        #endregion Health Manipulation
+
         #region Override Operators
 
         public static bool Equals(Enemy left, Enemy right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
-            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Level == right.Level && left.CurrentEndurance == right.CurrentEndurance && left.MaximumEndurance == right.MaximumEndurance && left.GoldOnHand == right.GoldOnHand && left.Armor == right.Armor && left.Weapon == right.Weapon && left.WeaponSkill == right.WeaponSkill;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
+            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Level == right.Level && left.CurrentEndurance == right.CurrentEndurance && left.MaximumEndurance == right.MaximumEndurance && left.GoldOnHand == right.GoldOnHand && left.Armor == right.Armor && left.Weapon == right.Weapon && left.WeaponSkill == right.WeaponSkill && left.Blocking == right.Blocking && left.Slipping == right.Slipping;
         }
 
         public override bool Equals(object obj) => Equals(this, obj as Enemy);
@@ -48,23 +61,10 @@ namespace Assassin.Models.Entities
 
         #endregion Override Operators
 
-        #region Health Manipulation
-
-        /// <summary>The <see cref="Enemy"/> takes damage.</summary>
-        /// <param name="damage">Amount of damage taken.</param>
-        /// <returns>Message regarding damage taken</returns>
-        public override string TakeDamage(int damage)
-        {
-            CurrentEndurance -= damage;
-            return "The " + Name + " takes " + damage + " damage.";
-        }
-
-        #endregion Health Manipulation
-
         #region Constructors
 
         /// <summary>Initializes a new instance of the <see cref="Enemy"/> class.</summary>
-        internal Enemy()
+        public Enemy()
         {
             Name = "";
             Level = 1;
@@ -89,7 +89,7 @@ namespace Assassin.Models.Entities
         /// <param name="weaponSkill">Amount of skill the <see cref="Enemy"/> has with their Weapon</param>
         /// <param name="blocking">Amount of skill the <see cref="Enemy"/> has with blocking incoming attacks</param>
         /// <param name="slipping">Amount of skill the <see cref="Enemy"/> has with dodging attacks and fleeing battles</param>
-        internal Enemy(string name, int level, int currentEndurance, int maximumEndurance, Weapon weapon, Armor armor, int goldOnHand, int weaponSkill, int blocking, int slipping)
+        public Enemy(string name, int level, int currentEndurance, int maximumEndurance, Weapon weapon, Armor armor, int goldOnHand, int weaponSkill, int blocking, int slipping)
         {
             Name = name;
             Level = level;
@@ -105,7 +105,7 @@ namespace Assassin.Models.Entities
 
         /// <summary>Replaces this instance of Enemy with another instance.</summary>
         /// <param name="other">Enemy to replace this instance</param>
-        internal Enemy(Enemy other) : this(other.Name, other.Level, other.CurrentEndurance, other.MaximumEndurance, other.Weapon, other.Armor, other.GoldOnHand, other.WeaponSkill, other.Blocking, other.Slipping)
+        public Enemy(Enemy other) : this(other.Name, other.Level, other.CurrentEndurance, other.MaximumEndurance, other.Weapon, other.Armor, other.GoldOnHand, other.WeaponSkill, other.Blocking, other.Slipping)
         {
         }
 

@@ -22,8 +22,8 @@ namespace Assassin.Models.Items
 
         public static bool Equals(Potion left, Potion right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
             return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.HealAmount == right.HealAmount && left.Value == right.Value && left.Hidden == right.Hidden;
         }
 

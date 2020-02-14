@@ -23,7 +23,7 @@ namespace Assassin.Views.Shopping
             set
             {
                 _selectedArmor = value;
-                NotifyPropertyChanged("SelectedArmor");
+                NotifyPropertyChanged(nameof(SelectedArmor));
                 GrpSelected.DataContext = SelectedArmor;
             }
         }
@@ -121,7 +121,7 @@ namespace Assassin.Views.Shopping
         private async void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             GameState.GoBack();
-            await GameState.SaveUser(GameState.CurrentUser);
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         #endregion Button-Click Methods

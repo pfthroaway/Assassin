@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Assassin.Models.Items
+﻿namespace Assassin.Models.Items
 {
     /// <summary>Represents an <see cref="Item"/> in the game.</summary>
     public abstract class Item : BaseINPC, IItem

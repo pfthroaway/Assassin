@@ -9,7 +9,7 @@ namespace Assassin.Models.Items
 
         #region Properties
 
-        /// <summary>Amount of hunger restored by this Food.</summary>
+        /// <summary>Amount of hunger restored by this <see cref="Food"/>.</summary>
         public int RestoreHunger
         {
             get => _restoreHunger;
@@ -22,8 +22,8 @@ namespace Assassin.Models.Items
 
         public static bool Equals(Food left, Food right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
             return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.RestoreHunger == right.RestoreHunger && left.Value == right.Value && left.Hidden == right.Hidden;
         }
 

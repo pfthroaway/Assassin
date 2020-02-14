@@ -25,9 +25,7 @@ namespace Assassin.Models.Items
             set
             {
                 _damage = value;
-                NotifyPropertyChanged(nameof(Damage));
-                NotifyPropertyChanged("DamageToString");
-                NotifyPropertyChanged("DamageToStringWithText");
+                NotifyPropertyChanged(nameof(Damage), nameof(DamageToString), nameof(DamageToStringWithText));
             }
         }
 
@@ -47,8 +45,8 @@ namespace Assassin.Models.Items
 
         public static bool Equals(Weapon left, Weapon right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
             return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Type == right.Type && left.Damage == right.Damage && left.Value == right.Value && left.Hidden == right.Hidden;
         }
 

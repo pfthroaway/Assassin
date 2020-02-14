@@ -15,6 +15,7 @@ using System.Windows.Controls;
 
 namespace Assassin.Models
 {
+    /// <summary><summary>Represents the current state of the game.</summary>
     internal static class GameState
     {
         internal static User CurrentUser = new User();
@@ -30,7 +31,7 @@ namespace Assassin.Models
         internal static List<Food> AllFood = new List<Food>();
         internal static List<Drink> AllDrinks = new List<Drink>();
         internal static string AdminPassword = "";
-        private static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
+        internal static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
 
         #region Navigation
 
@@ -99,6 +100,254 @@ namespace Assassin.Models
             }
         }
 
+        #region Display Management
+
+        /// <summary>Gets the hunger of a user and returns it as a String.</summary>
+        /// <param name="hunger">Current hunger</param>
+        /// <returns>String regarding hunger</returns>
+        public static string GetHunger(int hunger)
+        {
+            if (hunger < 5)
+                return "Full";
+            else if (hunger < 10)
+                return "Hungry";
+            else if (hunger < 15)
+                return "Very Hungry";
+            else if (hunger < 20)
+                return "Famished";
+            else if (hunger < 25)
+                return "Starving";
+            return "BROKEN";
+        }
+
+        /// <summary>Gets the thirst of a user and returns it as a String.</summary>
+        /// <param name="thirst">Current thirst</param>
+        /// <returns>String regarding thirst</returns>
+        public static string GetThirst(int thirst)
+        {
+            if (thirst < 5)
+                return "Quenched";
+            else if (thirst < 10)
+                return "Thirsty";
+            else if (thirst < 15)
+                return "Very Thirsty";
+            else if (thirst < 20)
+                return "Parched";
+            else if (thirst < 25)
+                return "Dehydrated";
+            return "BROKEN";
+        }
+
+        /// <summary>Selects an Enemy based on the User's current level.</summary>
+        /// <returns>Selected Enemy</returns>
+        internal static void SelectEnemy()
+        {
+            int level = 0;
+            int enemy = Functions.GenerateRandomNumber(1, 100);
+            switch (CurrentUser.Level)
+            {
+                case 1:
+                    level = enemy <= 65 ? 0 : 1;
+                    break;
+
+                case 2:
+                    if (enemy <= 40)
+                        level = 1;
+                    else if (enemy <= 80)
+                        level = 2;
+                    else if (enemy <= 95)
+                        level = 3;
+                    else
+                        level = 4;
+                    break;
+
+                case 3:
+                    if (enemy <= 20)
+                        level = 1;
+                    else if (enemy <= 40)
+                        level = 2;
+                    else if (enemy <= 80)
+                        level = 3;
+                    else if (enemy <= 95)
+                        level = 4;
+                    else
+                        level = 5;
+                    break;
+
+                case 4:
+                    if (enemy <= 10)
+                        level = 1;
+                    else if (enemy <= 20)
+                        level = 2;
+                    else if (enemy <= 40)
+                        level = 3;
+                    else if (enemy <= 70)
+                        level = 4;
+                    else if (enemy <= 90)
+                        level = 5;
+                    else
+                        level = 6;
+                    break;
+
+                case 5:
+                    if (enemy <= 5)
+                        level = 1;
+                    else if (enemy <= 10)
+                        level = 2;
+                    else if (enemy <= 20)
+                        level = 3;
+                    else if (enemy <= 50)
+                        level = 4;
+                    else if (enemy <= 75)
+                        level = 5;
+                    else if (enemy <= 90)
+                        level = 6;
+                    else
+                        level = 7;
+                    break;
+
+                case 6:
+                    if (enemy <= 2)
+                        level = 1;
+                    else if (enemy <= 4)
+                        level = 2;
+                    else if (enemy <= 10)
+                        level = 3;
+                    else if (enemy <= 25)
+                        level = 4;
+                    else if (enemy <= 50)
+                        level = 5;
+                    else if (enemy <= 75)
+                        level = 6;
+                    else if (enemy <= 90)
+                        level = 7;
+                    else
+                        level = 8;
+                    break;
+
+                case 7:
+                    if (enemy <= 5)
+                        level = 3;
+                    else if (enemy <= 10)
+                        level = 4;
+                    else if (enemy <= 35)
+                        level = 5;
+                    else if (enemy <= 60)
+                        level = 6;
+                    else if (enemy <= 85)
+                        level = 7;
+                    else if (enemy <= 95)
+                        level = 8;
+                    else
+                        level = 9;
+                    break;
+
+                case 8:
+                    if (enemy <= 5)
+                        level = 4;
+                    else if (enemy <= 15)
+                        level = 5;
+                    else if (enemy <= 30)
+                        level = 6;
+                    else if (enemy <= 55)
+                        level = 7;
+                    else if (enemy <= 85)
+                        level = 8;
+                    else if (enemy <= 95)
+                        level = 9;
+                    else
+                        level = 10;
+                    break;
+
+                case 9:
+                    if (enemy <= 5)
+                        level = 5;
+                    else if (enemy <= 15)
+                        level = 6;
+                    else if (enemy <= 30)
+                        level = 7;
+                    else if (enemy <= 50)
+                        level = 8;
+                    else if (enemy <= 85)
+                        level = 9;
+                    else
+                        level = 10;
+                    break;
+
+                case 10:
+                    if (enemy <= 5)
+                        level = 6;
+                    else if (enemy <= 15)
+                        level = 7;
+                    else if (enemy <= 35)
+                        level = 8;
+                    else if (enemy <= 65)
+                        level = 9;
+                    else
+                        level = 10;
+                    break;
+
+                case 11:
+                    if (enemy <= 15)
+                        level = 7;
+                    else if (enemy <= 30)
+                        level = 8;
+                    else if (enemy <= 45)
+                        level = 9;
+                    else
+                        level = 10;
+                    break;
+            }
+
+            List<Enemy> availableEnemies = AllEnemies.Where(availEnemy => availEnemy.Level == level).ToList();
+            if (availableEnemies.Count == 0)
+            {
+                int counter = 1;
+                while (availableEnemies.Count == 0)
+                {
+                    availableEnemies = AllEnemies.Where(availEnemy => level - counter >= availEnemy.Level && availEnemy.Level <= level + counter).ToList();
+                    counter++;
+                }
+            }
+            CurrentEnemy = new Enemy(availableEnemies[Functions.GenerateRandomNumber(0, availableEnemies.Count - 1)]);
+            CurrentEnemy.GoldOnHand = Functions.GenerateRandomNumber(CurrentEnemy.GoldOnHand / 2, CurrentEnemy.GoldOnHand);
+        }
+
+        #endregion Display Management
+
+        #region Guild Management
+
+        /// <summary>Member of a Guild gains membership with that Guild, applied to database.</summary>
+        /// <param name="joinUser">User joining the Guild.</param>
+        /// <param name="joinGuild">Guild being joined</param>
+        /// <returns>True if successful</returns>
+        public static async Task<bool> MemberJoinsGuild(User joinUser, Guild joinGuild)
+        {
+            if (await DatabaseInteraction.MemberJoinsGuild(joinUser, joinGuild))
+            {
+                joinGuild.Members.Add(joinUser.Name);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>Member of a Guild terminates membership with that Guild, applied to database.</summary>
+        /// <param name="leaveUser">User leaving the Guild.</param>
+        /// <param name="leaveGuild">Guild being left</param>
+        /// <returns>True if successful</returns>
+        public static async Task<bool> MemberLeavesGuild(User leaveUser, Guild leaveGuild)
+        {
+            if (await DatabaseInteraction.MemberLeavesGuild(leaveUser, leaveGuild))
+            {
+                leaveGuild.Members.Remove(leaveUser.Name);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion Guild Management
+
         #region User Management
 
         /// <summary>Changes a User's details in the database.</summary>
@@ -113,10 +362,11 @@ namespace Assassin.Models
         internal static async Task<bool> NewUser(User newUser)
         {
             bool success = false;
-            if (await DatabaseInteraction.NewUser(newUser))
+            if (await DatabaseInteraction.NewUser(newUser) && await MemberJoinsGuild(newUser, AllGuilds[0]))
             {
                 AllUsers.Add(newUser);
                 AllUsers = AllUsers.OrderBy(user => user.Name).ToList();
+                AllGuilds[0].Members.Add(newUser.Name);
                 success = true;
             }
 
@@ -129,172 +379,6 @@ namespace Assassin.Models
         internal static async Task<bool> SaveUser(User saveUser) => await DatabaseInteraction.SaveUser(saveUser);
 
         #endregion User Management
-
-        /// <summary>Selects an Enemy based on the User's current level.</summary>
-        /// <returns>Selected Enemy</returns>
-        internal static Enemy SelectEnemy()
-        {
-            int index = 0;
-            int random = Functions.GenerateRandomNumber(1, 100);
-            switch (CurrentUser.Level)
-            {
-                case 1:
-                    index = random <= 65 ? 0 : 1;
-                    break;
-
-                case 2:
-                    if (random <= 40)
-                        index = 0;
-                    else if (random <= 80)
-                        index = 1;
-                    else if (random <= 95)
-                        index = 2;
-                    else
-                        index = 3;
-                    break;
-
-                case 3:
-                    if (random <= 20)
-                        index = 0;
-                    else if (random <= 40)
-                        index = 1;
-                    else if (random <= 80)
-                        index = 2;
-                    else if (random <= 95)
-                        index = 3;
-                    else
-                        index = 4;
-                    break;
-
-                case 4:
-                    if (random <= 10)
-                        index = 0;
-                    else if (random <= 20)
-                        index = 1;
-                    else if (random <= 40)
-                        index = 2;
-                    else if (random <= 70)
-                        index = 3;
-                    else if (random <= 90)
-                        index = 4;
-                    else
-                        index = 5;
-                    break;
-
-                case 5:
-                    if (random <= 5)
-                        index = 0;
-                    else if (random <= 10)
-                        index = 1;
-                    else if (random <= 20)
-                        index = 2;
-                    else if (random <= 50)
-                        index = 3;
-                    else if (random <= 75)
-                        index = 4;
-                    else if (random <= 90)
-                        index = 5;
-                    else
-                        index = 6;
-                    break;
-
-                case 6:
-                    if (random <= 2)
-                        index = 0;
-                    else if (random <= 4)
-                        index = 1;
-                    else if (random <= 10)
-                        index = 2;
-                    else if (random <= 25)
-                        index = 3;
-                    else if (random <= 50)
-                        index = 4;
-                    else if (random <= 75)
-                        index = 5;
-                    else if (random <= 90)
-                        index = 6;
-                    else
-                        index = 7;
-                    break;
-
-                case 7:
-                    if (random <= 5)
-                        index = 2;
-                    else if (random <= 10)
-                        index = 3;
-                    else if (random <= 35)
-                        index = 4;
-                    else if (random <= 60)
-                        index = 5;
-                    else if (random <= 85)
-                        index = 6;
-                    else if (random <= 95)
-                        index = 7;
-                    else
-                        index = 8;
-                    break;
-
-                case 8:
-                    if (random <= 5)
-                        index = 3;
-                    else if (random <= 15)
-                        index = 4;
-                    else if (random <= 30)
-                        index = 5;
-                    else if (random <= 55)
-                        index = 6;
-                    else if (random <= 85)
-                        index = 7;
-                    else if (random <= 95)
-                        index = 8;
-                    else
-                        index = 9;
-                    break;
-
-                case 9:
-                    if (random <= 5)
-                        index = 4;
-                    else if (random <= 15)
-                        index = 5;
-                    else if (random <= 30)
-                        index = 6;
-                    else if (random <= 50)
-                        index = 7;
-                    else if (random <= 85)
-                        index = 8;
-                    else
-                        index = 9;
-                    break;
-
-                case 10:
-                    if (random <= 5)
-                        index = 5;
-                    else if (random <= 15)
-                        index = 6;
-                    else if (random <= 35)
-                        index = 7;
-                    else if (random <= 65)
-                        index = 8;
-                    else
-                        index = 9;
-                    break;
-
-                case 11:
-                    if (random <= 15)
-                        index = 6;
-                    else if (random <= 30)
-                        index = 7;
-                    else if (random <= 45)
-                        index = 8;
-                    else
-                        index = 9;
-                    break;
-            }
-
-            Enemy newEnemy = new Enemy(AllEnemies[index]);
-            newEnemy.GoldOnHand = Functions.GenerateRandomNumber(newEnemy.GoldOnHand / 2, newEnemy.GoldOnHand);
-            return newEnemy;
-        }
 
         #region Notification Management
 

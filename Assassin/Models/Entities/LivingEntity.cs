@@ -1,5 +1,4 @@
 ﻿using Assassin.Models.Items;
-using System.ComponentModel;
 
 namespace Assassin.Models.Entities
 {

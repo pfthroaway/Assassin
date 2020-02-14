@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Assassin.Models.Entities
 {
@@ -12,16 +11,8 @@ namespace Assassin.Models.Entities
         internal List<JailedUser> JailedList
         {
             get => _jailedList;
-            set { _jailedList = value; NotifyPropertyChanged("JailedList"); }
+            set { _jailedList = value; NotifyPropertyChanged(nameof(JailedList)); }
         }
-
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Constructors
 
