@@ -148,6 +148,7 @@ namespace Assassin.Views.City
         private void BtnInn_Click(object sender, RoutedEventArgs e)
         {
             //TODO Implement Inn
+            GameState.Navigate(new BarPage());
         }
 
         private void BtnInventory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InventoryPage());

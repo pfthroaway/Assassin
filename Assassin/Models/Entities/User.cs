@@ -96,6 +96,9 @@ namespace Assassin.Models.Entities
             }
         }
 
+        /// <summary>Amount of hunger a <see cref="User"/> has, formatted.</summary>
+        public string HungerToStringWithText => $"Hunger: {HungerToString}";
+
         /// <summary>Amount of thirst a <see cref="User"/> has, formatted.</summary>
         public string ThirstToString
         {
@@ -114,7 +117,9 @@ namespace Assassin.Models.Entities
                 else
                     return "BROKEN";
             }
-        }
+        }/// <summary>Amount of thirst a <see cref="User"/> has, formatted with preceding text.</summary>
+
+        public string ThirstToStringWithText => $"Thirst: {ThirstToString}";
 
         /// <summary>Weapon type of <see cref="User"/>'s currently equipped <see cref="Weapon"/>.</summary>
         public WeaponType CurrentWeaponType
