@@ -12,7 +12,8 @@ namespace Assassin.Models.Entities
 
         private string _password;
 
-        private int _experience, _skillPoints, _hunger, _thirst, _lockpicks, _goldInBank, _goldOnLoan, _lightWeaponSkill, _heavyWeaponSkill, _twoHandedWeaponSkill, _stealth, _henchmenLevel1, _henchmenLevel2, _henchmenLevel3, _henchmenLevel4, _henchmenLevel5;
+        private int _experience, _skillPoints, _hunger, _thirst, _lockpicks, _goldInBank, _goldOnLoan, _lightWeaponSkill, _heavyWeaponSkill, _twoHandedWeaponSkill, _stealth;
+        private Henchmen _henchmen;
         private bool _alive, _shovel, _lantern, _amulet;
         private SleepLocation _currentLocation;
         private WeaponType _currentWeapon;
@@ -224,39 +225,11 @@ namespace Assassin.Models.Entities
             set { _stealth = value; NotifyPropertyChanged(nameof(Stealth)); }
         }
 
-        /// <summary>Amount of level 1 henchmen hired by the <see cref="User"/>.</summary>
-        public int HenchmenLevel1
+        /// <summary>Amount of henchmen the <see cref="User"/> employs.</summary>
+        public Henchmen Henchmen
         {
-            get => _henchmenLevel1;
-            set { _henchmenLevel1 = value; NotifyPropertyChanged(nameof(HenchmenLevel1)); }
-        }
-
-        /// <summary>Amount of level 2 henchmen hired by the <see cref="User"/>.</summary>
-        public int HenchmenLevel2
-        {
-            get => _henchmenLevel2;
-            set { _henchmenLevel2 = value; NotifyPropertyChanged(nameof(HenchmenLevel2)); }
-        }
-
-        /// <summary>Amount of level 3 henchmen hired by the <see cref="User"/>.</summary>
-        public int HenchmenLevel3
-        {
-            get => _henchmenLevel3;
-            set { _henchmenLevel3 = value; NotifyPropertyChanged(nameof(HenchmenLevel3)); }
-        }
-
-        /// <summary>Amount of level 4 henchmen hired by the <see cref="User"/>.</summary>
-        public int HenchmenLevel4
-        {
-            get => _henchmenLevel4;
-            set { _henchmenLevel4 = value; NotifyPropertyChanged(nameof(HenchmenLevel4)); }
-        }
-
-        /// <summary>Amount of level 5 henchmen hired by the <see cref="User"/>.</summary>
-        public int HenchmenLevel5
-        {
-            get => _henchmenLevel5;
-            set { _henchmenLevel5 = value; NotifyPropertyChanged(nameof(HenchmenLevel5)); }
+            get => _henchmen;
+            set { _henchmen = value; NotifyPropertyChanged(nameof(Henchmen)); }
         }
 
         #endregion Modifying Properties
@@ -462,11 +435,7 @@ namespace Assassin.Models.Entities
                 && (left.Blocking == right.Blocking)
                 && (left.Slipping == right.Slipping)
                 && (left.Stealth == right.Stealth)
-                && (left.HenchmenLevel1 == right.HenchmenLevel1)
-                && (left.HenchmenLevel2 == right.HenchmenLevel2)
-                && (left.HenchmenLevel3 == right.HenchmenLevel3)
-                && (left.HenchmenLevel4 == right.HenchmenLevel4)
-                && (left.HenchmenLevel5 == right.HenchmenLevel5);
+                && (left.Henchmen == right.Henchmen);
         }
 
         public override bool Equals(object obj) => Equals(this, obj as User);
@@ -519,11 +488,7 @@ namespace Assassin.Models.Entities
             Slipping = 10;
             Stealth = 10;
 
-            HenchmenLevel1 = 0;
-            HenchmenLevel2 = 0;
-            HenchmenLevel3 = 0;
-            HenchmenLevel4 = 0;
-            HenchmenLevel5 = 0;
+            Henchmen = new Henchmen(0, 0, 0, 0, 0);
         }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class using Property values.</summary>
@@ -557,12 +522,8 @@ namespace Assassin.Models.Entities
         /// <param name="blocking">Amount of skill the <see cref="User"/> has with blocking incoming attacks</param>
         /// <param name="slipping">Amount of skill the <see cref="User"/> has with dodging attacks and fleeing battles</param>
         /// <param name="stealth">Amount of skill the <see cref="User"/> has with surprising opponents, theft, and hiding</param>
-        /// <param name="henchmenLevel1">Amount of Level 1 Henchmen employed by the <see cref="User"/></param>
-        /// <param name="henchmenLevel2">Amount of Level 2 Henchmen employed by the <see cref="User"/></param>
-        /// <param name="henchmenLevel3">Amount of Level 3 Henchmen employed by the <see cref="User"/></param>
-        /// <param name="henchmenLevel4">Amount of Level 4 Henchmen employed by the <see cref="User"/></param>
-        /// <param name="henchmenLevel5">Amount of Level 5 Henchmen employed by the <see cref="User"/></param>
-        public User(string name, string password, int level, int experience, int skillPoints, bool alive, SleepLocation currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
+        /// <param name="henchmen">Amount of <see cref="Henchmen"/> the <see cref="User"/> employs</param>
+        public User(string name, string password, int level, int experience, int skillPoints, bool alive, SleepLocation currentLocation, int currentEndurance, int maximumEndurance, int hunger, int thirst, WeaponType currentWeapon, Weapon lightWeapon, Weapon heavyWeapon, Weapon twoHandedWeapon, Armor armor, Potion potion, int lockpicks, int goldOnHand, int goldInBank, int goldOnLoan, bool shovel, bool lantern, bool amulet, int lightWeaponSkill, int heavyWeaponSkill, int twoHandedWeaponSkill, int blocking, int slipping, int stealth, Henchmen henchmen)
         {
             Name = name;
             Password = password;
@@ -597,16 +558,12 @@ namespace Assassin.Models.Entities
             Slipping = slipping;
             Stealth = stealth;
 
-            HenchmenLevel1 = henchmenLevel1;
-            HenchmenLevel2 = henchmenLevel2;
-            HenchmenLevel3 = henchmenLevel3;
-            HenchmenLevel4 = henchmenLevel4;
-            HenchmenLevel5 = henchmenLevel5;
+            Henchmen = henchmen;
         }
 
         /// <summary>Replaces this instance of <see cref="User"/> with another instance.</summary>
         /// <param name="other"><see cref="User"/> to replace this instance.</param>
-        public User(User other) : this(other.Name, other.Password, other.Level, other.Experience, other.SkillPoints, other.Alive, other.CurrentLocation, other.CurrentEndurance, other.MaximumEndurance, other.Hunger, other.Thirst, other.CurrentWeaponType, other.LightWeapon, other.HeavyWeapon, other.TwoHandedWeapon, other.Armor, other.Potion, other.Lockpicks, other.GoldOnHand, other.GoldInBank, other.GoldOnLoan, other.Shovel, other.Lantern, other.Amulet, other.LightWeaponSkill, other.HeavyWeaponSkill, other.TwoHandedWeaponSkill, other.Blocking, other.Slipping, other.Stealth, other.HenchmenLevel1, other.HenchmenLevel2, other.HenchmenLevel3, other.HenchmenLevel4, other.HenchmenLevel5)
+        public User(User other) : this(other.Name, other.Password, other.Level, other.Experience, other.SkillPoints, other.Alive, other.CurrentLocation, other.CurrentEndurance, other.MaximumEndurance, other.Hunger, other.Thirst, other.CurrentWeaponType, other.LightWeapon, other.HeavyWeapon, other.TwoHandedWeapon, other.Armor, other.Potion, other.Lockpicks, other.GoldOnHand, other.GoldInBank, other.GoldOnLoan, other.Shovel, other.Lantern, other.Amulet, other.LightWeaponSkill, other.HeavyWeaponSkill, other.TwoHandedWeaponSkill, other.Blocking, other.Slipping, other.Stealth, other.Henchmen)
         { }
 
         #endregion Constructors

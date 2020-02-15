@@ -12,7 +12,7 @@ namespace Assassin.Views.Admin
 
         #region Button-Click Methods
 
-        private void Btnvoidmit_Click(object sender, RoutedEventArgs e)
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             if (PBKDF2.ValidatePassword(PswdAdmin.Password.Trim(), GameState.AdminPassword))
             {
@@ -47,7 +47,7 @@ namespace Assassin.Views.Admin
 
         private void pswdAdmin_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
 
-        private void pswdAdmin_PasswordChanged(object sender, RoutedEventArgs e) => Btnvoidmit.IsEnabled =
+        private void pswdAdmin_PasswordChanged(object sender, RoutedEventArgs e) => BtnSubmit.IsEnabled =
             PswdAdmin.Password.Length > 0;
 
         #endregion Page-Manipulation

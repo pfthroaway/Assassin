@@ -7,11 +7,12 @@ namespace Assassin.Models.Entities
     /// <summary>Represents a <see cref="Guild"/> that a <see cref="User"/> can join.</summary>
     public class Guild : BaseINPC
     {
-        private int _id, _fee, _gold, _henchmenLevel1, _henchmenLevel2, _henchmenLevel3, _henchmenLevel4, _henchmenLevel5;
+        private int _id, _fee, _gold;
+        private Henchmen _henchmen = new Henchmen(0, 0, 0, 0, 0);
         private string _name, _master;
         private List<string> _members = new List<string>();
 
-        #region Properties
+        #region Modifying Properties
 
         /// <summary>ID of the <see cref="Guild"/> .</summary>
         public int ID
@@ -55,42 +56,24 @@ namespace Assassin.Models.Entities
             set { _members = value; NotifyPropertyChanged(nameof(Members)); }
         }
 
-        /// <summary>Amount of level 1 henchmen hired by the <see cref="Guild"/>.</summary>
-        public int HenchmenLevel1
+        /// <summary>Amount of henchmen the <see cref="Guild"/> employs.</summary>
+        public Henchmen Henchmen
         {
-            get => _henchmenLevel1;
-            set { _henchmenLevel1 = value; NotifyPropertyChanged(nameof(HenchmenLevel1)); }
+            get => _henchmen;
+            set { _henchmen = value; NotifyPropertyChanged(nameof(Henchmen)); }
         }
 
-        /// <summary>Amount of level 2 henchmen hired by the <see cref="Guild"/>.</summary>
-        public int HenchmenLevel2
-        {
-            get => _henchmenLevel2;
-            set { _henchmenLevel2 = value; NotifyPropertyChanged(nameof(HenchmenLevel2)); }
-        }
+        #endregion Modifying Properties
 
-        /// <summary>Amount of level 3 henchmen hired by the <see cref="Guild"/>.</summary>
-        public int HenchmenLevel3
-        {
-            get => _henchmenLevel3;
-            set { _henchmenLevel3 = value; NotifyPropertyChanged(nameof(HenchmenLevel3)); }
-        }
+        #region Helper Properties
 
-        /// <summary>Amount of level 4 henchmen hired by the <see cref="Guild"/>.</summary>
-        public int HenchmenLevel4
-        {
-            get => _henchmenLevel4;
-            set { _henchmenLevel4 = value; NotifyPropertyChanged(nameof(HenchmenLevel4)); }
-        }
+        /// <summary>Fee paid to join the <see cref="Guild"/>, formatted.</summary>
+        public string FeeToString => Fee.ToString("N0");
 
-        /// <summary>Amount of level 5 henchmen hired by the <see cref="Guild"/>.</summary>
-        public int HenchmenLevel5
-        {
-            get => _henchmenLevel5;
-            set { _henchmenLevel5 = value; NotifyPropertyChanged(nameof(HenchmenLevel5)); }
-        }
+        /// <summary>Gold owned by the <see cref="Guild"/>, formatted.</summary>
+        public string GoldToString => Gold.ToString("N0");
 
-        #endregion Properties
+        #endregion Helper Properties
 
         /// <summary>Determines whether the <see cref="Guild "/> has a specific <see cref="User"/> as a member.</summary>
         /// <param name="member"><see cref="User"/> being checked</param>
@@ -103,7 +86,7 @@ namespace Assassin.Models.Entities
         {
             if (left is null && right is null) return true;
             if (left is null ^ right is null) return false;
-            return left.ID == right.ID && string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && string.Equals(left.Master, right.Master, StringComparison.OrdinalIgnoreCase) && left.Fee == right.Fee && left.Gold == right.Gold && left.HenchmenLevel1 == right.HenchmenLevel1 && left.HenchmenLevel2 == right.HenchmenLevel2 && left.HenchmenLevel3 == right.HenchmenLevel3 && left.HenchmenLevel4 == right.HenchmenLevel4 && left.HenchmenLevel5 == right.HenchmenLevel5 && !left.Members.Except(right.Members).Any() && !right.Members.Except(left.Members).Any();
+            return left.ID == right.ID && string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && string.Equals(left.Master, right.Master, StringComparison.OrdinalIgnoreCase) && left.Fee == right.Fee && left.Gold == right.Gold && left.Henchmen == right.Henchmen && !left.Members.Except(right.Members).Any() && !right.Members.Except(left.Members).Any();
         }
 
         public override bool Equals(object obj) => Equals(this, obj as Guild);
@@ -115,6 +98,8 @@ namespace Assassin.Models.Entities
         public static bool operator !=(Guild left, Guild right) => !Equals(left, right);
 
         public override int GetHashCode() => base.GetHashCode() ^ 17;
+
+        public override string ToString() => Name;
 
         #endregion Override Operators
 
@@ -129,11 +114,7 @@ namespace Assassin.Models.Entities
             Fee = 50;
             Gold = 500;
             Members = new List<string>();
-            HenchmenLevel1 = 0;
-            HenchmenLevel2 = 0;
-            HenchmenLevel3 = 0;
-            HenchmenLevel4 = 0;
-            HenchmenLevel5 = 0;
+            Henchmen = new Henchmen(0, 0, 0, 0, 0);
         }
 
         /// <summary>Initializes a new instance of the <see cref="Guild"/> class using Property values.</summary>
@@ -143,12 +124,8 @@ namespace Assassin.Models.Entities
         /// <param name="fee">Fee to enter <see cref="Guild"/></param>
         /// <param name="gold">Amount of Gold owned by <see cref="Guild"/></param>
         /// <param name="members">Names of <see cref="User"/>s who are a member of the <see cref="Guild"/></param>
-        /// <param name="henchmenLevel1">Amount of Level 1 Henchmen the <see cref="Guild"/> employs</param>
-        /// <param name="henchmenLevel2">Amount of Level 2 Henchmen the <see cref="Guild"/> employs</param>
-        /// <param name="henchmenLevel3">Amount of Level 3 Henchmen the <see cref="Guild"/> employs</param>
-        /// <param name="henchmenLevel4">Amount of Level 4 Henchmen the <see cref="Guild"/> employs</param>
-        /// <param name="henchmenLevel5">Amount of Level 5 Henchmen the <see cref="Guild"/> employs</param>
-        public Guild(int id, string name, string master, int fee, int gold, List<string> members, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
+        /// <param name="henchmen">Amount of <see cref="Henchmen"/> the <see cref="Guild"/> employs</param>
+        public Guild(int id, string name, string master, int fee, int gold, List<string> members, Henchmen henchmen)
         {
             ID = id;
             Name = name;
@@ -156,11 +133,7 @@ namespace Assassin.Models.Entities
             Fee = fee;
             Gold = gold;
             Members = members;
-            HenchmenLevel1 = henchmenLevel1;
-            HenchmenLevel2 = henchmenLevel2;
-            HenchmenLevel3 = henchmenLevel3;
-            HenchmenLevel4 = henchmenLevel4;
-            HenchmenLevel5 = henchmenLevel5;
+            Henchmen = henchmen;
         }
 
         #endregion Constructors

@@ -80,6 +80,7 @@
     <Compile Include="Models\Database\IDatabaseInteraction.cs" />
     <Compile Include="Models\Database\SQLiteDatabaseInteraction.cs" />
     <Compile Include="Models\Entities\Employer.cs" />
+    <Compile Include="Models\Entities\Henchmen.cs" />
     <Compile Include="Models\Entities\IEntity.cs" />
     <Compile Include="Models\Entities\LivingEntity.cs" />
     <Compile Include="Models\Enums\Crime.cs" />

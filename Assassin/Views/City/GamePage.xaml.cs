@@ -3,6 +3,7 @@ using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Assassin.Views.Bank;
 using Assassin.Views.Battle;
+using Assassin.Views.Guilds;
 using Assassin.Views.Player;
 using Assassin.Views.Shopping;
 using Extensions;
@@ -124,47 +125,9 @@ namespace Assassin.Views.City
 
         #region Button-Click Methods
 
-        private void BtnExit_Click(object sender, RoutedEventArgs e) => ClosePage();
+        private void BtnAssassinate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AssassinationPage());
 
-        private void BtnMessages_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement messages.
-        }
-
-        private void BtnOptions_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Options.
-        }
-
-        private void BtnPub_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Pub
-        }
-
-        private void BtnInn_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Inn
-        }
-
-        private void BtnJail_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Jail
-        }
-
-        private void BtnGuild_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Guilds.
-        }
-
-        private void BtnOthers_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Others
-        }
-
-        private void BtnMystic_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Mystic
-        }
+        private void BtnBank_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new BankPage());
 
         private async void BtnChapel_Click(object sender, RoutedEventArgs e)
         {
@@ -179,17 +142,52 @@ namespace Assassin.Views.City
                 Functions.AddTextToTextBox(TxtGame, "Sorry, the priest is currently holding mass. Please come again later.");
         }
 
-        private void BtnRob_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new RobPage());
+        private void BtnExit_Click(object sender, RoutedEventArgs e) => ClosePage();
 
-        private void BtnAssassinate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AssassinationPage());
+        private void BtnGuild_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildListPage());
+
+        private void BtnInn_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement Inn
+        }
 
         private void BtnInventory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InventoryPage());
+
+        private void BtnJail_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement Jail
+        }
+
+        private void BtnMessages_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement messages.
+        }
+
+        private void BtnMystic_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement Mystic
+        }
+
+        private void BtnOptions_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement Options.
+        }
+
+        private void BtnOthers_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement Others
+        }
+
+        private void BtnPub_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO Implement Pub
+        }
+
+        private void BtnRob_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new RobPage());
 
         private void BtnShops_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ShopsPage());
 
         private void BtnTrain_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new TrainPage());
-
-        private void BtnBank_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new BankPage());
 
         #endregion Button-Click Methods
 

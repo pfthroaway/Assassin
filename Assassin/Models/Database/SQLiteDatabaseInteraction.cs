@@ -183,11 +183,11 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@guildmaster", guildSave.Master);
             cmd.Parameters.AddWithValue("@guildFee", guildSave.Fee);
             cmd.Parameters.AddWithValue("@guildGold", guildSave.Gold);
-            cmd.Parameters.AddWithValue("@henchmenLevel1", guildSave.HenchmenLevel1.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel2", guildSave.HenchmenLevel2.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel3", guildSave.HenchmenLevel3.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel4", guildSave.HenchmenLevel4.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel5", guildSave.HenchmenLevel5.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel1", guildSave.Henchmen.Level1.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel2", guildSave.Henchmen.Level2.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel3", guildSave.Henchmen.Level3.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel4", guildSave.Henchmen.Level4.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel5", guildSave.Henchmen.Level5.ToString());
             cmd.Parameters.AddWithValue("@id", guildSave.ID);
 
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
@@ -295,8 +295,18 @@ namespace Assassin.Models.Database
             List<Guild> allGuilds = new List<Guild>();
 
             if (ds.Tables[0].Rows.Count > 0)
-                allGuilds.AddRange(from DataRow dr in ds.Tables[0].Rows select new Guild(Int32Helper.Parse(dr["ID"]), dr["GuildName"].ToString(), dr["Guildmaster"].ToString(), Int32Helper.Parse(dr["GuildFee"]), Int32Helper.Parse(dr["GuildGold"]), new List<string>(), Int32Helper.Parse(dr["HenchmenLevel1"]), Int32Helper.Parse(dr["HenchmenLevel2"]), Int32Helper.Parse(dr["HenchmenLevel3"]), Int32Helper.Parse(dr["HenchmenLevel4"]), Int32Helper.Parse(dr["HenchmenLevel5"])));
-
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    Guild newGuild = new Guild(Int32Helper.Parse(dr["ID"]), dr["GuildName"].ToString(), dr["Guildmaster"].ToString(), Int32Helper.Parse(dr["GuildFee"]), Int32Helper.Parse(dr["GuildGold"]), new List<string>(), new Henchmen(Int32Helper.Parse(dr["HenchmenLevel1"]), Int32Helper.Parse(dr["HenchmenLevel2"]), Int32Helper.Parse(dr["HenchmenLevel3"]), Int32Helper.Parse(dr["HenchmenLevel4"]), Int32Helper.Parse(dr["HenchmenLevel5"])));
+                    string members = $"Guild{Int32Helper.Parse(dr["ID"])}Members";
+                    DataSet membersDS = await SQLiteHelper.FillDataSet(_con, $"SELECT * FROM {members}");
+                    if (membersDS.Tables[0].Rows.Count > 0)
+                        foreach (DataRow drM in membersDS.Tables[0].Rows)
+                            newGuild.Members.Add(drM["Username"].ToString());
+                    allGuilds.Add(newGuild);
+                }
+            }
             return allGuilds.OrderBy(guild => guild.ID).ToList();
         }
 
@@ -466,11 +476,11 @@ namespace Assassin.Models.Database
                 Blocking = Int32Helper.Parse(dr["Blocking"].ToString()),
                 Slipping = Int32Helper.Parse(dr["Slipping"].ToString()),
                 Stealth = Int32Helper.Parse(dr["Stealth"].ToString()),
-                HenchmenLevel1 = Int32Helper.Parse(dr["HenchmenLevel1"].ToString()),
-                HenchmenLevel2 = Int32Helper.Parse(dr["HenchmenLevel2"].ToString()),
-                HenchmenLevel3 = Int32Helper.Parse(dr["HenchmenLevel3"].ToString()),
-                HenchmenLevel4 = Int32Helper.Parse(dr["HenchmenLevel4"].ToString()),
-                HenchmenLevel5 = Int32Helper.Parse(dr["HenchmenLevel5"].ToString())
+                Henchmen = new Henchmen(Int32Helper.Parse(dr["HenchmenLevel1"].ToString()),
+                Int32Helper.Parse(dr["HenchmenLevel2"].ToString()),
+                Int32Helper.Parse(dr["HenchmenLevel3"].ToString()),
+                Int32Helper.Parse(dr["HenchmenLevel4"].ToString()),
+                Int32Helper.Parse(dr["HenchmenLevel5"].ToString()))
             };
 
             return newUser;
@@ -546,11 +556,11 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@blocking", newUser.Blocking.ToString());
             cmd.Parameters.AddWithValue("@slipping", newUser.Slipping.ToString());
             cmd.Parameters.AddWithValue("@stealth", newUser.Stealth.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel1", newUser.HenchmenLevel1.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel2", newUser.HenchmenLevel2.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel3", newUser.HenchmenLevel3.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel4", newUser.HenchmenLevel4.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel5", newUser.HenchmenLevel5.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel1", newUser.Henchmen.Level1.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel2", newUser.Henchmen.Level2.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel3", newUser.Henchmen.Level3.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel4", newUser.Henchmen.Level4.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel5", newUser.Henchmen.Level5.ToString());
 
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
@@ -590,11 +600,11 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@blocking", saveUser.Blocking.ToString());
             cmd.Parameters.AddWithValue("@slipping", saveUser.Slipping.ToString());
             cmd.Parameters.AddWithValue("@stealth", saveUser.Stealth.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel1", saveUser.HenchmenLevel1.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel2", saveUser.HenchmenLevel2.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel3", saveUser.HenchmenLevel3.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel4", saveUser.HenchmenLevel4.ToString());
-            cmd.Parameters.AddWithValue("@henchmenLevel5", saveUser.HenchmenLevel5.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel1", saveUser.Henchmen.Level1.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel2", saveUser.Henchmen.Level2.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel3", saveUser.Henchmen.Level3.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel4", saveUser.Henchmen.Level4.ToString());
+            cmd.Parameters.AddWithValue("@henchmenLevel5", saveUser.Henchmen.Level5.ToString());
             cmd.Parameters.AddWithValue("@name", saveUser.Name);
 
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
