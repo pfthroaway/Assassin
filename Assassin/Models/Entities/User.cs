@@ -19,7 +19,7 @@ namespace Assassin.Models.Entities
         private Weapon _lightWeapon, _heavyWeapon, _twoHandedWeapon;
         private Potion _potion;
 
-        #region Properties
+        #region Modifying Properties
 
         /// <summary><see cref="User"/>'s Password.</summary>
         public string Password
@@ -27,9 +27,6 @@ namespace Assassin.Models.Entities
             get => _password;
             set { _password = value; NotifyPropertyChanged(nameof(Password)); }
         }
-
-        /// <summary>Rank of User</summary>
-        public string Rank => GameState.AllRanks[Level - 1];
 
         /// <summary><see cref="User"/>'s current experience points.</summary>
         public int Experience
@@ -262,9 +259,32 @@ namespace Assassin.Models.Entities
             set { _henchmenLevel5 = value; NotifyPropertyChanged(nameof(HenchmenLevel5)); }
         }
 
-        #endregion Properties
+        #endregion Modifying Properties
 
         #region Helper Properties
+
+        /// <summary>The amount of skill the <see cref="User"/> has in the currently equipped <see cref="Weapon" />.</summary>
+        public int CurrentWeaponSkill
+        {
+            get
+            {
+                switch (CurrentWeaponType)
+                {
+                    case WeaponType.Light:
+                        return LightWeaponSkill;
+
+                    case WeaponType.Heavy:
+                        return HeavyWeaponSkill;
+
+                    case WeaponType.TwoHanded:
+                        return TwoHandedWeaponSkill;
+                }
+                return 10;
+            }
+        }
+
+        /// <summary>The <see cref="User"/>'s rank.</summary>
+        public string Rank => GameState.AllRanks[Level - 1];
 
         /// <summary>Amount of gold the <see cref="User"/> has in the bank, formatted.</summary>
         public string GoldInBankToString => GoldInBank.ToString("N0");

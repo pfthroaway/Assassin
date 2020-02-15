@@ -1,4 +1,5 @@
 ﻿using Assassin.Models;
+using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Assassin.Views.City;
 using Extensions;
@@ -12,40 +13,51 @@ namespace Assassin.Views.Court
     /// <summary>Interaction logic for CourtPage.xaml</summary>
     public partial class CourtPage
     {
-        internal GamePage RefToGamePage { get; set; }
-
         private readonly List<string> _courtText = new List<string>();
         private int _index, _fine;
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private bool _blnGuilty, _blnFinished;
-        private string _reason = "";
+        private Crime _reason;
+
+        ///<summary>Administers justice!</summary>
+        private void Justice()
+        {
+            if (_blnGuilty)
+            {
+                if (GameState.CurrentUser.GoldOnHand >= _fine)
+                    BtnPayFine.IsEnabled = true;
+                BtnJail.IsEnabled = true;
+            }
+            else
+                BtnFreedom.IsEnabled = true;
+        }
 
         /// <summary>Loads the Page and assigns the text to be displayed.</summary>
         /// <param name="arrestReason">Reason User was arrested</param>
-        internal void LoadPage(string arrestReason)
+        internal void LoadPage(Crime arrestReason)
         {
             _reason = arrestReason;
             _courtText.Add("You are dragged to the courts of justice.");
             _courtText.Add("The judge stares at you. . .");
             if (GameState.CurrentUser.Level > 6)
             {
-                _courtText.Add("\"Well, if it isn't the " + GameState.CurrentUser.Rank + " , " + GameState.CurrentUser.Name + ".\"");
+                _courtText.Add($"\"Well, if it isn't the {GameState.CurrentUser.Rank}, {GameState.CurrentUser.Name}.\"");
                 _courtText.Add("\"Don't worry, I will be impartial,\" he laughs.");
             }
             _courtText.Add("The trial begins. . .");
             switch (_reason)
             {
-                case "Robbery":
+                case Crime.Pickpocket:
                     _courtText.Add("You are charged with the crime of attempted theft of property.");
                     _fine = 50;
                     break;
 
-                case "Assault":
+                case Crime.Assault:
                     _courtText.Add("You are charged with the crime of attempted assault and robbery.");
                     _fine = 100;
                     break;
 
-                case "Assassinate":
+                case Crime.AttemptedMurder:
                     _courtText.Add("You are charged with the crime of attemped murder.");
                     _fine = 250;
                     break;
@@ -60,7 +72,7 @@ namespace Assassin.Views.Court
             else
             {
                 _courtText.Add("guilty!");
-                _courtText.Add("\"You are to pay " + _fine + " gold as a fine. Pay it or you will be jailed for the night,\" the judge says.");
+                _courtText.Add($"\"You are to pay {_fine} gold as a fine. Pay it or you will be jailed for the night,\" the judge says.");
                 _blnGuilty = true;
             }
 
@@ -68,6 +80,35 @@ namespace Assassin.Views.Court
         }
 
         #region Button-Click Methods
+
+        private void BtnFreedom_Click(object sender, RoutedEventArgs e)
+        {
+            Functions.AddTextToTextBox(TxtCourt, "You beat a hasty retreat and return to the streets.");
+            _blnFinished = true;
+            ClosePage();
+        }
+
+        private async void BtnGoToJail_Click(object sender, RoutedEventArgs e)
+        {
+            Functions.AddTextToTextBox(TxtCourt, GameState.CurrentUser.GoldOnHand < _fine
+                ? "You don't have the money required to pay the fine."
+                : "You decide it is best to spend the night in jail.");
+
+            GameState.CurrentUser.CurrentLocation = SleepLocation.Jail;
+            JailedUser jailedUser = new JailedUser(GameState.CurrentUser.Name, _reason, _fine, DateTime.UtcNow);
+            if (await GameState.DatabaseInteraction.SendToJail(jailedUser))
+            {
+                BtnPayFine.IsEnabled = false;
+                BtnJail.IsEnabled = false;
+                GameState.CurrentUser.CurrentLocation = SleepLocation.Jail;
+                GameState.AllJailedUsers.Add(jailedUser);
+                _blnFinished = true;
+                BtnFreedom.IsEnabled = true;
+                BtnFreedom.Content = "_Back";
+            }
+            _blnFinished = true;
+            ClosePage();
+        }
 
         private void BtnPayFine_Click(object sender, RoutedEventArgs e)
         {
@@ -77,37 +118,7 @@ namespace Assassin.Views.Court
             ClosePage();
         }
 
-        private void BtnGoToJail_Click(object sender, RoutedEventArgs e)
-        {
-            Functions.AddTextToTextBox(TxtCourt, GameState.CurrentUser.GoldOnHand < _fine
-                ? "You don't have the money required to pay the fine."
-                : "You decide it is best to spend the night in jail.");
-
-            GameState.CurrentUser.CurrentLocation = SleepLocation.Jail;
-            _blnFinished = true;
-            ClosePage();
-        }
-
-        private void BtnFreedom_Click(object sender, RoutedEventArgs e)
-        {
-            Functions.AddTextToTextBox(TxtCourt, "You beat a hasty retreat and return to the streets.");
-            _blnFinished = true;
-            ClosePage();
-        }
-
         #endregion Button-Click Methods
-
-        private void Justice()
-        {
-            if (_blnGuilty)
-            {
-                if (GameState.CurrentUser.GoldOnHand >= _fine)
-                    BtnPayFine.IsEnabled = true;
-                BtnGoToJail.IsEnabled = true;
-            }
-            else
-                BtnFreedom.IsEnabled = true;
-        }
 
         #region Page-Manipulation Methods
 
@@ -116,6 +127,7 @@ namespace Assassin.Views.Court
         {
             if (_blnFinished)
             {
+                GameState.MainWindow.MainFrame.RemoveBackEntry();
                 GameState.GoBack();
                 await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
             }
@@ -123,14 +135,15 @@ namespace Assassin.Views.Court
                 GameState.DisplayNotification("You must first make a decision.", "Assassin");
         }
 
-        public CourtPage()
+        public CourtPage(Crime reason)
         {
             InitializeComponent();
-            _timer.Tick += timer_Tick;
-            _timer.Interval = new TimeSpan(0, 0, 2);
+            LoadPage(reason);
+            _timer.Tick += Timer_Tick;
+            _timer.Interval = new TimeSpan(0, 0, 0, 1, 500);
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             if (_index < _courtText.Count)
             {

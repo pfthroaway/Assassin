@@ -16,9 +16,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtCourt" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Height="150" Width="300" IsReadOnly="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnPayFine" Grid.Column="0" Grid.Row="1" Width="125" Margin="0,0,0,10" Content="_Pay Fine" Click="BtnPayFine_Click" IsEnabled="False" />
-        <Button x:Name="BtnGoToJail" Grid.Column="1" Grid.Row="1" Width="125" Margin="0,0,0,10" Content="_Go to Jail" Click="BtnGoToJail_Click" IsEnabled="False" />
-        <Button x:Name="BtnFreedom" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="125" Content="_Freedom" IsCancel="True" IsDefault="True" Click="BtnFreedom_Click" IsEnabled="False" />
+        <TextBox x:Name="TxtCourt" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Height="500" Width="410" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10" />
+        <Button x:Name="BtnPayFine" Grid.Column="0" Grid.Row="1" Width="200" Margin="0,0,10,10" Content="_Pay Fine" Click="BtnPayFine_Click" IsEnabled="False" />
+        <Button x:Name="BtnJail" Grid.Column="1" Grid.Row="1" Width="200" Margin="0,0,0,10" Content="_Go to Jail" Click="BtnGoToJail_Click" IsEnabled="False" />
+        <Button x:Name="BtnFreedom" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="200" Content="_Freedom" IsCancel="True" IsDefault="True" Click="BtnFreedom_Click" IsEnabled="False" />
     </Grid>
 </Page>

@@ -5,7 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="Assassination"
-      Style="{StaticResource PageStyle}">
+      Style="{StaticResource PageStyle}"
+      Loaded="Page_Loaded">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -16,9 +17,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtAssassinate" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="350" Height="200" BorderThickness="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10" />
-        <Button x:Name="BtnAssassinate" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="160" Content="_Assassinate" Click="BtnAssassinate_Click" IsDefault="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnNewVictim" Grid.Column="0" Grid.Row="2" Width="160" Content="_Stalk New Victim" Click="BtnNewVictim_Click" />
-        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="2" Width="160" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+        <TextBox x:Name="TxtAssassinate" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="510" Height="350" BorderThickness="1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Margin="0,0,0,10" />
+        <Button x:Name="BtnAssassinate" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="250" Content="_Assassinate" Click="BtnAssassinate_Click" IsDefault="True" Margin="0,0,0,10" />
+        <Button x:Name="BtnNewVictim" Grid.Column="0" Grid.Row="2" Width="250" Content="_Stalk New Victim" Click="BtnNewVictim_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="2" Width="250" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
     </Grid>
 </Page>

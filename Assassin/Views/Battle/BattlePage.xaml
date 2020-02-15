@@ -29,14 +29,14 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Width="100" Text="Endurance" TextAlignment="Center" Margin="0,0,10,5" />
-                <TextBlock Grid.Column="1" Grid.Row="0" Width="150" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" Margin="0,0,0,5" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Width="100" Text="Status" TextAlignment="Center" Margin="0,0,10,5" />
-                <TextBlock x:Name="LblPlayerStatus" Grid.Column="1" Grid.Row="1" Width="150" Text="{Binding Path=PlayerStaminaToString}" TextAlignment="Center" Margin="0,0,0,5" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Width="100" Text="Weapon" TextAlignment="Center" Margin="0,0,10,5" />
-                <TextBlock Grid.Column="1" Grid.Row="2" Width="150" Text="{Binding Path=SelectedWeapon}" TextAlignment="Center" Margin="0,0,0,5" />
-                <TextBlock Grid.Column="0" Grid.Row="3" Width="100" Text="Armor" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
-                <TextBlock Grid.Column="1" Grid.Row="3" Width="150" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Width="150" Text="Endurance" TextAlignment="Center" Margin="0,0,10,5" />
+                <TextBlock x:Name="LblPlayerEndurance" Grid.Column="1" Grid.Row="0" Width="275" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Width="150" Text="Status" TextAlignment="Center" Margin="0,0,10,5" />
+                <TextBlock x:Name="LblPlayerStatus" Grid.Column="1" Grid.Row="1" Width="275" Text="{Binding Path=PlayerStaminaToString}" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Width="150" Text="Weapon" TextAlignment="Center" Margin="0,0,10,5" />
+                <TextBlock Grid.Column="1" Grid.Row="2" Width="275" Text="{Binding Path=CurrentWeapon}" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBlock Grid.Column="0" Grid.Row="3" Width="150" Text="Armor" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
+                <TextBlock Grid.Column="1" Grid.Row="3" Width="275" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Grid>
         </GroupBox>
         <GroupBox x:Name="GrpEnemy" Grid.Column="1" Grid.Row="0" Header="{Binding Path=Name}" Margin="0,0,0,20" Padding="5">
@@ -51,18 +51,18 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Width="100" Text="Endurance" TextAlignment="Center" Margin="0,0,10,5" />
-                <TextBlock Grid.Column="1" Grid.Row="0" Width="150" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" Margin="0,0,0,5" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Width="100" Text="Status" TextAlignment="Center" Margin="0,0,10,5" />
-                <TextBlock x:Name="LblEnemyStatus" Grid.Column="1" Grid.Row="1" Width="150" Text="{Binding Path=EnemyStaminaToString}" TextAlignment="Center" Margin="0,0,0,5" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Width="100" Text="Weapon" TextAlignment="Center" Margin="0,0,10,5" />
-                <TextBlock Grid.Column="1" Grid.Row="2" Width="150" Text="{Binding Path=Weapon}" TextAlignment="Center" Margin="0,0,0,5" />
-                <TextBlock Grid.Column="0" Grid.Row="3" Width="100" Text="Armor" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
-                <TextBlock Grid.Column="1" Grid.Row="3" Width="150" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Width="150" Text="Endurance" TextAlignment="Center" Margin="0,0,10,5" />
+                <TextBlock x:Name="LblEnemyEndurance" Grid.Column="1" Grid.Row="0" Width="275" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Width="150" Text="Status" TextAlignment="Center" Margin="0,0,10,5" />
+                <TextBlock x:Name="LblEnemyStatus" Grid.Column="1" Grid.Row="1" Width="275" Text="{Binding Path=EnemyStaminaToString}" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Width="150" Text="Weapon" TextAlignment="Center" Margin="0,0,10,5" />
+                <TextBlock Grid.Column="1" Grid.Row="2" Width="275" Text="{Binding Path=Weapon}" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBlock Grid.Column="0" Grid.Row="3" Width="150" Text="Armor" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,0" />
+                <TextBlock Grid.Column="1" Grid.Row="3" Width="275" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Grid>
         </GroupBox>
-        <TextBox x:Name="TxtBattle" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Width="576" Height="200" BorderThickness="1" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,20" ScrollViewer.VerticalScrollBarVisibility="Visible" />
-        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+        <TextBox x:Name="TxtBattle" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Width="830" Height="300" BorderThickness="1" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,20" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="835">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -74,15 +74,15 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button x:Name="BtnAttack" Grid.Column="0" Grid.Row="0" Width="135" Content="_Attack" Click="BtnAttack_Click" IsDefault="True" Margin="0,0,12,12" />
-            <Button x:Name="BtnBerserk" Grid.Column="1" Grid.Row="0" Width="135" Click="BtnBerserk_Click" Content="_Berserk" Margin="0,0,12,12" />
-            <Button x:Name="BtnDefend" Grid.Column="2" Grid.Row="0" Width="135" Content="_Defend" Click="BtnDefend_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnFlee" Grid.Column="3" Grid.Row="0" Width="135" Content="_Flee" Margin="0,0,0,12" />
-            <Button x:Name="BtnLunge" Grid.Column="0" Grid.Row="1" Width="135" Content="_Lunge" Click="BtnLunge_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnParry" Grid.Column="1" Grid.Row="1" Width="135" Content="_Parry" Click="BtnParry_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnQuickCombat" Grid.Column="2" Grid.Row="1" Width="135" Content="_Quick Combat" Click="BtnQuickCombat_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnInventory" Grid.Column="3" Grid.Row="1" Width="135" Content="_Inventory" Click="BtnInventory_Click" Margin="0,0,0,12" />
-            <Button x:Name="BtnExit" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Width="135" Content="E_xit" IsCancel="True" IsEnabled="False" Click="BtnExit_Click" />
+            <Button x:Name="BtnAttack" Grid.Column="0" Grid.Row="0" Width="200" Content="_Attack" Click="BtnAttack_Click" IsDefault="True" Margin="0,0,12,12" />
+            <Button x:Name="BtnBerserk" Grid.Column="1" Grid.Row="0" Width="200" Click="BtnBerserk_Click" Content="_Berserk" Margin="0,0,12,12" />
+            <Button x:Name="BtnDefend" Grid.Column="2" Grid.Row="0" Width="200" Content="_Defend" Click="BtnDefend_Click" Margin="0,0,12,12" />
+            <Button x:Name="BtnFlee" Grid.Column="3" Grid.Row="0" Width="200" Content="_Flee" Margin="0,0,0,12" />
+            <Button x:Name="BtnLunge" Grid.Column="0" Grid.Row="1" Width="200" Content="_Lunge" Click="BtnLunge_Click" Margin="0,0,12,12" />
+            <Button x:Name="BtnParry" Grid.Column="1" Grid.Row="1" Width="200" Content="_Parry" Click="BtnParry_Click" Margin="0,0,12,12" />
+            <Button x:Name="BtnQuickCombat" Grid.Column="2" Grid.Row="1" Width="200" Content="_Quick Combat" Click="BtnQuickCombat_Click" Margin="0,0,12,12" />
+            <Button x:Name="BtnInventory" Grid.Column="3" Grid.Row="1" Width="200" Content="_Inventory" Click="BtnInventory_Click" Margin="0,0,0,12" />
+            <Button x:Name="BtnExit" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Width="200" Content="E_xit" IsCancel="True" IsEnabled="False" Click="BtnExit_Click" />
         </Grid>
     </Grid>
 </Page>

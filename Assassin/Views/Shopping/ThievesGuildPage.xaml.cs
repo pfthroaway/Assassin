@@ -2,6 +2,7 @@
 using Extensions;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace Assassin.Views.Shopping
 {
@@ -40,13 +41,13 @@ namespace Assassin.Views.Shopping
 
         #region Click Methods
 
-        private async void BtnBack_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             GameState.GoBack();
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
-        private void BtnPurchase_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnPurchase_Click(object sender, RoutedEventArgs e)
         {
             GameState.CurrentUser.Lockpicks++;
             GameState.CurrentUser.GoldOnHand -= 300;

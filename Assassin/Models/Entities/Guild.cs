@@ -148,7 +148,7 @@ namespace Assassin.Models.Entities
         /// <param name="henchmenLevel3">Amount of Level 3 Henchmen the <see cref="Guild"/> employs</param>
         /// <param name="henchmenLevel4">Amount of Level 4 Henchmen the <see cref="Guild"/> employs</param>
         /// <param name="henchmenLevel5">Amount of Level 5 Henchmen the <see cref="Guild"/> employs</param>
-        public Guild(int id, string name, string master, int fee, int gold, List<String> members, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
+        public Guild(int id, string name, string master, int fee, int gold, List<string> members, int henchmenLevel1, int henchmenLevel2, int henchmenLevel3, int henchmenLevel4, int henchmenLevel5)
         {
             ID = id;
             Name = name;

@@ -1,4 +1,5 @@
 ﻿using Assassin.Models.Items;
+using Extensions.DataTypeHelpers;
 
 namespace Assassin.Models.Entities
 {
@@ -12,7 +13,7 @@ namespace Assassin.Models.Entities
 
         #endregion Fields
 
-        #region Modifying Properties Properties
+        #region Modifying Properties
 
         /// <summary>Name of this Entity.</summary>
         public string Name
@@ -32,14 +33,14 @@ namespace Assassin.Models.Entities
         public int CurrentEndurance
         {
             get => _currentEndurance;
-            set { _currentEndurance = value; NotifyPropertyChanged(nameof(EnduranceToString)); }
+            set { _currentEndurance = value; NotifyPropertyChanged(nameof(CurrentEndurance), nameof(EnduranceToString), nameof(EnduranceRatio)); }
         }
 
         /// <summary>Entity's maxmimum amount of health.</summary>
         public int MaximumEndurance
         {
             get => _maximumEndurance;
-            set { _maximumEndurance = value; NotifyPropertyChanged(nameof(MaximumEndurance)); NotifyPropertyChanged(nameof(EnduranceToString)); }
+            set { _maximumEndurance = value; NotifyPropertyChanged(nameof(MaximumEndurance), nameof(EnduranceRatio), nameof(EnduranceToString)); }
         }
 
         /// <summary>Amount of gold the Entity has in their possession.</summary>
@@ -49,9 +50,7 @@ namespace Assassin.Models.Entities
             set
             {
                 _goldOnHand = value;
-                NotifyPropertyChanged(nameof(GoldOnHand));
-                NotifyPropertyChanged(nameof(GoldOnHandToString));
-                NotifyPropertyChanged(nameof(GoldOnHandToStringWithText));
+                NotifyPropertyChanged(nameof(GoldOnHand), nameof(GoldOnHandToString), nameof(GoldOnHandToStringWithText));
             }
         }
 
@@ -62,12 +61,29 @@ namespace Assassin.Models.Entities
             set { _armor = value; NotifyPropertyChanged(nameof(Armor)); }
         }
 
-        #endregion Modifying Properties Properties
+        /// <summary>Entity's skill at blocking.</summary>
+        public int Blocking
+        {
+            get => _blocking;
+            set { _blocking = value; NotifyPropertyChanged(nameof(Blocking), nameof(BlockingToString)); }
+        }
+
+        /// <summary>Entity's skill at dodging and running away.</summary>
+        public int Slipping
+        {
+            get => _slipping;
+            set { _slipping = value; NotifyPropertyChanged(nameof(Slipping), nameof(SlippingToString)); }
+        }
+
+        #endregion Modifying Properties
 
         #region Helper Properties
 
         /// <summary>Entity's current amount of health as opposed to their maximum health, formatted.</summary>
         public string EnduranceToString => $"{CurrentEndurance:N0} / {MaximumEndurance:N0}";
+
+        /// <summary>Ratio of current to maximum endurance.</summary>
+        public decimal EnduranceRatio => decimal.Divide(CurrentEndurance, MaximumEndurance);
 
         /// <summary>Amount of gold the Entity has in their possession, formatted.</summary>
         public string GoldOnHandToString => GoldOnHand.ToString("N0");
@@ -75,19 +91,11 @@ namespace Assassin.Models.Entities
         /// <summary>Amount of gold the Entity has in their possession, formatted, with preceding text.</summary>
         public string GoldOnHandToStringWithText => $"Gold on Hand: {GoldOnHandToString}";
 
-        /// <summary>Entity's skill at blocking.</summary>
-        public int Blocking
-        {
-            get => _blocking;
-            set { _blocking = value; NotifyPropertyChanged(nameof(Blocking)); }
-        }
+        /// <summary>Entity's skill at blocking, formatted.</summary>
+        public string BlockingToString => $"{Blocking:N0}%";
 
         /// <summary>Entity's skill at dodging and running away.</summary>
-        public int Slipping
-        {
-            get => _slipping;
-            set { _slipping = value; NotifyPropertyChanged(nameof(Slipping)); }
-        }
+        public string SlippingToString => $"{Slipping:N0}%";
 
         #endregion Helper Properties
 

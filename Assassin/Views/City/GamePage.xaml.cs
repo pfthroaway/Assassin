@@ -1,47 +1,126 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Entities;
+using Assassin.Models.Enums;
 using Assassin.Views.Bank;
 using Assassin.Views.Battle;
 using Assassin.Views.Player;
 using Assassin.Views.Shopping;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using Extensions;
+using System;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Assassin.Views.City
 {
     /// <summary>Interaction logic for GamePage.xaml</summary>
-    public partial class GamePage : INotifyPropertyChanged
+    public partial class GamePage
     {
+        private TimeSpan jailTimeSpan;
+        private JailedUser jailedUser;
+        private DispatcherTimer Timer1 = new DispatcherTimer();
+        private readonly SolidColorBrush defaultBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#CCCCCC");
+
+        /// <summary>Displays the appropriate text when a user awakens.</summary>
+        internal async void Awaken()
+        {
+            if (GameState.CurrentUser.Alive)
+            {
+                switch (GameState.CurrentUser.CurrentLocation)
+                {
+                    case SleepLocation.Streets:
+                        int loseEnd = Functions.GenerateRandomNumber(1, 5);
+                        Functions.AddTextToTextBox(TxtGame, $"You awaken on the streets. After a rough night sleeping on the ground, you have lost {loseEnd} Endurance.");
+                        GameState.CurrentUser.CurrentEndurance -= loseEnd;
+                        if (GameState.CurrentUser.CurrentEndurance < 1)
+                            GameState.CurrentUser.CurrentEndurance = 1;
+                        break;
+
+                    case SleepLocation.Jail:
+                        CheckJailed();
+                        break;
+
+                    case SleepLocation.Inn:
+                        Functions.AddTextToTextBox(TxtGame, "You awaken in the inn. You feel refreshed. You exit to the streets.");
+                        GameState.CurrentUser.CurrentEndurance += 10;
+                        break;
+
+                    case SleepLocation.Guild:
+                        Functions.AddTextToTextBox(TxtGame, "You awaken in the guild. You exit to the streets.");
+                        break;
+                }
+            }
+            else
+            {
+                Functions.AddTextToTextBox(TxtGame, "You were slain. You have been resurrected by the gods.");
+                GameState.CurrentUser.Alive = true;
+                GameState.CurrentUser.CurrentEndurance = 1;
+            }
+
+            GameState.CurrentUser.CurrentLocation = SleepLocation.Streets;
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
+
+            Display();
+        }
+
+        /// <summary>Checks whether a <see cref="JailedUser"/> has served their time.</summary>
+        public async void CheckJailed()
+        {
+            jailedUser = GameState.AllJailedUsers.Find(user => user.Name == GameState.CurrentUser.Name);
+            jailTimeSpan = DateTime.UtcNow - jailedUser.DateJailed;
+            if (jailTimeSpan.Seconds >= jailedUser.Fine / 10)
+            {
+                Functions.AddTextToTextBox(TxtGame, "You awaken in a jail cell. A guard looms over you.\nHe barks at you, \"You're free to go!\"\nYou briskly leave the jail.");
+                await GameState.DatabaseInteraction.FreeFromJail(jailedUser);
+                GameState.CurrentUser.CurrentLocation = SleepLocation.Streets;
+                ToggleButtons(true);
+
+                Display();
+
+                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
+            }
+            else
+            {
+                ToggleButtons(false);
+                Functions.AddTextToTextBox(TxtGame, $"You awaken in a jail cell. You have not yet finished your sentence. You have {(jailedUser.Fine / 10) - jailTimeSpan.Seconds} seconds remaining.");
+                Timer1.Start();
+            }
+        }
+
+        /// <summary>Sets the foreground color of some TextBlocks based on <see cref="User"/>'s stats.</summary>
+        private void Display()
+        {
+            LblHunger.Foreground = GameState.CurrentUser.Hunger < 20 ? defaultBrush : Brushes.Red;
+            LblThirst.Foreground = GameState.CurrentUser.Thirst < 20 ? defaultBrush : Brushes.Red;
+            LblWeaponName.Foreground = GameState.CurrentUser.CurrentWeapon.Name == "Hands" ? Brushes.Red : defaultBrush;
+            LblArmorName.Foreground = GameState.CurrentUser.Armor.Name == "Clothes" ? Brushes.Red : defaultBrush;
+            LblEndAmt.Foreground = GameState.CurrentUser.EnduranceRatio <= 0.2m ? Brushes.Red : defaultBrush;
+        }
+
         /// <summary>If the character is newly created, display this text.</summary>
         internal void NewUser() => TxtGame.Text =
                 $"Creare An Vita, {GameState.CurrentUser.Name}!\n\nYou enter the city of thieves to take your place among the legends!";
 
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
-        /// <param name="propertyNames">The names of the properties to update in the UI.</param>
-        protected void NotifyPropertyChanged(params string[] propertyNames)
+        /// <summary>Toggles all the Buttons on the Form.</summary>
+        /// <param name="enabled">Should the Buttons be enabled?</param>
+        public void ToggleButtons(bool enabled)
         {
-            if (PropertyChanged != null)
-            {
-                foreach (string propertyName in propertyNames)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
-            }
+            BtnAssassinate.IsEnabled = enabled;
+            BtnBank.IsEnabled = enabled;
+            BtnChapel.IsEnabled = enabled;
+            BtnGuild.IsEnabled = enabled;
+            BtnInn.IsEnabled = enabled;
+            BtnInventory.IsEnabled = enabled;
+            BtnJail.IsEnabled = enabled;
+            BtnMessages.IsEnabled = enabled;
+            BtnMystic.IsEnabled = enabled;
+            BtnOptions.IsEnabled = enabled;
+            BtnOthers.IsEnabled = enabled;
+            BtnPub.IsEnabled = enabled;
+            BtnRob.IsEnabled = enabled;
+            BtnShops.IsEnabled = enabled;
+            BtnTrain.IsEnabled = enabled;
         }
-
-        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
-        /// <param name="propertyName">The optional name of the property to update in the UI. If this is left blank, the name will be taken from the calling member via the CallerMemberName attribute.</param>
-        protected virtual void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion Data-Binding
 
         #region Button-Click Methods
 
@@ -87,15 +166,20 @@ namespace Assassin.Views.City
             //TODO Implement Mystic
         }
 
-        private void BtnChapel_Click(object sender, RoutedEventArgs e)
+        private async void BtnChapel_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Implement Chapel
+            if (GameState.CurrentUser.EnduranceRatio <= 0.2m)
+            {
+                Functions.AddTextToTextBox(TxtGame, "The priest welcomes you into his chapel. He sees your grievous injuries and blesses you. You have been healed!");
+                GameState.CurrentUser.CurrentEndurance = GameState.CurrentUser.MaximumEndurance;
+                Display();
+                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
+            }
+            else
+                Functions.AddTextToTextBox(TxtGame, "Sorry, the priest is currently holding mass. Please come again later.");
         }
 
-        private void BtnRob_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Robbing
-        }
+        private void BtnRob_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new RobPage());
 
         private void BtnAssassinate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AssassinationPage());
 
@@ -118,9 +202,28 @@ namespace Assassin.Views.City
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
-        public GamePage() => InitializeComponent();
+        public GamePage()
+        {
+            InitializeComponent();
+            Timer1.Tick += Timer1_Tick;
+        }
 
-        private void GamePage_OnLoaded(object sender, RoutedEventArgs e) => DataContext = GameState.CurrentUser;
+        private void GamePage_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = GameState.CurrentUser;
+            GameState.GamePage = this;
+            Awaken();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            jailTimeSpan = DateTime.UtcNow - jailedUser.DateJailed;
+            if (jailTimeSpan.Seconds >= jailedUser.Fine / 10)
+            {
+                CheckJailed();
+                Timer1.Stop();
+            }
+        }
 
         #endregion Page-Manipulation Methods
     }

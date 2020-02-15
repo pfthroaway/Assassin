@@ -2,6 +2,7 @@
 using Assassin.Models.Entities;
 using Assassin.Models.Items;
 using Assassin.Views;
+using Assassin.Views.City;
 using Extensions;
 using Extensions.Encryption;
 using Extensions.Enums;
@@ -18,24 +19,27 @@ namespace Assassin.Models
     /// <summary><summary>Represents the current state of the game.</summary>
     internal static class GameState
     {
+        internal static string AdminPassword = "";
+        internal static List<Armor> AllArmor = new List<Armor>();
+        internal static List<Drink> AllDrinks = new List<Drink>();
+        internal static List<Enemy> AllEnemies = new List<Enemy>();
+        internal static List<Food> AllFood = new List<Food>();
+        internal static List<Guild> AllGuilds = new List<Guild>();
+        internal static List<JailedUser> AllJailedUsers = new List<JailedUser>();
+        internal static List<Potion> AllPotions = new List<Potion>();
+        internal static List<string> AllRanks = new List<string>();
+        internal static List<User> AllUsers = new List<User>();
+        internal static List<Weapon> AllWeapons = new List<Weapon>();
+        internal static Enemy CurrentEnemy = new Enemy();
+        internal static Guild CurrentGuild = new Guild();
         internal static User CurrentUser = new User();
         internal static User MaxStatsUsers = new User();
-        internal static Enemy CurrentEnemy = new Enemy();
-        internal static List<User> AllUsers = new List<User>();
-        internal static List<Enemy> AllEnemies = new List<Enemy>();
-        internal static List<Weapon> AllWeapons = new List<Weapon>();
-        internal static List<Armor> AllArmor = new List<Armor>();
-        internal static List<Guild> AllGuilds = new List<Guild>();
-        internal static List<string> AllRanks = new List<string>();
-        internal static List<Potion> AllPotions = new List<Potion>();
-        internal static List<Food> AllFood = new List<Food>();
-        internal static List<Drink> AllDrinks = new List<Drink>();
-        internal static string AdminPassword = "";
         internal static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
 
         #region Navigation
 
         internal static MainWindow MainWindow { get; set; }
+        internal static GamePage GamePage { get; set; }
 
         /// <summary>Navigates to selected Page.</summary>
         /// <param name="newPage">Page to navigate to.</param>
@@ -72,6 +76,7 @@ namespace Assassin.Models
             AllRanks = await DatabaseInteraction.LoadRanks();
             AllUsers = await DatabaseInteraction.LoadUsers();
             AllEnemies = await DatabaseInteraction.LoadEnemies();
+            AllJailedUsers = await DatabaseInteraction.LoadJailedUsers();
         }
 
         /// <summary>Checks whether a valid login has occurred.</summary>

@@ -7,33 +7,22 @@ namespace Assassin.Views.Battle
     /// <summary>Interaction logic for AssassinationPage.xaml</summary>
     public partial class AssassinationPage
     {
-        internal City.GamePage RefToGamePage { get; set; }
-
         /// <summary>Checks the User's Hunger and Thirst to determine whether or not they can continue.</summary>
         /// <returns>Returns true if player isn't too hungry or thirst to continue.</returns>
         private bool CheckHungerThirst()
         {
-            if (GameState.CurrentUser.Hunger >= 24 || GameState.CurrentUser.Thirst >= 24)
-            {
-                BtnNewVictim.IsEnabled = false;
-                BtnAssassinate.IsEnabled = false;
+            Functions.AddTextToTextBox(TxtAssassinate, GameState.CurrentUser.DisplayHungerThirstText());
+            if (GameState.CurrentUser.CanDoAction())
+                return true;
+            DisableButtons();
+            return false;
+        }
 
-                if (GameState.CurrentUser.Hunger >= 24 && GameState.CurrentUser.Thirst >= 24)
-                    Functions.AddTextToTextBox(TxtAssassinate, "You are too hungry and thirsty to continue.");
-                else if (GameState.CurrentUser.Hunger >= 24)
-                    Functions.AddTextToTextBox(TxtAssassinate, "You are too hungry to continue.");
-                else if (GameState.CurrentUser.Thirst >= 24)
-                    Functions.AddTextToTextBox(TxtAssassinate, "You are too thirsty to continue.");
-                return false;
-            }
-            BtnNewVictim.IsEnabled = true;
-            BtnAssassinate.IsEnabled = true;
-
-            if (GameState.CurrentUser.Hunger > 0 && GameState.CurrentUser.Hunger % 5 == 0)
-                Functions.AddTextToTextBox(TxtAssassinate, "You are " + GameState.CurrentUser.HungerToString.ToLower() + ".");
-            if (GameState.CurrentUser.Thirst > 0 && GameState.CurrentUser.Thirst % 5 == 0)
-                Functions.AddTextToTextBox(TxtAssassinate, "You are " + GameState.CurrentUser.ThirstToString.ToLower() + ".");
-            return true;
+        /// <summary>Disables the Assassin and New Victim Buttons.</summary>
+        private void DisableButtons()
+        {
+            BtnAssassinate.IsEnabled = false;
+            BtnNewVictim.IsEnabled = false;
         }
 
         /// <summary>Gets an Enemy if Player is able to continue.</summary>
@@ -41,12 +30,10 @@ namespace Assassin.Views.Battle
         {
             if (CheckHungerThirst())
             {
-                GameState.CurrentUser.Hunger++;
-                GameState.CurrentUser.Thirst++;
-                BtnAssassinate.IsEnabled = true;
                 GameState.SelectEnemy();
-
-                Functions.AddTextToTextBox(TxtAssassinate, "You spot a " + GameState.CurrentEnemy + ".");
+                GameState.CurrentUser.GainHungerThirst();
+                Functions.AddTextToTextBox(TxtAssassinate, $"You spot a {GameState.CurrentEnemy}.");
+                BtnAssassinate.IsEnabled = true;
             }
         }
 
@@ -55,12 +42,16 @@ namespace Assassin.Views.Battle
         private void BtnAssassinate_Click(object sender, RoutedEventArgs e)
         {
             BtnAssassinate.IsEnabled = false;
-            GameState.Navigate(new BattlePage());
+            GameState.Navigate(new BattlePage { RefToAssassinationPage = this });
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtAssassinate.Text);
+            GameState.GoBack();
         }
 
         private void BtnNewVictim_Click(object sender, RoutedEventArgs e) => GetEnemy();
-
-        private void BtnBack_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
 
         #endregion Button-Click Methods
 
@@ -71,6 +62,14 @@ namespace Assassin.Views.Battle
             InitializeComponent();
             TxtAssassinate.Text = "Thou dost go out in search of prey...";
             GetEnemy();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (GameState.CurrentUser.Alive)
+                CheckHungerThirst();
+            else
+                DisableButtons();
         }
 
         #endregion Page-Manipulation Methods

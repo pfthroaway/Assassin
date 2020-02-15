@@ -8,90 +8,24 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Assassin.Views.Battle
 {
     /// <summary>Interaction logic for BattlePage.xaml</summary>
     public partial class BattlePage : INotifyPropertyChanged
     {
-        private int _playerStamina = 20;
-        private int _enemyStamina = 20;
+        private bool _blnDone, _blnWin, _blnSurprise = true;
+        private static readonly int _maxStamina = 100;
+        private int _playerStamina = _maxStamina;
+        private int _enemyStamina = _maxStamina;
         private Stance _playerStance, _enemyStance;
-        private bool _battleOver;
-        private string _previousPage = "";
-
-        /// <summary>Sets the previous Page.</summary>
-        /// <param name="windowName">Previous Page name</param>
-        internal void SetPreviousPage(string windowName) => _previousPage = windowName;
-
-        #region Display Manipulation
-
-        /// <summary>Checks which buttons to be enabled.</summary>
-        private void CheckButtons()
-        {
-            if (PlayerStamina > 0)
-                ToggleButtons(true);
-            else
-                BtnDefend.IsEnabled = true;
-        }
-
-        /// <summary>Gets a text status for a stamina value.</summary>
-        /// <param name="stamina">Stamina amount</param>
-        /// <returns>Text based on stamina</returns>
-        private string GetStaminaText(int stamina)
-        {
-            switch (stamina)
-            {
-                case 19:
-                case 20:
-                    return "Vigorous";
-
-                case 17:
-                case 18:
-                    return "Robust";
-
-                case 15:
-                case 16:
-                    return "Stalwart";
-
-                case 13:
-                case 14:
-                    return "Beat";
-
-                case 11:
-                case 12:
-                    return "Shaky";
-
-                case 9:
-                case 10:
-                    return "Spent";
-
-                case 7:
-                case 8:
-                    return "Bushed";
-
-                case 5:
-                case 6:
-                    return "Weary";
-
-                case 3:
-                case 4:
-                    return "Tired";
-
-                case 0:
-                case 1:
-                case 2:
-                    return "Exhausted";
-
-                default:
-                    return "BROKEN";
-            }
-        }
-
-        #endregion Display Manipulation
+        private int _playerBlocking, _enemyBlocking, _playerDamage, _enemyDamage, _playerWeaponSkill, _enemyWeaponSkill;
+        private readonly SolidColorBrush defaultBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#CCCCCC");
 
         #region Properties
 
+        internal bool BlnJob { get; set; }
         internal AssassinationPage RefToAssassinationPage { get; set; }
         internal JobsPage RefToJobsPage { get; set; }
 
@@ -145,365 +79,495 @@ namespace Assassin.Views.Battle
             GrpEnemy.DataContext = GameState.CurrentEnemy;
             LblEnemyStatus.DataContext = this;
 
-            Surprise();
+            if (_blnSurprise)
+                Surprise();
         }
 
         #endregion Data-Binding
 
-        #region Button Manipulation
+        #region Display Manipulation
 
-        /// <summary>Toggles all the battle Buttons.</summary>
-        /// <param name="enabled">Should the battle Buttons be enabled?</param>
-        private void ToggleButtons(bool enabled)
+        /// <summary>Add text to the TextBox.</summary>
+        /// <param name="newText">Text to be added</param>
+        private void AddText(string newText) => Functions.AddTextToTextBox(TxtBattle, newText);
+
+        /// <summary>Checks which buttons to be enabled.</summary>
+        private void CheckButtons()
         {
-            BtnAttack.IsEnabled = enabled;
-            BtnBerserk.IsEnabled = enabled && PlayerStamina >= 2;
-            BtnDefend.IsEnabled = enabled;
-            BtnFlee.IsEnabled = enabled;
-            BtnLunge.IsEnabled = enabled;
-            BtnParry.IsEnabled = enabled;
-            BtnQuickCombat.IsEnabled = enabled;
+            if (PlayerStamina > 0)
+                ToggleButtons(true);
+            else
+                BtnDefend.IsEnabled = true;
         }
 
-        #endregion Button Manipulation
+        /// <summary>Sets the foreground color of some TextBlocks based on <see cref="User"/>'s and <see cref="Enemy"/>'s stats.</summary>
+        private void Display()
+        {
+            LblPlayerEndurance.Foreground = GameState.CurrentUser.EnduranceRatio <= 0.2m ? Brushes.Red : defaultBrush;
+            LblPlayerStatus.Foreground = _playerStamina < 3 ? Brushes.Red : defaultBrush;
+            LblEnemyEndurance.Foreground = GameState.CurrentEnemy.EnduranceRatio <= 0.2m ? Brushes.Red : defaultBrush;
+            LblEnemyStatus.Foreground = _enemyStamina < 3 ? Brushes.Red : defaultBrush;
+            ToggleButtons(_playerStamina > 0 && !_blnDone);
+        }
+
+        /// <summary>Gets a text status for a stamina value.</summary>
+        /// <param name="stamina">Stamina amount</param>
+        /// <returns>Text based on stamina</returns>
+        private string GetStaminaText(int stamina)
+        {
+            if (stamina > 18)
+                return "Vigorous";
+            else if (stamina > 16)
+                return "Robust";
+            else if (stamina > 14)
+                return "Stalwart";
+            else if (stamina > 12)
+                return "Beat";
+            else if (stamina > 10)
+                return "Shaky";
+            else if (stamina > 8)
+                return "Spent";
+            else if (stamina > 6)
+                return "Bushed";
+            else if (stamina > 4)
+                return "Weary";
+            else if (stamina > 2)
+                return "Tired";
+            else
+                return "Exhausted";
+        }
+
+        #endregion Display Manipulation
 
         #region Battle Management
 
-        private void Surprise()
+        /// <summary>Adjusts the stamina for a given <see cref="Stance"/>.</summary>
+        /// <param name="stance">Given <see cref="Stance"/></param>
+        /// <param name="stamina">Reference to current stamina value</param>
+        private void AdjustStamina(Stance stance, ref int stamina)
         {
-            int surprise = Functions.GenerateRandomNumber(1, 100);
-            if (surprise <= GameState.CurrentUser.Stealth)
+            switch (stance)
             {
-                Functions.AddTextToTextBox(TxtBattle, "You surprise your opponent!");
-                PlayerInflictsDamage(GameState.CurrentUser.CurrentWeapon.Damage, GameState.CurrentEnemy.Armor.Defense);
+                case Stance.Defend:
+                    {
+                        if (stamina < _maxStamina)
+                            stamina++;
+                        break;
+                    }
+
+                case Stance.Berserk:
+                    {
+                        stamina -= 2;
+                        break;
+                    }
+
+                default:
+                    {
+                        stamina--;
+                        break;
+                    }
             }
         }
 
-        /// <summary>A new round of battle.</summary>
+        /// <summary>Gives a <see cref="User"/> a bonus.</summary>
+        /// <returns>Bonus amount</returns>
+        private int Bonus() => GameState.CurrentUser.Level <= 4 ? 11 - GameState.CurrentUser.Level * 5 : 0;
+
+        /// <summary>Handle's an <see cref="Enemy"/>'s attack.</summary>
+        private void EnemyAttack()
+        {
+            if (_playerStance != Stance.Parry)
+                EnemyHitsPlayer();
+            else if (SkillCheck(GameState.CurrentUser.CurrentWeaponSkill + Bonus()))
+            {
+                AddText("You parry your opponent's attack!");
+                PlayerHitsEnemy();
+            }
+            else
+                EnemyHitsPlayer();
+        }
+
+        /// <summary>The <see cref="Enemy"/> hits the <see cref="User"/>.</summary>
+        private void EnemyHitsPlayer()
+        {
+            int eneDamage = Functions.GenerateRandomNumber(_enemyDamage / 2, _enemyDamage);
+            int plrDefend = Functions.GenerateRandomNumber(GameState.CurrentUser.Armor.Defense / 2, GameState.CurrentUser.Armor.Defense);
+            if (eneDamage > plrDefend)
+            {
+                int actualDamage = eneDamage - plrDefend;
+                AddText($"Your opponent attacks you for {eneDamage} damage, but your armor absorbs {plrDefend} damage. You take {actualDamage} total damage.");
+                GameState.CurrentUser.CurrentEndurance -= actualDamage;
+            }
+            else
+                AddText($"Your opponent attacks you for {eneDamage} damage, but your armor absorbs all of it.");
+        }
+
+        /// <summary>Chooses an <see cref="Enemy"/>'s <see cref="Stance"/>.</summary>
+        private void EnemyStance()
+        {
+            if (_enemyStamina > 2)
+            {
+                // if enemy's stamina is above 2, any option
+                int type = Functions.GenerateRandomNumber(1, 100);
+                switch (type)
+                {
+                    case object _ when 1 <= type && type <= 20    // 20%
+                   :
+                        {
+                            _enemyStance = Stance.Normal;
+                            break;
+                        }
+
+                    case object _ when 21 <= type && type <= 40    // 20%
+             :
+                        {
+                            _enemyStance = Stance.Berserk;
+                            _enemyDamage *= 2;
+                            break;
+                        }
+
+                    case object _ when 41 <= type && type <= 60    // 20%
+             :
+                        {
+                            _enemyStance = Stance.Lunge;
+                            _enemyDamage *= 2;
+                            _enemyWeaponSkill /= 2;
+                            break;
+                        }
+
+                    case object _ when 61 <= type && type <= 80    // 20%
+             :
+                        {
+                            _enemyStance = Stance.Parry;
+                            break;
+                        }
+
+                    case object _ when 81 <= type && type <= 100   // 20%
+             :
+                        {
+                            _enemyStance = Stance.Defend;
+                            if (_enemyStamina < 20)
+                            {
+                            }
+
+                            break;
+                        }
+                }
+            }
+            else if (_enemyStamina == 1)
+            {
+                // if enemy's stamina is 1, no berserk option, higher chance of defend
+                int type = Functions.GenerateRandomNumber(1, 100);
+                switch (type)
+                {
+                    case object _ when 1 <= type && type <= 20    // 20%
+                   :
+                        {
+                            _enemyStance = Stance.Normal;
+                            break;
+                        }
+
+                    case object _ when 21 <= type && type <= 40   // 20%
+             :
+                        {
+                            _enemyStance = Stance.Lunge;
+                            _enemyDamage *= 2;
+                            _enemyWeaponSkill /= 2;
+                            break;
+                        }
+
+                    case object _ when 41 <= type && type <= 60   // 20%
+             :
+                        {
+                            _enemyStance = Stance.Parry;
+                            break;
+                        }
+
+                    case object _ when 61 <= type && type <= 100  // 40%
+             :
+                        {
+                            _enemyStance = Stance.Defend;
+                            break;
+                        }
+                }
+            }
+            else if (_enemyStamina <= 0)
+                // if enemy's stamina is 0, only defend
+                _enemyStance = Stance.Defend;
+
+            if (_enemyStance == Stance.Defend)
+            {
+                _enemyBlocking = _enemyBlocking >= 45 ? 90 : _enemyBlocking * 2;
+                AddText("Your opponent goes on the defensive and attempts to regain stamina.");
+            }
+        }
+
+        /// <summary>The <see cref="Enemy"/>'s turn.</summary>
+        private void EnemyTurn()
+        {
+            // If the Enemy is not defending
+            // and the Enemy can hit
+            // and the Assassin doesn't block
+            // then attempt to attack.
+            // TODO Re-implement the enemy fleeing if they're below 20% endurance.
+
+            if (_enemyStance != Stance.Defend)
+            {
+                if (SkillCheck(_enemyWeaponSkill))
+                {
+                    if (SkillCheck(_playerBlocking + Bonus()) == false)
+                        EnemyAttack();
+                    else
+                        AddText("You block your opponent's attack.");
+                }
+                else
+                    AddText("Your opponent misses you.");
+            }
+        }
+
+        /// <summary>Sets default values for <see cref="User"/> and <see cref="Enemy"/> blocking, damage, and weapon skill.</summary>
+        private void LoadBattle()
+        {
+            _playerBlocking = GameState.CurrentUser.Blocking;
+            _enemyBlocking = GameState.CurrentEnemy.Blocking;
+            _playerDamage = GameState.CurrentUser.CurrentWeapon.Damage;
+            _enemyDamage = GameState.CurrentEnemy.Weapon.Damage;
+            _playerWeaponSkill = GameState.CurrentUser.CurrentWeaponSkill;
+            _enemyWeaponSkill = GameState.CurrentEnemy.WeaponSkill;
+        }
+
+        /// <summary>Starts a new round of battle.</summary>
         private void NewRound()
         {
             int playerFirst = Functions.GenerateRandomNumber(1, 100);
             int enemyFirst = Functions.GenerateRandomNumber(1, 100);
-            _enemyStance = EnemyStance();
+            EnemyStance();
 
             ToggleButtons(false);
+            BtnDefend.IsEnabled = false;
 
-            if (playerFirst >= enemyFirst) //if player goes first
+            if (playerFirst >= enemyFirst)
             {
                 PlayerTurn();
-
-                if (!_battleOver)
+                if (GameState.CurrentEnemy.CurrentEndurance > 0)
                     EnemyTurn();
             }
             else
             {
                 EnemyTurn();
-
-                if (!_battleOver)
+                if (GameState.CurrentUser.CurrentEndurance > 0)
                     PlayerTurn();
             }
-            CheckButtons();
+
             if (GameState.CurrentEnemy.CurrentEndurance <= 0)
                 WinBattle();
             else if (GameState.CurrentUser.CurrentEndurance <= 0)
                 LoseBattle();
+            else
+                RoundReset();
+
+            Display();
         }
 
-        /// <summary>The Player's turn.</summary>
+        /// <summary>The <see cref="User"/> attacks.</summary>
+        private void PlayerAttack()
+        {
+            if (_enemyStance != Stance.Parry)
+                PlayerHitsEnemy();
+            else if (SkillCheck(GameState.CurrentEnemy.WeaponSkill))
+            {
+                AddText("Your opponent parries your attack!");
+                EnemyHitsPlayer();
+            }
+            else
+                PlayerHitsEnemy();
+        }
+
+        /// <summary>The <see cref="User"/> flees the battle.</summary>
+        private void PlayerFlee()
+        {
+            AddText("You have escaped the battle!");
+
+            if (GameState.CurrentUser.Experience < 100)
+            {
+                if ((GameState.CurrentEnemy.Level - GameState.CurrentUser.Level) >= 2)
+                {
+                    AddText("You have gained 1 experience from the battle.");
+                    GameState.CurrentUser.Experience++;
+                }
+            }
+
+            ToggleButtons(false);                    // disable buttons
+            BtnExit.IsEnabled = true;              // enable Exit buton
+            _blnDone = true;                      // allow the form to exit
+        }
+
+        /// <summary>The <see cref="User"/> hits the <see cref="Enemy"/>.</summary>
+        private void PlayerHitsEnemy()
+        {
+            int plrDamage = Functions.GenerateRandomNumber(_playerDamage / 2, _playerDamage);
+            int eneDefend = Functions.GenerateRandomNumber(GameState.CurrentEnemy.Armor.Defense / 2, GameState.CurrentEnemy.Armor.Defense);
+
+            if (plrDamage > eneDefend)
+            {
+                int actualDamage = plrDamage - eneDefend;
+                AddText($"You attack your opponent for {plrDamage} damage, but their armor absorbs {eneDefend} damage. You do {actualDamage} total damage.");
+                GameState.CurrentEnemy.CurrentEndurance -= actualDamage;
+                if (GameState.CurrentEnemy.CurrentEndurance < 0)
+                    GameState.CurrentEnemy.CurrentEndurance = 0;
+            }
+            else
+                AddText($"You attack your opponent for {plrDamage} damage, but their armor absorbs all of it.");
+        }
+
+        /// <summary>Handles the <see cref="User"/>'s <see cref="Stance"/> in QuickCombat.</summary>
+        private void QuickCombatPlayerStance()
+        {
+            if (_playerStamina > 2)
+            {
+                int percent = Functions.GenerateRandomNumber(1, 100);
+                if (percent <= 20)
+                    SetPlayerStance(Stance.Normal);
+                else if (percent <= 40)
+                    SetPlayerStance(Stance.Berserk);
+                else if (percent <= 60)
+                    SetPlayerStance(Stance.Parry);
+                else if (percent <= 80)
+                    SetPlayerStance(Stance.Lunge);
+                else
+                    SetPlayerStance(Stance.Defend);
+            }
+            else if (_playerStamina == 1)
+            {
+                int percent = Functions.GenerateRandomNumber(1, 100);
+                if (percent <= 20)
+                    SetPlayerStance(Stance.Normal);
+                else if (percent <= 40) SetPlayerStance(Stance.Parry);
+                else if (percent <= 60)
+                    SetPlayerStance(Stance.Lunge);
+                else
+                    SetPlayerStance(Stance.Defend);
+            }
+            else
+                SetPlayerStance(Stance.Defend);
+        }
+
+        /// <summary>The <see cref="User"/>'s turn.</summary>
         private void PlayerTurn()
         {
             if (_playerStance != Stance.Defend && _playerStance != Stance.Flee)
-                PlayerAttack();
-            else if (_playerStance == Stance.Flee)
             {
-                if (PlayerFlee())
+                if (SkillCheck(_playerWeaponSkill + Bonus()))
                 {
-                    Functions.AddTextToTextBox(TxtBattle, "You successfully fled the battle.");
-                    EndBattle();
+                    if (!SkillCheck(_enemyBlocking))
+                        PlayerAttack();
+                    else
+                        AddText("Your opponent blocks your attack.");
                 }
+                else
+                    AddText("You miss your opponent.");
             }
-            else if (_playerStance == Stance.Defend)
-                PlayerStamina++;
-            if (PlayerStamina > 20)
-                PlayerStamina = 20;
         }
 
-        /// <summary>The Player attacks.</summary>
-        private void PlayerAttack()
+        /// <summary>Resets <see cref="User"/> and <see cref="Enemy"/> stats after a round.</summary>
+        private void RoundReset()
         {
-            int playerDamage = GameState.CurrentUser.CurrentWeapon.Damage;
-            int playerDefense = GameState.CurrentUser.Armor.Defense;
-            int enemyDamage = GameState.CurrentEnemy.Weapon.Damage;
-            int enemyDefense = GameState.CurrentEnemy.Armor.Defense;
+            AdjustStamina(_playerStance, ref _playerStamina);
+            _playerBlocking = GameState.CurrentUser.Blocking;
+            _playerDamage = GameState.CurrentUser.CurrentWeapon.Damage;
+            _playerWeaponSkill = GameState.CurrentUser.CurrentWeaponSkill;
 
-            switch (_enemyStance)
-            {
-                case Stance.Defend:
-                    enemyDefense *= 2;
-                    break;
+            AdjustStamina(_enemyStance, ref _enemyStamina);
+            _enemyBlocking = GameState.CurrentEnemy.Blocking;
+            _enemyDamage = GameState.CurrentEnemy.Weapon.Damage;
+            _enemyWeaponSkill = GameState.CurrentEnemy.WeaponSkill;
+        }
 
-                case Stance.Lunge:
-                    enemyDamage = Int32Helper.Parse(enemyDamage * 1.5m);
-                    enemyDefense = Int32Helper.Parse(enemyDefense * 0.5m);
-                    break;
-
-                case Stance.Berserk:
-                    enemyDamage *= 2;
-                    break;
-            }
+        /// <summary>Sets the <see cref="User"/>'s <see cref="Stance"/>.</summary>
+        /// <param name="stance"><see cref="Stance"/> to be set</param>
+        private void SetPlayerStance(Stance stance)
+        {
+            _playerStance = stance;
 
             switch (_playerStance)
             {
-                case Stance.Normal:
-                    PlayerStamina--;
-                    break;
-
                 case Stance.Berserk:
-                    playerDamage *= 2;
-                    PlayerStamina -= 2;
-                    break;
+                    {
+                        _playerDamage *= 2;
+                        break;
+                    }
 
                 case Stance.Lunge:
-                    playerDamage = Int32Helper.Parse(playerDamage * 1.5m);
-                    playerDefense = Int32Helper.Parse(playerDefense * 0.5m);
-                    PlayerStamina--;
-                    break;
-            }
-
-            int toHit = Functions.GenerateRandomNumber(10, GameState.CurrentUser.SelectedWeaponSkill);
-            int actualHit = Functions.GenerateRandomNumber(10, 90);
-
-            if (toHit >= actualHit) // then hit
-            {
-                if (_enemyStance == Stance.Parry)
-                {
-                    int parry = Functions.GenerateRandomNumber(10, GameState.CurrentEnemy.WeaponSkill);
-                    int parryDefend = Functions.GenerateRandomNumber(10, GameState.CurrentUser.SelectedWeaponSkill);
-
-                    if (parry >= parryDefend) //enemy successfully parries
                     {
-                        int actualDamage = Functions.GenerateRandomNumber(1, enemyDamage);
-                        int actualDefend = Functions.GenerateRandomNumber(1, playerDefense);
-                        string strParry = "The " + GameState.CurrentEnemy.Name + " parries your attack and attacks you for " + actualDamage + " damage. ";
-                        if (actualDamage > actualDefend) //player actually takes damage
-                            Functions.AddTextToTextBox(TxtBattle, strParry + "Your armor absorbs " + actualDefend + " damage. " + GameState.CurrentUser.TakeDamage(actualDamage - actualDefend));
-                        else
-                            Functions.AddTextToTextBox(TxtBattle, strParry + "Your armor absorbs all the damage.");
+                        _playerDamage *= 2;
+                        _playerWeaponSkill /= 2;
+                        break;
                     }
-                    else
-                        PlayerInflictsDamage(playerDamage, enemyDefense);
-                }
-                else
-                {
-                    int enemyBlocks = Functions.GenerateRandomNumber(10, GameState.CurrentEnemy.Blocking);
-                    if (enemyBlocks >= GameState.CurrentEnemy.Blocking)
-                        Functions.AddTextToTextBox(TxtBattle, "The " + GameState.CurrentEnemy.Name + " blocks your attack.");
-                    else
-                        PlayerInflictsDamage(playerDamage, enemyDefense);
-                }
-            }
-            else
-                Functions.AddTextToTextBox(TxtBattle, "You miss.");
-        }
 
-        /// <summary>Player inflicts damage on Enemy.</summary>
-        /// <param name="playerDamage">Maximum damage the player can inflict</param>
-        /// <param name="enemyDefense">Maximum damage the enemy can defend against</param>
-        private void PlayerInflictsDamage(int playerDamage, int enemyDefense)
-        {
-            int actualDamage = Functions.GenerateRandomNumber(1, playerDamage);
-            int actualDefend = Functions.GenerateRandomNumber(1, enemyDefense);
-            string attack = "You attack the " + GameState.CurrentEnemy.Name + " for " + actualDamage + ". ";
-            if (actualDamage > actualDefend)
-                Functions.AddTextToTextBox(TxtBattle, attack + "Their armor absorbs " + actualDefend + " damage. " + GameState.CurrentEnemy.TakeDamage(actualDamage - actualDefend));
-            else
-                Functions.AddTextToTextBox(TxtBattle, attack + "Their armor absorbs all of it.");
-        }
-
-        /// <summary>Sets the Enemy's stance.</summary>
-        /// <returns>Returns stance</returns>
-        private Stance EnemyStance()
-        {
-            // if Enemy will soon run out of Stamina, Defend to regain Stamina
-            if (EnemyStamina <= 1) return Stance.Defend;
-
-            int stance = Functions.GenerateRandomNumber(1, 100);
-
-            if (Decimal.Divide(GameState.CurrentEnemy.CurrentEndurance, GameState.CurrentEnemy.MaximumEndurance) > 0.2m)
-            {
-                if (stance <= 20)
-                    return Stance.Normal;
-                if (stance <= 40)
-                    return Stance.Berserk;
-                if (stance <= 60)
-                    return Stance.Parry;
-                if (stance <= 80)
-                    return Stance.Defend;
-                return Stance.Lunge;
-            }
-
-            // if Enemy is at less than 20% health, give a 20% chance to attempt to run away.
-            if (stance <= 16)
-                return Stance.Normal;
-            if (stance <= 32)
-                return Stance.Berserk;
-            if (stance <= 48)
-                return Stance.Parry;
-            if (stance <= 64)
-                return Stance.Defend;
-            if (stance <= 80)
-                return Stance.Lunge;
-            return Stance.Flee;
-        }
-
-        /// <summary>The Enemy's turn.</summary>
-        private void EnemyTurn()
-        {
-            if (_enemyStance != Stance.Defend && _enemyStance != Stance.Flee)
-                EnemyAttack();
-            else if (_enemyStance == Stance.Flee)
-            {
-                if (EnemyFlee())
-                {
-                    Functions.AddTextToTextBox(TxtBattle, "The " + GameState.CurrentEnemy.Name + " fled the battle.");
-                    EndBattle();
-                }
-            }
-            else if (_enemyStance == Stance.Defend)
-                EnemyStamina++;
-            if (EnemyStamina > 20)
-                EnemyStamina = 20;
-        }
-
-        /// <summary>The Enemy attacks.</summary>
-        private void EnemyAttack()
-        {
-            int playerDamage = GameState.CurrentUser.CurrentWeapon.Damage;
-            int playerDefense = GameState.CurrentUser.Armor.Defense;
-            int enemyDamage = GameState.CurrentEnemy.Weapon.Damage;
-            int enemyDefense = GameState.CurrentEnemy.Armor.Defense;
-
-            switch (_playerStance)
-            {
                 case Stance.Defend:
-                    playerDefense *= 2;
-                    break;
-
-                case Stance.Berserk:
-                    playerDamage *= 2;
-                    break;
-
-                case Stance.Lunge:
-                    playerDamage = Int32Helper.Parse(playerDamage * 1.5m);
-                    playerDefense = Int32Helper.Parse(playerDefense * 0.5m);
-                    break;
-            }
-
-            switch (_enemyStance)
-            {
-                case Stance.Normal:
-                    EnemyStamina--;
-                    break;
-
-                case Stance.Lunge:
-                    enemyDamage = Int32Helper.Parse(enemyDamage * 1.5m);
-                    enemyDefense = Int32Helper.Parse(enemyDefense * 0.5m);
-                    EnemyStamina--;
-                    break;
-
-                case Stance.Berserk:
-                    enemyDamage *= 2;
-                    EnemyStamina -= 2;
-                    break;
-            }
-
-            int toHit = Functions.GenerateRandomNumber(10, GameState.CurrentEnemy.WeaponSkill);
-            int actualHit = Functions.GenerateRandomNumber(10, 90);
-
-            if (toHit >= actualHit) // then hit
-            {
-                if (_playerStance == Stance.Parry)
-                {
-                    int parry = Functions.GenerateRandomNumber(10, GameState.CurrentUser.SelectedWeaponSkill);
-                    int parryDefend = Functions.GenerateRandomNumber(10, GameState.CurrentEnemy.WeaponSkill);
-
-                    if (parry >= parryDefend) //enemy successfully parries
                     {
-                        int actualDamage = Functions.GenerateRandomNumber(10, playerDamage);
-                        int actualDefend = Functions.GenerateRandomNumber(10, enemyDefense);
-                        string strParry = "You parry the " + GameState.CurrentEnemy.Name + "'s attack and you attack for " + actualDamage + " damage. ";
-                        if (actualDamage > actualDefend) //player actually takes damage
-                            Functions.AddTextToTextBox(TxtBattle, strParry + "Their armor absorbs " + actualDefend + " damage. " + GameState.CurrentEnemy.TakeDamage(actualDamage - actualDefend));
-                        else
-                            Functions.AddTextToTextBox(TxtBattle, strParry + "Their armor absorbs all the damage.");
+                        _playerBlocking = _playerBlocking >= 45 ? 90 : _playerBlocking * 2;
+                        break;
                     }
-                    else
-                        EnemyInflictsDamage(enemyDamage, playerDefense);
-                }
-                else
-                {
-                    int playerBlocks = Functions.GenerateRandomNumber(10, GameState.CurrentUser.Blocking);
-                    if (playerBlocks >= GameState.CurrentUser.Blocking)
-                        Functions.AddTextToTextBox(TxtBattle, "You block the " + GameState.CurrentEnemy.Name + "'s attack.");
-                    else
-                        EnemyInflictsDamage(enemyDamage, playerDefense);
-                }
             }
-            else
-                Functions.AddTextToTextBox(TxtBattle, "The " + GameState.CurrentEnemy.Name + " misses.");
         }
 
-        /// <summary>Enemy inflicts damage on Player.</summary>
-        /// <param name="enemyDamage">Maximum damage the Enemy can inflict</param>
-        /// <param name="playerDefense">Maximum damage the Player can defend against</param>
-        private void EnemyInflictsDamage(int enemyDamage, int playerDefense)
+        /// <summary>Sets the <see cref="User"/>'s <see cref="Stance"/> and starts a new round.</summary>
+        /// <param name="stance">Stance to be set</param>
+        private void SetPlayerStanceNewRound(Stance stance)
         {
-            int actualDamage = Functions.GenerateRandomNumber(1, enemyDamage);
-            int actualDefend = Functions.GenerateRandomNumber(1, playerDefense);
-            string attack = "The " + GameState.CurrentEnemy.Name + " attacks you for " + actualDamage + ". ";
-            if (actualDamage > actualDefend)
-                Functions.AddTextToTextBox(TxtBattle, attack + "Your armor absorbs " + actualDefend + " damage. " + GameState.CurrentUser.TakeDamage(actualDamage - actualDefend));
-            else
-                Functions.AddTextToTextBox(TxtBattle, attack + "Your armor absorbs all of it.");
+            SetPlayerStance(stance);
+            NewRound();
+        }
+
+        /// <summary>Determines whether an attempt to hit is successful.</summary>
+        /// <param name="skill">Skill to be tested against</param>
+        /// <returns>True if successful hit</returns>
+        private bool SkillCheck(int skill) => Functions.GenerateRandomNumber(1, 100) <= (skill > 90 ? 90 : skill);
+
+        /// <summary>Determines if you surprise the <see cref="Enemy"/> when first attacking them.</summary>
+        private void Surprise()
+        {
+            LoadBattle();
+            AddText($"You approach the {GameState.CurrentEnemy.Name}.");
+            if (SkillCheck(GameState.CurrentUser.Stealth + Bonus()))
+            {
+                _playerDamage *= 2;
+                AddText("You surprise your opponent!");
+                PlayerHitsEnemy();
+
+                if (GameState.CurrentEnemy.CurrentEndurance <= 0)
+                    WinBattle();
+                else
+                    RoundReset();
+            }
+            _blnSurprise = false;
         }
 
         #endregion Battle Management
-
-        #region Flee Attempts
-
-        ///TODO Fix bug in attempting to flee.
-        /// <summary>The User attempts to flee.</summary>
-        /// <returns>Whether the User successfully fled</returns>
-        private bool PlayerFlee() => Functions.GenerateRandomNumber(1, 100) <= GameState.CurrentUser.Slipping;
-
-        /// <summary>The Enemy attempts to flee.</summary>
-        /// <returns>Whether the Enemy successfully fled</returns>
-        private bool EnemyFlee() => Functions.GenerateRandomNumber(1, 100) <= GameState.CurrentEnemy.Slipping;
-
-        #endregion Flee Attempts
 
         #region Battle Results
 
         /// <summary>Ends the battle.</summary>
         private void EndBattle()
         {
+            _blnDone = true;
             ToggleButtons(false);
-            BtnInventory.IsEnabled = false;
-            _battleOver = true;
             BtnExit.IsEnabled = true;
         }
 
-        /// <summary>The User loses the battle.</summary>
+        /// <summary>The Player loses the battle.</summary>
         private void LoseBattle()
         {
-            Functions.AddTextToTextBox(TxtBattle, "You have been slain by your opponent!");
+            AddText("You have been slain by your opponent!");
+            GameState.CurrentUser.CurrentEndurance = 0;
             GameState.CurrentUser.Alive = false;
 
             EndBattle();
         }
 
-        /// <summary>The User wins the battle.</summary>
-        private void WinBattle()
+        /// <summary>The <see cref="User"/> wins the battle.</summary>
+        private async void WinBattle()
         {
             Functions.AddTextToTextBox(TxtBattle, "You have slain your opponent!");
 
@@ -516,8 +580,11 @@ namespace Assassin.Views.Battle
                 }
             }
 
-            GameState.CurrentUser.SkillPoints++;
-            Functions.AddTextToTextBox(TxtBattle, "You have earned a skill point from this battle.");
+            if (GameState.CurrentUser.Level - GameState.CurrentEnemy.Level >= -2)
+            {
+                GameState.CurrentUser.SkillPoints++;
+                Functions.AddTextToTextBox(TxtBattle, "You have earned a skill point from this battle.");
+            }
 
             GameState.CurrentUser.GoldOnHand += GameState.CurrentEnemy.GoldOnHand;
             Functions.AddTextToTextBox(TxtBattle, "You frisk your opponent's body and find " + GameState.CurrentEnemy.GoldOnHand + " gold.");
@@ -551,59 +618,85 @@ namespace Assassin.Views.Battle
                     break;
             }
             if (!blnTakeWeapon)
-                Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse and bring it to the Weapon shop and sell it for {GameState.CurrentEnemy.Weapon.Value / 2} gold.");
+            {
+                Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse and bring it to the Weapon shop and sell it for {GameState.CurrentEnemy.Weapon.SellValue} gold.");
+                GameState.CurrentUser.GoldOnHand += GameState.CurrentEnemy.Weapon.SellValue;
+            }
             else
                 Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse.");
 
             EndBattle();
+            _blnWin = true;
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         #endregion Battle Results
 
+        #region Button Manipulation
+
+        /// <summary>Toggles all the battle Buttons.</summary>
+        /// <param name="enabled">Should the battle Buttons be enabled?</param>
+        private void ToggleButtons(bool enabled)
+        {
+            BtnAttack.IsEnabled = enabled;
+            BtnBerserk.IsEnabled = enabled && PlayerStamina >= 2;
+            BtnDefend.IsEnabled = !_blnDone;
+            BtnFlee.IsEnabled = enabled;
+            BtnInventory.IsEnabled = !_blnDone;
+            BtnLunge.IsEnabled = enabled;
+            BtnParry.IsEnabled = enabled;
+            BtnQuickCombat.IsEnabled = enabled;
+        }
+
+        #endregion Button Manipulation
+
         #region Button-Click Methods
 
-        private void BtnAttack_Click(object sender, RoutedEventArgs e)
-        {
-            _playerStance = Stance.Normal;
-            NewRound();
-        }
+        private void BtnAttack_Click(object sender, RoutedEventArgs e) => SetPlayerStanceNewRound(Stance.Normal);
 
-        private void BtnBerserk_Click(object sender, RoutedEventArgs e)
-        {
-            _playerStance = Stance.Berserk;
-            NewRound();
-        }
+        private void BtnBerserk_Click(object sender, RoutedEventArgs e) => SetPlayerStanceNewRound(Stance.Berserk);
 
-        private void BtnDefend_Click(object sender, RoutedEventArgs e)
-        {
-            _playerStance = Stance.Defend;
-            NewRound();
-        }
+        private void BtnDefend_Click(object sender, RoutedEventArgs e) => SetPlayerStanceNewRound(Stance.Defend);
 
         private void BtnFlee_Click(object sender, RoutedEventArgs e)
         {
-            _playerStance = Stance.Flee;
-            NewRound();
+            if (SkillCheck(GameState.CurrentUser.Slipping + Bonus()))
+            {
+                if (SkillCheck(_enemyBlocking - Bonus()))
+                    PlayerFlee();
+                else
+                {
+                    _playerStance = Stance.Flee;
+                    AddText("Your opponent blocked your attempt to flee.");
+                    NewRound();
+                }
+            }
+            else
+            {
+                _playerStance = Stance.Flee;
+                AddText("Your attempt at flight failed miserably.");
+                NewRound();
+            }
         }
-
-        private void BtnLunge_Click(object sender, RoutedEventArgs e)
-        {
-            _playerStance = Stance.Lunge;
-            NewRound();
-        }
-
-        private void BtnParry_Click(object sender, RoutedEventArgs e)
-        {
-            _playerStance = Stance.Parry;
-            NewRound();
-        }
-
-        private void BtnQuickCombat_Click(object sender, RoutedEventArgs e) => GameState.DisplayNotification("Quick Combat still under construction.", "Assassin");
 
         private void BtnExit_Click(object sender, RoutedEventArgs e) => ClosePage();
 
         private void BtnInventory_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Inventory
+        }
+
+        private void BtnLunge_Click(object sender, RoutedEventArgs e) => SetPlayerStanceNewRound(Stance.Lunge);
+
+        private void BtnParry_Click(object sender, RoutedEventArgs e) => SetPlayerStanceNewRound(Stance.Parry);
+
+        private void BtnQuickCombat_Click(object sender, RoutedEventArgs e)
+        {
+            while (GameState.CurrentUser.CurrentEndurance > 0 && GameState.CurrentEnemy.CurrentEndurance > 0)
+            {
+                QuickCombatPlayerStance();
+                NewRound();
+            }
         }
 
         #endregion Button-Click Methods
@@ -613,10 +706,18 @@ namespace Assassin.Views.Battle
         /// <summary>Closes the Page.</summary>
         private async void ClosePage()
         {
-            if (_battleOver)
+            if (_blnDone)
             {
                 GameState.GoBack();
                 await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
+                if (BlnJob)
+                {
+                    Functions.AddTextToTextBox(RefToJobsPage.TxtJob, TxtBattle.Text);
+                }
+                else
+                {
+                    Functions.AddTextToTextBox(RefToAssassinationPage.TxtAssassinate, TxtBattle.Text);
+                }
             }
         }
 

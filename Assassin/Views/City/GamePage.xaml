@@ -12,6 +12,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,24 +26,24 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtGame" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="410" Height="300" BorderThickness="1" TextWrapping="Wrap" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Visible" />
-        <Button x:Name="BtnAssassinate" Grid.Column="0" Grid.Row="1" Width="200" Content="_Assassinate" Click="BtnAssassinate_Click" Margin="0,0,5,0" />
-        <Button x:Name="BtnInventory" Grid.Column="1" Grid.Row="1" Width="200" Margin="5,5,0,5" Content="_Inventory" Click="BtnInventory_Click" />
-        <Button x:Name="BtnRob" Grid.Column="0" Grid.Row="2" Width="200" Margin="0,5,5,5" Content="_Rob" Click="BtnRob_Click" />
-        <Button x:Name="BtnShops" Grid.Column="1" Grid.Row="2" Width="200" Margin="5,5,0,5" Content="_Shops" Click="BtnShops_Click" />
-        <Button x:Name="BtnInn" Grid.Column="0" Grid.Row="3" Width="200" Margin="0,5,5,5" Content="_Inn" Click="BtnInn_Click" />
-        <Button x:Name="BtnGuild" Grid.Column="1" Grid.Row="3" Width="200" Margin="5,5,0,5" Content="_Guild" Click="BtnGuild_Click" />
-        <Button x:Name="BtnPub" Grid.Column="0" Grid.Row="4" Width="200" Margin="0,5,5,5" Content="_Pub" Click="BtnPub_Click" />
-        <Button x:Name="BtnTrain" Grid.Column="1" Grid.Row="4" Width="200" Margin="5,5,0,5" Content="_Train" Click="BtnTrain_Click" />
-        <Button x:Name="BtnMystic" Grid.Column="0" Grid.Row="5" Width="200" Margin="0,5,5,5" Content="M_ystic" Click="BtnMystic_Click" />
-        <Button x:Name="BtnBank" Grid.Column="1" Grid.Row="5" Width="200" Margin="5,5,0,5" Content="_Bank" Click="BtnBank_Click" />
-        <Button x:Name="BtnChapel" Grid.Column="0" Grid.Row="6" Width="200" Margin="0,5,5,5" Content="_Chapel" Click="BtnChapel_Click" />
-        <Button x:Name="BtnMessages" Grid.Column="1" Grid.Row="6" Width="200" Margin="5,5,0,5" Content="_Messsages" Click="BtnMessages_Click" />
-        <Button x:Name="BtnOthers" Grid.Column="0" Grid.Row="7" Width="200" Margin="0,5,5,5" Content="_Others" Click="BtnOthers_Click" />
-        <Button x:Name="BtnOptions" Grid.Column="1" Grid.Row="7" Width="200" Margin="5,5,0,5" Content="O_ptions" Click="BtnOptions_Click" />
-        <Button x:Name="BtnJail" Grid.Column="0" Grid.Row="8" Width="200" Margin="0,5,5,0" Content="_Jail" Click="BtnJail_Click" />
-        <Button x:Name="BtnExit" Grid.Column="1" Grid.Row="8" Width="200" Margin="5,5,0,0" Content="_Exit" Click="BtnExit_Click" IsCancel="True" />
-        <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="9" Margin="10,0,0,0">
+        <TextBox x:Name="TxtGame" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Width="830" Height="600" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <Button x:Name="BtnAssassinate" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="410" Content="_Assassinate" Click="BtnAssassinate_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnInventory" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Width="410" Content="_Inventory" Click="BtnInventory_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnBank" Grid.Column="0" Grid.Row="2" Width="200" Content="_Bank" Click="BtnBank_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnJail" Grid.Column="1" Grid.Row="2" Width="200" Content="_Jail" Click="BtnJail_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnRob" Grid.Column="2" Grid.Row="2" Width="200" Content="_Rob" Click="BtnRob_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnChapel" Grid.Column="0" Grid.Row="3" Width="200" Content="_Chapel" Click="BtnChapel_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnMystic" Grid.Column="1" Grid.Row="3" Width="200" Content="M_ystic" Click="BtnMystic_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnShops" Grid.Column="2" Grid.Row="3" Width="200" Content="_Shops" Click="BtnShops_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnMessages" Grid.Column="3" Grid.Row="3" Width="200" Content="_Messsages" Click="BtnMessages_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnGuild" Grid.Column="0" Grid.Row="4" Width="200" Content="_Guild" Click="BtnGuild_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnOthers" Grid.Column="1" Grid.Row="4" Width="200" Content="_Others" Click="BtnOthers_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnTrain" Grid.Column="2" Grid.Row="4" Width="200" Content="_Train" Click="BtnTrain_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnOptions" Grid.Column="3" Grid.Row="4" Width="200" Content="O_ptions" Click="BtnOptions_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnInn" Grid.Column="0" Grid.Row="5" Width="200" Content="_Inn" Click="BtnInn_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnPub" Grid.Column="1" Grid.Row="5" Width="200" Content="_Pub" Click="BtnPub_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnExit" Grid.Column="3" Grid.Row="5" Width="200" Content="_Exit" Click="BtnExit_Click" IsCancel="True" />
+        <Grid Grid.Column="4" Grid.Row="0" Grid.RowSpan="9" Margin="10,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="300" />
@@ -91,19 +93,19 @@
                 <TextBlock Text="Endurance" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="4" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=EnduranceToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblEndAmt" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="5" BorderThickness="1,1,1,0">
                 <TextBlock Text="Hunger" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="5" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=HungerToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblHunger" Text="{Binding Path=HungerToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="6" BorderThickness="1,1,1,0">
                 <TextBlock Text="Thirst" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="6" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=ThirstToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblThirst" Text="{Binding Path=ThirstToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" BorderThickness="1,1,1,0">
                 <TextBlock Text="Inventory" TextAlignment="Center" VerticalAlignment="Center" />
@@ -112,13 +114,13 @@
                 <TextBlock Text="Weapon" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="8" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=SelectedWeapon}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblWeaponName" Text="{Binding Path=CurrentWeapon}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="9" BorderThickness="1,1,1,0">
                 <TextBlock Text="Armor" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="9" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblArmorName" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="10" BorderThickness="1,1,1,0">
                 <TextBlock Text="Potion" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />

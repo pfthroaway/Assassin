@@ -1,5 +1,6 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Entities;
+using Assassin.Views.Battle;
 using Assassin.Views.Guilds;
 using Assassin.Views.Shopping;
 using Extensions;
@@ -23,28 +24,12 @@ namespace Assassin.Views.City
         /// <returns>Returns true if player isn't too hungry or thirst to continue.</returns>
         private bool CheckHungerThirst()
         {
-            if (GameState.CurrentUser.Hunger >= 24 || GameState.CurrentUser.Thirst >= 24)
-            {
-                BtnAccept.IsEnabled = false;
-                BtnDecline.IsEnabled = false;
-
-                if (GameState.CurrentUser.Hunger >= 24 && GameState.CurrentUser.Thirst >= 24)
-                    Functions.AddTextToTextBox(TxtJob, "You are too hungry and thirsty to continue.");
-                else if (GameState.CurrentUser.Hunger >= 24)
-                    Functions.AddTextToTextBox(TxtJob, "You are too hungry to continue.");
-                else if (GameState.CurrentUser.Thirst >= 24)
-                    Functions.AddTextToTextBox(TxtJob, "You are too thirsty to continue.");
-                return false;
-            }
-
-            BtnAccept.IsEnabled = true;
-            BtnDecline.IsEnabled = true;
-
-            if (GameState.CurrentUser.Hunger > 0 && GameState.CurrentUser.Hunger % 5 == 0)
-                Functions.AddTextToTextBox(TxtJob, "You are " + GameState.CurrentUser.HungerToString.ToLower() + ".");
-            if (GameState.CurrentUser.Thirst > 0 && GameState.CurrentUser.Thirst % 5 == 0)
-                Functions.AddTextToTextBox(TxtJob, "You are " + GameState.CurrentUser.ThirstToString.ToLower() + ".");
-            return true;
+            Functions.AddTextToTextBox(TxtJob, GameState.CurrentUser.DisplayHungerThirstText());
+            if (GameState.CurrentUser.CanDoAction())
+                return true;
+            BtnAccept.IsEnabled = false;
+            BtnDecline.IsEnabled = false;
+            return false;
         }
 
         /// <summary>Generates list of Employers who offer jobs.</summary>
@@ -68,20 +53,21 @@ namespace Assassin.Views.City
             _bounty = Functions.GenerateRandomNumber(GameState.CurrentEnemy.GoldOnHand, GameState.CurrentEnemy.GoldOnHand * 2);
             Functions.AddTextToTextBox(TxtJob,
                 $"\"Greetings, {GameState.CurrentUser.Name}.\"\n" +
-                $"I have an opportunity for you.\"\nIt concerns the elimination of a {GameState.CurrentEnemy.Name}.\"\n" +
-                $"I will pay you {_bounty} gold.\"\n" +
-                $"Are you interested?\"");
+                $"\"I have an opportunity for you.\"\n" +
+                $"\"It concerns the elimination of a {GameState.CurrentEnemy.Name}.\"\n" +
+                $"\"I will pay you {_bounty} gold.\"\n" +
+                "\"Are you interested?\"");
         }
 
-        internal void ReceivePayment()
+        /// <summary>Handles getting paid.</summary>
+        public async void GetPaid()
         {
-        }
+            ToggleButtons(false);
+            BtnLeaveTable.IsEnabled = true;
+            Functions.AddTextToTextBox(TxtJob, $"The {_currentEmployer.Age} {_currentEmployer.Gender} welcomes your return.\n\"Well done. Here is your payment.\"\nYou are handed {_bounty} gold.");
+            GameState.CurrentUser.GoldOnHand += _bounty;
 
-        /// <summary>Increases the current User's Hunger and Thirst.</summary>
-        private static void IncreaseHungerThirst()
-        {
-            GameState.CurrentUser.Hunger++;
-            GameState.CurrentUser.Thirst++;
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
         #region Button Manipulation
@@ -98,13 +84,28 @@ namespace Assassin.Views.City
 
         #region Button-Click Methods
 
-        private void BtnAccept_Click(object sender, RoutedEventArgs e) => IncreaseHungerThirst();
+        private void BtnAccept_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckHungerThirst())
+            {
+                GameState.CurrentUser.GainHungerThirst();
+                BattlePage battlePage = new BattlePage() { RefToJobsPage = this, BlnJob = true };
+                battlePage.TxtBattle.Text = "You stalk your opponent.";
+                GameState.Navigate(battlePage);
+            }
+            else
+                BtnLeaveTable.IsEnabled = true;
+        }
 
         private void BtnDecline_Click(object sender, RoutedEventArgs e)
         {
-            IncreaseHungerThirst();
             if (CheckHungerThirst())
+            {
+                GameState.CurrentUser.GainHungerThirst();
                 GenerateJob();
+            }
+            else
+                BtnLeaveTable.IsEnabled = true;
         }
 
         private void BtnLeaveTable_Click(object sender, RoutedEventArgs e)
