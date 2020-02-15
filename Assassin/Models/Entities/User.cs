@@ -393,7 +393,7 @@ namespace Assassin.Models.Entities
             CurrentEndurance += healAmount;
             if (CurrentEndurance > MaximumEndurance)
                 CurrentEndurance = MaximumEndurance;
-            return $"You heal {healAmount:N0} damage.";
+            return $"You restore {healAmount:N0} endurance.";
         }
 
         /// <summary>The <see cref="User"/> takes damage.</summary>

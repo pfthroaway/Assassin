@@ -142,7 +142,7 @@ namespace Assassin.Models.Database
         /// <returns>True if has applied</returns>
         public async Task<bool> HasAppliedToGuild(User checkUser, Guild checkGuild)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"SELECT * FROM Applications WHERE [Username] = @name AND [Guild] = @guild" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "SELECT * FROM Applications WHERE [Username] = @name AND [Guild] = @guild" };
             cmd.Parameters.AddWithValue("@name", checkUser.Name);
             cmd.Parameters.AddWithValue("@guild", checkGuild.ID);
             DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);

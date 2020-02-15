@@ -11,7 +11,7 @@ namespace Assassin.Models.Entities
         private int _fine;
         private DateTime _dateJailed;
 
-        #region Properties
+        #region Modifying Properties
 
         /// <summary>Name of the <see cref="JailedUser"/>.</summary>
         public string Name
@@ -33,8 +33,7 @@ namespace Assassin.Models.Entities
             get => _fine;
             set
             {
-                _fine = value; NotifyPropertyChanged(nameof(Fine));
-                NotifyPropertyChanged(nameof(FineToString));
+                _fine = value; NotifyPropertyChanged(nameof(Fine), nameof(FineToString));
             }
         }
 
@@ -46,14 +45,21 @@ namespace Assassin.Models.Entities
             get => _dateJailed; set
             {
                 _dateJailed = value;
-                NotifyPropertyChanged(nameof(DateJailed));
+                NotifyPropertyChanged(nameof(DateJailed), nameof(LocalDateJailed), nameof(LocalDateJailedToString));
             }
         }
 
-        #endregion Properties
+        #endregion Modifying Properties
+
+        #region Helper Properties
 
         /// <summary>Date the <see cref="JailedUser"/> was incarcerated in local time.</summary>
         public DateTime LocalDateJailed => TimeZone.CurrentTimeZone.ToLocalTime(DateJailed);
+
+        /// <summary>Date the <see cref="JailedUser"/> was incarcerated in local time, formatted.</summary>
+        public string LocalDateJailedToString => LocalDateJailed.ToString(@"yyyy-MM-dd hh\:mm\:ss tt");
+
+        #endregion Helper Properties
 
         #region Constructors
 
