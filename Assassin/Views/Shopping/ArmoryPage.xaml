@@ -18,25 +18,25 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListBox x:Name="LstArmor" Grid.Column="0" Grid.Row="0" Width="225" Height="245" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding}" SelectionChanged="LstArmor_SelectionChanged" Margin="0,0,20,10" />
-        <TextBox x:Name="TxtArmor" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Width="456" Height="245" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10" />
-        <GroupBox x:Name="GrpSelected" Grid.Column="1" Grid.Row="1" Header="Selected Armor" Margin="0,0,10,10" Padding="5">
+        <ListBox x:Name="LstArmor" Grid.Column="0" Grid.Row="0" Width="350" Height="380" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding}" SelectionChanged="LstArmor_SelectionChanged" Margin="0,0,20,10" />
+        <TextBox x:Name="TxtArmor" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Width="646" Height="380" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10" />
+        <GroupBox x:Name="GrpSelected" Grid.Column="1" Grid.Row="1" Header="Selected Armor" Margin="0,0,10,20" Padding="5">
             <StackPanel>
-                <TextBlock x:Name="LblSelectedArmor" Width="200" Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
-                <TextBlock x:Name="LblSelectedDefense" Width="200" Text="{Binding DefenseToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
-                <TextBlock x:Name="LblSelectedValue" Width="200" Text="{Binding ValueToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20" />
-                <Button x:Name="BtnPurchase" Grid.Row="4" Width="145" Click="BtnPurchase_Click" Content="_Purchase" IsEnabled="False" />
+                <TextBlock x:Name="LblSelectedArmor" Width="300" Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+                <TextBlock x:Name="LblSelectedDefense" Width="300" Text="{Binding DefenseToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+                <TextBlock x:Name="LblSelectedValue" Width="300" Text="{Binding ValueToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20" />
+                <Button x:Name="BtnPurchase" Grid.Row="4" Width="200" Click="BtnPurchase_Click" Content="_Purchase" IsEnabled="False" />
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="GrpCurrent" Grid.Column="2" Grid.Row="1" Header="Current Armor" Margin="0,0,0,10" Padding="5">
+        <GroupBox x:Name="GrpCurrent" Grid.Column="2" Grid.Row="1" Header="Current Armor" Margin="0,0,0,20" Padding="5">
             <StackPanel>
-                <TextBlock x:Name="LblCurrentArmor" Width="200" Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
-                <TextBlock x:Name="LblCurrentDefense" Width="200" Text="{Binding DefenseToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
-                <TextBlock x:Name="LblCurrentSellValue" Width="200" Text="{Binding SellValueToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20" />
-                <Button x:Name="BtnSell" Width="145" Click="BtnSell_Click" Content="_Sell" IsEnabled="False" />
+                <TextBlock x:Name="LblCurrentArmor" Width="300" Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+                <TextBlock x:Name="LblCurrentDefense" Width="300" Text="{Binding DefenseToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+                <TextBlock x:Name="LblCurrentSellValue" Width="300" Text="{Binding SellValueToStringWithText}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20" />
+                <Button x:Name="BtnSell" Width="200" Click="BtnSell_Click" Content="_Sell" IsEnabled="False" />
             </StackPanel>
         </GroupBox>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=GoldOnHandToStringWithText}" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,10" />
-        <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Width="145" Content="_Back" HorizontalAlignment="Center" IsCancel="True" Click="BtnBack_Click" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=GoldOnHandToStringWithText}" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,35" />
+        <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Width="200" Content="_Back" HorizontalAlignment="Center" IsCancel="True" Click="BtnBack_Click" />
     </Grid>
 </Page>

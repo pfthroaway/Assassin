@@ -712,11 +712,17 @@ namespace Assassin.Views.Battle
                 await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
                 if (BlnJob)
                 {
-                    Functions.AddTextToTextBox(RefToJobsPage.TxtJob, TxtBattle.Text);
+                    Functions.AddTextToTextBox(RefToJobsPage.TxtJob, TxtBattle.Text.Trim());
+                    RefToJobsPage.BtnLeaveTable.IsEnabled = true;
+                    if (_blnWin)
+                    {
+                        Functions.AddTextToTextBox(RefToJobsPage.TxtJob, "You take your opponent's engraved weapon back to your employer.");
+                        RefToJobsPage.GetPaid();
+                     }
                 }
                 else
                 {
-                    Functions.AddTextToTextBox(RefToAssassinationPage.TxtAssassinate, TxtBattle.Text);
+                    Functions.AddTextToTextBox(RefToAssassinationPage.TxtAssassinate, TxtBattle.Text.Trim());
                 }
             }
         }

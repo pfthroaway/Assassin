@@ -216,6 +216,7 @@ namespace Assassin.Views.Shopping
             SelectedWeapon = (Weapon)LstWeapon.SelectedItem;
             UpdateBinding();
             CheckPurchase();
+            CheckSell();
         }
 
         #endregion Click-Methods
@@ -229,12 +230,7 @@ namespace Assassin.Views.Shopping
                 "Weapons 'R Us is the name, tools of destruction is our game.";
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            RadLight.IsChecked = true;
-            UpdateBinding();
-            CheckSell();
-        }
+        private void Page_Loaded(object sender, RoutedEventArgs e) => RadLight.IsChecked = true;
 
         #endregion Page-Manipulation Methods
     }

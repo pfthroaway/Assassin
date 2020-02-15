@@ -47,7 +47,7 @@ namespace Assassin.Views.Battle
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtAssassinate.Text);
+            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtAssassinate.Text.Trim());
             GameState.GoBack();
         }
 

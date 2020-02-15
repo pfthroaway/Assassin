@@ -17,6 +17,7 @@ namespace Assassin.Views.City
     /// <summary>Interaction logic for GamePage.xaml</summary>
     public partial class GamePage
     {
+        private bool blnAwake;
         private TimeSpan jailTimeSpan;
         private JailedUser jailedUser;
         private DispatcherTimer Timer1 = new DispatcherTimer();
@@ -60,7 +61,7 @@ namespace Assassin.Views.City
 
             GameState.CurrentUser.CurrentLocation = SleepLocation.Streets;
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
-
+            blnAwake = true;
             Display();
         }
 
@@ -99,8 +100,7 @@ namespace Assassin.Views.City
         }
 
         /// <summary>If the character is newly created, display this text.</summary>
-        internal void NewUser() => TxtGame.Text =
-                $"Creare An Vita, {GameState.CurrentUser.Name}!\n\nYou enter the city of thieves to take your place among the legends!";
+        internal void NewUser() => TxtGame.Text = $"Creare An Vita, {GameState.CurrentUser.Name}!\n\nYou enter the city of thieves to take your place among the legends!";
 
         /// <summary>Toggles all the Buttons on the Form.</summary>
         /// <param name="enabled">Should the Buttons be enabled?</param>
@@ -210,7 +210,8 @@ namespace Assassin.Views.City
         {
             DataContext = GameState.CurrentUser;
             GameState.GamePage = this;
-            Awaken();
+            if (!blnAwake)
+                Awaken();
         }
 
         private void Timer1_Tick(object sender, EventArgs e)

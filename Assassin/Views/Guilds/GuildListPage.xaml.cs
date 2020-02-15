@@ -49,7 +49,7 @@ namespace Assassin.Views.Guilds
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtGuild.Text);
+            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtGuild.Text.Trim());
             GameState.GoBack();
         }
 

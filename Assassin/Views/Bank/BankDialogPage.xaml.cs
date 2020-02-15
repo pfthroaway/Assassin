@@ -31,20 +31,17 @@ namespace Assassin.Views.Bank
                     break;
 
                 case "Withdrawal":
-                    LblDialog.Text =
-                        $"How much gold would you like to withdraw? You have {_maximum:N0} gold in your account.";
+                    LblDialog.Text = $"How much gold would you like to withdraw? You have {_maximum:N0} gold in your account.";
                     BtnAction.Content = "_Withdraw";
                     break;
 
                 case "Repay Loan":
-                    LblDialog.Text =
-                        $"How much of your loan would you like to repay? You currently owe {_maximum:N0} gold. You have {GameState.CurrentUser.GoldOnHand:N0} with you.";
+                    LblDialog.Text = $"How much of your loan would you like to repay? You currently owe {_maximum:N0} gold. You have {GameState.CurrentUser.GoldOnHand:N0} with you.";
                     BtnAction.Content = "_Repay";
                     break;
 
                 case "Take Out Loan":
-                    LblDialog.Text =
-                        $"How much gold would you like to take out on loan? Your credit deems you worthy of receiving up to {maximum:N0} gold. Remember, we have a 5% loan fee.";
+                    LblDialog.Text = $"How much gold would you like to take out on loan? Your credit deems you worthy of receiving up to {maximum:N0} gold. Remember, we have a 5% loan fee.";
                     BtnAction.Content = "_Borrow";
                     break;
             }
@@ -90,7 +87,7 @@ namespace Assassin.Views.Bank
 
         private void BtnAction_Click(object sender, RoutedEventArgs e)
         {
-            _textAmount = Int32Helper.Parse(TxtBank.Text);
+            _textAmount = Int32Helper.Parse(TxtBank.Text.Trim());
 
             if (_textAmount <= _maximum && _textAmount > 0)
             {

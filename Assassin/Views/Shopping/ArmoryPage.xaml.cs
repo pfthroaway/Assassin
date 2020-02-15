@@ -142,13 +142,10 @@ namespace Assassin.Views.Shopping
         {
             SelectedArmor = LstArmor.SelectedIndex >= 0 ? (Armor)LstArmor.SelectedItem : new Armor();
             CheckPurchase();
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateBinding();
             CheckSell();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e) => UpdateBinding();
 
         #endregion Page-Manipulation Methods
     }
