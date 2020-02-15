@@ -1,4 +1,5 @@
 ﻿using Assassin.Models;
+using Assassin.Views.Options;
 using System.Windows;
 
 namespace Assassin.Views.Admin
@@ -9,6 +10,20 @@ namespace Assassin.Views.Admin
         #region Button-Click Methods
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => ClosePage();
+
+        private void BtnChangePassword_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ChangePasswordPage(true));
+
+        private void BtnManageEnemies_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BtnManageGuilds_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BtnManageUsers_Click(object sender, RoutedEventArgs e)
+        {
+        }
 
         #endregion Button-Click Methods
 

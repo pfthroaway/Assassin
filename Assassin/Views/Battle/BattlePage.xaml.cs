@@ -2,9 +2,8 @@
 using Assassin.Models.Enums;
 using Assassin.Models.Items;
 using Assassin.Views.City;
+using Assassin.Views.Player;
 using Extensions;
-using Extensions.DataTypeHelpers;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -681,10 +680,7 @@ namespace Assassin.Views.Battle
 
         private void BtnExit_Click(object sender, RoutedEventArgs e) => ClosePage();
 
-        private void BtnInventory_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Inventory
-        }
+        private void BtnInventory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InventoryPage());
 
         private void BtnLunge_Click(object sender, RoutedEventArgs e) => SetPlayerStanceNewRound(Stance.Lunge);
 
@@ -718,7 +714,7 @@ namespace Assassin.Views.Battle
                     {
                         Functions.AddTextToTextBox(RefToJobsPage.TxtJob, "You take your opponent's engraved weapon back to your employer.");
                         RefToJobsPage.GetPaid();
-                     }
+                    }
                 }
                 else
                 {

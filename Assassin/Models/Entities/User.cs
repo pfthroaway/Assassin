@@ -123,7 +123,7 @@ namespace Assassin.Models.Entities
         public WeaponType CurrentWeaponType
         {
             get => _currentWeapon;
-            set { _currentWeapon = value; NotifyPropertyChanged(nameof(CurrentWeaponType)); }
+            set { _currentWeapon = value; NotifyPropertyChanged(nameof(CurrentWeaponType), nameof(CurrentWeapon)); }
         }
 
         /// <summary><see cref="User"/>'s light <see cref="Weapon"/>.</summary>

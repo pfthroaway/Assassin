@@ -1,7 +1,6 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Entities;
 using Assassin.Models.Enums;
-using Assassin.Views.City;
 using Extensions;
 using System;
 using System.Collections.Generic;

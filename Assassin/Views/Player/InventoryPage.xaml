@@ -14,24 +14,24 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Light Weapon" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-        <TextBlock Grid.Column="1" Grid.Row="0" Width="200" Text="{Binding Path=LightWeapon}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="0" Width="300" Text="{Binding Path=LightWeapon}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
         <Button x:Name="BtnEquipLight" Grid.Column="2" Grid.Row="0" Width="125" Margin="0,0,0,10" Content="Equip" Click="BtnEquipLight_Click" />
         <TextBlock Grid.Column="0" Grid.Row="1" Text="Heavy Weapon" TextAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Center" />
-        <TextBlock Grid.Column="1" Grid.Row="1" Width="200" Text="{Binding Path=HeavyWeapon}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="1" Width="300" Text="{Binding Path=HeavyWeapon}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
         <Button x:Name="BtnEquipHeavy" Grid.Column="2" Grid.Row="1" Width="125" Margin="0,0,0,10" Content="Equip" Click="BtnEquipHeavy_Click" />
         <TextBlock Grid.Column="0" Grid.Row="2" Text="Two-Handed Weapon" TextAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Center" />
-        <TextBlock Grid.Column="1" Grid.Row="2" Width="200" Text="{Binding Path=TwoHandedWeapon}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="2" Width="300" Text="{Binding Path=TwoHandedWeapon}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
         <Button x:Name="BtnEquipTwoHanded" Grid.Column="2" Grid.Row="2" Width="125" Margin="0,0,0,10" Content="Equip" Click="BtnEquipTwoHanded_Click" />
         <TextBlock Grid.Column="0" Grid.Row="3" Text="Potion" TextAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Center" />
-        <TextBlock Grid.Column="1" Grid.Row="3" Width="200" Text="{Binding Path=Potion}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="3" Width="300" Text="{Binding Path=Potion}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
         <Button x:Name="BtnDrinkPotion" Grid.Column="2" Grid.Row="3" Width="125" Margin="0,0,0,10" Content="Drink" Click="BtnDrinkPotion_Click" />
         <TextBlock Grid.Column="0" Grid.Row="4" Text="Lockpicks" TextAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Center" />
         <TextBlock Grid.Column="1" Grid.Row="4" Width="50" Text="{Binding Path=Lockpicks}" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />

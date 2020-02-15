@@ -3,6 +3,7 @@ using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Assassin.Views.Battle;
 using Assassin.Views.Guilds;
+using Assassin.Views.Options;
 using Assassin.Views.Player;
 using Assassin.Views.Shopping;
 using Extensions;
@@ -61,7 +62,6 @@ namespace Assassin.Views.City
             GameState.CurrentUser.CurrentLocation = SleepLocation.Streets;
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
             blnAwake = true;
-            Display();
         }
 
         /// <summary>Checks whether a <see cref="JailedUser"/> has served their time.</summary>
@@ -167,10 +167,7 @@ namespace Assassin.Views.City
             //TODO Implement Mystic
         }
 
-        private void BtnOptions_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Options.
-        }
+        private void BtnOptions_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ChangePasswordPage());
 
         private void BtnOthers_Click(object sender, RoutedEventArgs e)
         {
@@ -211,6 +208,7 @@ namespace Assassin.Views.City
             GameState.GamePage = this;
             if (!blnAwake)
                 Awaken();
+            Display();
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
