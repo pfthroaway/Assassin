@@ -17,7 +17,7 @@ namespace Assassin.Views.Help
                 "Based on the BBS game created by Kevin MacFarland\n" +
                 "Copyright © 1990-1995\n" +
                 "Recreated for Windows\n" +
-                "Copyright © 2008-2017";
+                "Copyright © 2008-2020";
         }
 
         #endregion Page-Manipulation Methods

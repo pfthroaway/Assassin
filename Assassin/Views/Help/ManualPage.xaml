@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtManual" Grid.Column="0" Grid.Row="0" Grid.RowSpan="6" Width="600" Height="400" ScrollViewer.VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,10,0" />
+        <TextBox x:Name="TxtManual" Grid.Column="0" Grid.Row="0" Grid.RowSpan="6" Width="1000" Height="700" ScrollViewer.VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,10,0" />
         <Button x:Name="BtnIntroduction" Grid.Column="1" Grid.Row="0" Width="200" Click="BtnIntroduction_Click" Content="_Introduction" />
         <Button x:Name="BtnCity" Grid.Column="1" Grid.Row="1" Width="200" Click="BtnCity_Click" Content="_The City" />
         <Button x:Name="BtnSkills" Grid.Column="1" Grid.Row="2" Width="200" Click="BtnSkills_Click" Content="_Skills" />
