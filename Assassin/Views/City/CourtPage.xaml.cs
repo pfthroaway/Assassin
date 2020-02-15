@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Assassin.Views.Court
+namespace Assassin.Views.City
 {
     /// <summary>Interaction logic for CourtPage.xaml</summary>
     public partial class CourtPage
