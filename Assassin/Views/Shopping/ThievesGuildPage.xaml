@@ -16,10 +16,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtThieves" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="550" Height="150" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtThieves" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="600" Height="400" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=GoldOnHandToStringWithText}" TextAlignment="Center" Margin="0,0,0,10" />
         <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=LockpicksToStringWithText}" TextAlignment="Center" Margin="0,0,0,10" />
-        <Button x:Name="BtnPurchase" Grid.Column="0" Grid.Row="2" Width="145" Click="BtnPurchase_Click" Content="_Purchase" IsEnabled="False" />
-        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="2" Width="145" Content="_Back" IsCancel="True" Click="BtnBack_Click" />
+        <Button x:Name="BtnPurchase" Grid.Column="0" Grid.Row="2" Width="200" Click="BtnPurchase_Click" Content="_Purchase" IsEnabled="False" />
+        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="2" Width="200" Content="_Back" IsCancel="True" Click="BtnBack_Click" />
     </Grid>
 </Page>

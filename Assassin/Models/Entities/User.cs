@@ -7,9 +7,6 @@ namespace Assassin.Models.Entities
     /// <summary>Represents a <see cref="User"/> in the game.</summary>
     public class User : LivingEntity
     {
-        //TODO Finish BaseINPC on all classes
-        //TODO Check all properties to make sure they're used right.
-
         private string _password;
 
         private int _experience, _skillPoints, _hunger, _thirst, _lockpicks, _goldInBank, _goldOnLoan, _lightWeaponSkill, _heavyWeaponSkill, _twoHandedWeaponSkill, _stealth;
