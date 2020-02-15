@@ -1,7 +1,6 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Entities;
 using Assassin.Models.Enums;
-using Assassin.Views.Bank;
 using Assassin.Views.Battle;
 using Assassin.Views.Guilds;
 using Assassin.Views.Player;

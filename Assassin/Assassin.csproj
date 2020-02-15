@@ -111,10 +111,7 @@
     <Compile Include="Views\Admin\AdminUsersPage.xaml.cs">
       <DependentUpon>AdminUsersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Bank\BankDialogPage.xaml.cs">
-      <DependentUpon>BankDialogPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Bank\BankPage.xaml.cs">
+    <Compile Include="Views\City\BankPage.xaml.cs">
       <DependentUpon>BankPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shopping\BarPage.xaml.cs">
@@ -245,11 +242,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Bank\BankDialogPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Bank\BankPage.xaml">
+    <Page Include="Views\City\BankPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

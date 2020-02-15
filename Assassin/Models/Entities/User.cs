@@ -187,7 +187,7 @@ namespace Assassin.Models.Entities
         public int GoldInBank
         {
             get => _goldInBank;
-            set { _goldInBank = value; NotifyPropertyChanged(nameof(GoldInBank)); }
+            set { _goldInBank = value; NotifyPropertyChanged(nameof(GoldInBank), nameof(GoldInBankToString)); }
         }
 
         /// <summary>Amount of gold the <see cref="User"/> has taken as a loan from the bank.</summary>
@@ -269,7 +269,7 @@ namespace Assassin.Models.Entities
         public int LoanAvailable => (Level * 250) - GoldOnLoan;
 
         /// <summary>Amount of gold the <see cref="User"/> can take as a loan from the bank, formatted.</summary>
-        public string LoanAvailableToString => (LoanAvailable - GoldOnLoan).ToString("N0");
+        public string LoanAvailableToString => LoanAvailable.ToString("N0");
 
         /// <summary>Amount of lockpicks a <see cref="User"/> has, formatted.</summary>
         public string LockpicksToString => Lockpicks.ToString("N0");
@@ -336,12 +336,17 @@ namespace Assassin.Models.Entities
                 return "You are too hungry to continue.";
             else if (Thirst >= 24)
                 return "You are too thirsty to continue.";
-            else if (Hunger > 0 && Hunger % 5 == 0)
-                return $"You are {GameState.GetHunger(Hunger).ToLower()}.";
-            else if (Thirst > 0 && Thirst % 5 == 0)
-                return $"You are {GameState.GetThirst(Thirst).ToLower()}.";
+            string text = "";
+            if (Hunger > 0 && Hunger % 5 == 0)
+                text = $"You are {GameState.GetHunger(Hunger).ToLower()}.";
+            if (Thirst > 0 && Thirst % 5 == 0)
+            {
+                if (text.Length > 0)
+                    text += "\n\n";
+                text += $"You are {GameState.GetThirst(Thirst).ToLower()}.";
+            }
 
-            return "";
+            return text;
         }
 
         /// <summary>Gains experience for the <see cref="User"/>.</summary>
