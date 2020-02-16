@@ -6,20 +6,12 @@
       mc:Ignorable="d"
       Title="Admin"
       Style="{StaticResource PageStyle}">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Admin" TextAlignment="Center" Margin="0,0,0,10" />
-        <Button x:Name="BtnManageEnemies" Grid.Row="1" Width="300" Content="Manage _Enemies" Click="BtnManageEnemies_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnManageGuilds" Grid.Row="2" Width="300" Content="Manage _Guilds" Click="BtnManageGuilds_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnManageUsers" Grid.Row="3" Width="300" Content="Manage _Users" Click="BtnManageUsers_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnChangePassword" Grid.Row="4" Width="300" Content="_Change Password" Click="BtnChangePassword_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnBack" Grid.Row="5" Width="300" Content="Back" Click="BtnBack_Click" IsCancel="True" />
-    </Grid>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Admin" TextAlignment="Center" Margin="0,0,0,10" />
+        <Button x:Name="BtnManageEnemies" Width="300" Content="Manage _Enemies" Click="BtnManageEnemies_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnManageGuilds" Width="300" Content="Manage _Guilds" Click="BtnManageGuilds_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnManageUsers" Width="300" Content="Manage _Users" Click="BtnManageUsers_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnChangePassword" Width="300" Content="_Change Password" Click="BtnChangePassword_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnBack" Width="300" Content="Back" Click="BtnBack_Click" IsCancel="True" />
+    </StackPanel>
 </Page>
