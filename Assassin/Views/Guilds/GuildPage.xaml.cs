@@ -74,11 +74,8 @@ namespace Assassin.Views.Guilds
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (GameState.CurrentGuild.Master == GameState.CurrentUser.Name)
-            {
-                BtnChallenge.IsEnabled = false;
-                BtnManageGuild.IsEnabled = true;
-            }
+            BtnChallenge.IsEnabled = GameState.CurrentGuild.Master != GameState.CurrentUser.Name;
+            BtnManageGuild.IsEnabled = GameState.CurrentGuild.Master == GameState.CurrentUser.Name;
             Title = GameState.CurrentGuild.Name;
         }
 

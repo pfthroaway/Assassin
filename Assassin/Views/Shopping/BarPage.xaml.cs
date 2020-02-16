@@ -77,17 +77,23 @@ namespace Assassin.Views.Shopping
             {
                 GameState.CurrentUser.GoldOnHand -= SelectedDrink.Value;
                 GameState.CurrentUser.Thirst -= SelectedDrink.RestoreThirst;
-                if (GameState.CurrentUser.Thirst < 0)
-                    GameState.CurrentUser.Thirst = 0;
                 Functions.AddTextToTextBox(TxtBar, $"You purchase the {SelectedDrink.Name} for {SelectedDrink.ValueToString} gold.");
+                if (GameState.CurrentUser.Thirst < 0)
+                {
+                    GameState.CurrentUser.Thirst = 0;
+                    Functions.AddTextToTextBox(TxtBar, "You don't need any more to drink right now.");
+                }
             }
             else if (RadFood.IsChecked != null && RadFood.IsChecked.Value)
             {
                 GameState.CurrentUser.GoldOnHand -= SelectedFood.Value;
                 GameState.CurrentUser.Hunger -= SelectedFood.RestoreHunger;
-                if (GameState.CurrentUser.Hunger < 0)
-                    GameState.CurrentUser.Hunger = 0;
                 Functions.AddTextToTextBox(TxtBar, $"You purchase the {SelectedFood.Name} for {SelectedFood.ValueToString} gold.");
+                if (GameState.CurrentUser.Hunger < 0)
+                {
+                    GameState.CurrentUser.Hunger = 0;
+                    Functions.AddTextToTextBox(TxtBar, "You don't need any more to eat right now.");
+                }
             }
             Functions.AddTextToTextBox(TxtBar, GameState.CurrentUser.DisplayHungerThirstText());
         }
