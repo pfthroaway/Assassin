@@ -5,7 +5,30 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="GuildOptionsPage"
+      Loaded="Page_Loaded"
       Style="{StaticResource PageStyle}">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtOptions" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="639" Height="300" Text="What would you like to change?" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Guild Name:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,10" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Entrance Fee:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,10" />
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Guildmaster:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,10" />
+        <TextBox x:Name="TxtGuildName" Width="450" Text="The Master's Tavern" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtEntranceFee" Grid.Column="1" Grid.Row="2" Width="80" MaxLength="4" PreviewKeyDown="TxtEntranceFee_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <ComboBox x:Name="CmbMaster" Grid.Column="1" Grid.Row="3" Width="450" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="0,0,0,10" />
+        <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="BtnSave" Width="200" Content="_Save" Click="BtnSave_Click" IsDefault="True" Margin="0,0,10,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" Click="BtnBack_Click" IsDefault="True" />
+        </StackPanel>
     </Grid>
 </Page>

@@ -576,7 +576,7 @@ namespace Assassin.Models.Entities
             Slipping = slipping;
             Stealth = stealth;
 
-            Henchmen = henchmen;
+            Henchmen = new Henchmen(henchmen);
         }
 
         /// <summary>Replaces this instance of <see cref="User"/> with another instance.</summary>

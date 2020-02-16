@@ -133,8 +133,13 @@ namespace Assassin.Models.Entities
             Fee = fee;
             Gold = gold;
             Members = members;
-            Henchmen = henchmen;
+            Henchmen = new Henchmen(henchmen);
         }
+
+        /// <summary>Replaces this instance of <see cref="Guild"/> with another instance.</summary>
+        /// <param name="other">Instance of <see cref="Guild"/> to replace this instance.</param>
+        public Guild(Guild other) : this(other.ID, other.Name, other.Master, other.Fee, other.Gold, other.Members, other.Henchmen)
+        { }
 
         #endregion Constructors
     }
