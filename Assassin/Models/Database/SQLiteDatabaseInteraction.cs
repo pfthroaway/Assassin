@@ -272,7 +272,7 @@ namespace Assassin.Models.Database
             if (ds.Tables[0].Rows.Count > 0)
                 allEnemies.AddRange(from DataRow dr in ds.Tables[0].Rows select new Enemy(dr["EnemyName"].ToString(), Int32Helper.Parse(dr["Level"]), Int32Helper.Parse(dr["Endurance"]), Int32Helper.Parse(dr["Endurance"]), new Weapon(GameState.AllWeapons.Find(wpn => wpn.Name == dr["Weapon"].ToString())), new Armor(GameState.AllArmor.Find(armr => armr.Name == dr["Armor"].ToString())), Int32Helper.Parse(dr["Gold"]), Int32Helper.Parse(dr["WeaponSkill"]), Int32Helper.Parse(dr["Blocking"]), Int32Helper.Parse(dr["Slipping"])));
 
-            return allEnemies.OrderBy(enemy => enemy.Level).ToList();
+            return allEnemies.OrderBy(enemy => enemy.Level).ThenBy(enemy => enemy.Name).ToList();
         }
 
         /// <summary>Loads all <see cref="Food"/> from the database.</summary>
