@@ -206,7 +206,7 @@ namespace Assassin.Views.City
         {
             DataContext = GameState.CurrentUser;
             GameState.GamePage = this;
-            if (!blnAwake)
+            if (!blnAwake || !GameState.CurrentUser.Alive)
                 Awaken();
             Display();
         }

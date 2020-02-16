@@ -53,9 +53,7 @@ namespace Assassin.Views.Guilds
             GameState.GoBack();
         }
 
-        private void BtnEnter_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        private void BtnEnter_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildPage(this));
 
         private async void LstGuilds_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

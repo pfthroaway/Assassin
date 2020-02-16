@@ -152,7 +152,7 @@ namespace Assassin.Models
             switch (CurrentUser.Level)
             {
                 case 1:
-                    level = enemy <= 65 ? 0 : 1;
+                    level = enemy <= 65 ? 1 : 2;
                     break;
 
                 case 2:
