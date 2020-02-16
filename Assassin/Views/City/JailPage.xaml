@@ -5,7 +5,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="Jail"
+      Loaded="Page_Loaded"
       Style="{StaticResource PageStyle}">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-    </Grid>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <ListBox x:Name="LstJail" Width="350" Height="200" ItemsSource="{Binding}" SelectionChanged="LstJail_SelectionChanged" Margin="0,0,20,0" />
+            <StackPanel>
+                <TextBlock Width="500" Text="{Binding ReasonToString}" Margin="0,0,0,10" />
+                <TextBlock Width="500" Text="{Binding FineToStringWithText}" Margin="0,0,0,10" />
+                <TextBlock Width="500" Text="{Binding LocalDateJailedToStringWithText}" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="BtnBailOut" Width="200" Content="Bail _Out" Click="BtnBailOut_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
 </Page>

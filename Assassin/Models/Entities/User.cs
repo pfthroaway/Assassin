@@ -426,34 +426,34 @@ namespace Assassin.Models.Entities
             if (left is null ^ right is null) return false;
             return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase)
                 && left.Level == right.Level
-                && (left.Experience == right.Experience)
-                && (left.SkillPoints == right.SkillPoints)
-                && (left.Alive == right.Alive)
-                && (left.CurrentLocation == right.CurrentLocation)
-                && (left.CurrentEndurance == right.CurrentEndurance)
-                && (left.MaximumEndurance == right.MaximumEndurance)
-                && (left.Hunger == right.Hunger)
-                && (left.Thirst == right.Thirst)
-                && (left.CurrentWeaponType == right.CurrentWeaponType)
-                && (left.LightWeapon == right.LightWeapon)
-                && (left.HeavyWeapon == right.HeavyWeapon)
-                && (left.TwoHandedWeapon == right.TwoHandedWeapon)
-                && (left.Armor == right.Armor)
-                && (left.Potion == right.Potion)
-                && (left.Lockpicks == right.Lockpicks)
-                && (left.GoldOnHand == right.GoldOnHand)
-                && (left.GoldInBank == right.GoldInBank)
-                && (left.GoldOnLoan == right.GoldOnLoan)
-                && (left.Shovel == right.Shovel)
-                && (left.Lantern == right.Lantern)
-                && (left.Amulet == right.Amulet)
-                && (left.LightWeaponSkill == right.LightWeaponSkill)
-                && (left.HeavyWeaponSkill == right.HeavyWeaponSkill)
-                && (left.TwoHandedWeaponSkill == right.TwoHandedWeaponSkill)
-                && (left.Blocking == right.Blocking)
-                && (left.Slipping == right.Slipping)
-                && (left.Stealth == right.Stealth)
-                && (left.Henchmen == right.Henchmen);
+                && left.Experience == right.Experience
+                && left.SkillPoints == right.SkillPoints
+                && left.Alive == right.Alive
+                && left.CurrentLocation == right.CurrentLocation
+                && left.CurrentEndurance == right.CurrentEndurance
+                && left.MaximumEndurance == right.MaximumEndurance
+                && left.Hunger == right.Hunger
+                && left.Thirst == right.Thirst
+                && left.CurrentWeaponType == right.CurrentWeaponType
+                && left.LightWeapon == right.LightWeapon
+                && left.HeavyWeapon == right.HeavyWeapon
+                && left.TwoHandedWeapon == right.TwoHandedWeapon
+                && left.Armor == right.Armor
+                && left.Potion == right.Potion
+                && left.Lockpicks == right.Lockpicks
+                && left.GoldOnHand == right.GoldOnHand
+                && left.GoldInBank == right.GoldInBank
+                && left.GoldOnLoan == right.GoldOnLoan
+                && left.Shovel == right.Shovel
+                && left.Lantern == right.Lantern
+                && left.Amulet == right.Amulet
+                && left.LightWeaponSkill == right.LightWeaponSkill
+                && left.HeavyWeaponSkill == right.HeavyWeaponSkill
+                && left.TwoHandedWeaponSkill == right.TwoHandedWeaponSkill
+                && left.Blocking == right.Blocking
+                && left.Slipping == right.Slipping
+                && left.Stealth == right.Stealth
+                && left.Henchmen == right.Henchmen;
         }
 
         public override bool Equals(object obj) => Equals(this, obj as User);

@@ -24,7 +24,7 @@ namespace Assassin.Models.Entities
         public Crime Reason
         {
             get => _reason;
-            set { _reason = value; NotifyPropertyChanged(nameof(Reason)); }
+            set { _reason = value; NotifyPropertyChanged(nameof(Reason), nameof(ReasonToString)); }
         }
 
         /// <summary>Amount of gold required to release the <see cref="JailedUser"/> from Jail.</summary>
@@ -33,11 +33,9 @@ namespace Assassin.Models.Entities
             get => _fine;
             set
             {
-                _fine = value; NotifyPropertyChanged(nameof(Fine), nameof(FineToString));
+                _fine = value; NotifyPropertyChanged(nameof(Fine), nameof(FineToString), nameof(FineToStringWithText));
             }
         }
-
-        public string FineToString => Fine.ToString("N0");
 
         /// <summary>Date the <see cref="JailedUser"/> was incarcerated in UTC.</summary>
         public DateTime DateJailed
@@ -45,7 +43,7 @@ namespace Assassin.Models.Entities
             get => _dateJailed; set
             {
                 _dateJailed = value;
-                NotifyPropertyChanged(nameof(DateJailed), nameof(LocalDateJailed), nameof(LocalDateJailedToString));
+                NotifyPropertyChanged(nameof(DateJailed), nameof(LocalDateJailed), nameof(LocalDateJailedToString), nameof(LocalDateJailedToStringWithText));
             }
         }
 
@@ -53,13 +51,48 @@ namespace Assassin.Models.Entities
 
         #region Helper Properties
 
+        /// <summary>Reason the <see cref="JailedUser"/> is in Jail, with preceding text.</summary>
+        public string ReasonToString => !string.IsNullOrWhiteSpace(Name) ? $"Crime: {Reason.ToString()}" : "";
+
+        /// <summary>Amount of gold required to release the <see cref="JailedUser"/> from Jail, formatted.</summary>
+        public string FineToString => !string.IsNullOrWhiteSpace(Name) ? Fine.ToString("N0") : "";
+
+        /// <summary>Amount of gold required to release the <see cref="JailedUser"/> from Jail, formatted with preceding text.</summary>
+        public string FineToStringWithText => !string.IsNullOrWhiteSpace(Name) ? $"Fine: {FineToString}" : "";
+
         /// <summary>Date the <see cref="JailedUser"/> was incarcerated in local time.</summary>
         public DateTime LocalDateJailed => TimeZone.CurrentTimeZone.ToLocalTime(DateJailed);
 
         /// <summary>Date the <see cref="JailedUser"/> was incarcerated in local time, formatted.</summary>
-        public string LocalDateJailedToString => LocalDateJailed.ToString(@"yyyy-MM-dd hh\:mm\:ss tt");
+        public string LocalDateJailedToString => !string.IsNullOrWhiteSpace(Name) ? LocalDateJailed.ToString(@"yyyy-MM-dd hh\:mm\:ss tt") : "";
+
+        /// <summary>Date the <see cref="JailedUser"/> was incarcerated in local time, formatted with preceding text.</summary>
+        public string LocalDateJailedToStringWithText => !string.IsNullOrWhiteSpace(Name) ? $"Date Jailed: {LocalDateJailedToString}" : "";
 
         #endregion Helper Properties
+
+        #region Override Operators
+
+        public static bool Equals(JailedUser left, JailedUser right)
+        {
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
+            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Reason == right.Reason && left.Fine == right.Fine && left.DateJailed == right.DateJailed;
+        }
+
+        public override bool Equals(object obj) => Equals(this, obj as JailedUser);
+
+        public bool Equals(JailedUser other) => Equals(this, other);
+
+        public static bool operator ==(JailedUser left, JailedUser right) => Equals(left, right);
+
+        public static bool operator !=(JailedUser left, JailedUser right) => !Equals(left, right);
+
+        public override int GetHashCode() => base.GetHashCode() ^ 17;
+
+        public override string ToString() => Name;
+
+        #endregion Override Operators
 
         #region Constructors
 

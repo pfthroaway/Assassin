@@ -1,52 +1,64 @@
 ﻿using Assassin.Models;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using Assassin.Models.Entities;
+using Assassin.Models.Enums;
+using Extensions;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Assassin.Views.City
 {
-    /// <summary>
-    /// Interaction logic for JailPage.xaml
-    /// </summary>
-    public partial class JailPage : INotifyPropertyChanged
+    /// <summary>Interaction logic for JailPage.xaml</summary>
+    public partial class JailPage
     {
-        internal GamePage RefToGamePage { get; set; }
+        private JailedUser _selectedUser = new JailedUser();
 
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
-        /// <param name="propertyNames">The names of the properties to update in the UI.</param>
-        protected void NotifyPropertyChanged(params string[] propertyNames)
+        /// <summary>Refreshes the LstJail ItemsSource.</summary>
+        private void RefreshItemsSource()
         {
-            if (PropertyChanged != null)
+            LstJail.ItemsSource = GameState.AllJailedUsers;
+            LstJail.Items.Refresh();
+        }
+
+        #region Click
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
+
+        private async void BtnBailOut_Click(object sender, RoutedEventArgs e)
+        {
+            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, $"You bail out {_selectedUser.Name} for {_selectedUser.FineToString} gold.");
+            GameState.CurrentUser.GoldOnHand -= _selectedUser.Fine;
+            await GameState.DatabaseInteraction.FreeFromJail(_selectedUser);
+            GameState.AllJailedUsers.Remove(_selectedUser);
+            GameState.AllUsers.Find(user => user.Name == _selectedUser.Name).CurrentLocation = SleepLocation.Streets;
+            await GameState.DatabaseInteraction.SaveUser(GameState.AllUsers.Find(user => user.Name == _selectedUser.Name));
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
+            _selectedUser = new JailedUser();
+            DataContext = _selectedUser;
+            RefreshItemsSource();
+        }
+
+        private void LstJail_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LstJail.SelectedIndex >= 0)
             {
-                foreach (string propertyName in propertyNames)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
+                _selectedUser = GameState.AllJailedUsers[LstJail.SelectedIndex];
+                DataContext = _selectedUser;
             }
+            BtnBailOut.IsEnabled = LstJail.SelectedIndex >= 0 && GameState.CurrentUser.GoldOnHand >= _selectedUser.Fine;
         }
 
-        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
-        /// <param name="propertyName">The optional name of the property to update in the UI. If this is left blank, the name will be taken from the calling member via the CallerMemberName attribute.</param>
-        protected virtual void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion Data-Binding
+        #endregion Click
 
         #region Page-Manipulation Methods
 
-        /// <summary>Closes the Page.</summary>
-        private async void ClosePage()
-        {
-            GameState.GoBack();
-            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
-        }
-
         public JailPage() => InitializeComponent();
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshItemsSource();
+            if (LstJail.Items.Count > 0)
+                LstJail.SelectedIndex = 0;
+        }
 
         #endregion Page-Manipulation Methods
     }

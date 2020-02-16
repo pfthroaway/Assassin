@@ -152,10 +152,7 @@ namespace Assassin.Views.City
 
         private void BtnInventory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InventoryPage());
 
-        private void BtnJail_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Jail
-        }
+        private void BtnJail_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new JailPage());
 
         private void BtnMessages_Click(object sender, RoutedEventArgs e)
         {

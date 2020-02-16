@@ -126,7 +126,6 @@
     <Compile Include="Views\Options\ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities\Jail.cs" />
     <Compile Include="Models\Entities\JailedUser.cs" />
     <Compile Include="Views\City\CourtPage.xaml.cs">
       <DependentUpon>CourtPage.xaml</DependentUpon>

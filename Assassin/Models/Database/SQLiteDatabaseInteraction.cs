@@ -214,7 +214,7 @@ namespace Assassin.Models.Database
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Jail([Username], [Reason], [Fine], [DateJailed])VALUES(@name, @reason, @fine, @dateJailed)" };
             cmd.Parameters.AddWithValue("@name", jailUser.Name);
-            cmd.Parameters.AddWithValue("@reason", jailUser.Reason);
+            cmd.Parameters.AddWithValue("@reason", jailUser.Reason.ToString());
             cmd.Parameters.AddWithValue("@fine", jailUser.Fine);
             cmd.Parameters.AddWithValue("@dateJailed", jailUser.DateJailed);
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
@@ -337,7 +337,7 @@ namespace Assassin.Models.Database
                 foreach (DataRow dr in ds.Tables[0].Rows)
                     jailedUsers.Add(new JailedUser(dr["Username"].ToString(), EnumHelper.Parse<Crime>(dr["Reason"].ToString()), Int32Helper.Parse(dr["Fine"]), DateTimeHelper.Parse(dr["DateJailed"])));
 
-            return jailedUsers;
+            return jailedUsers.OrderBy(user => user.Name).ToList();
         }
 
         /// <summary>Loads all <see cref="Message"/>s for specified <see cref="User"/>.</summary>
@@ -548,12 +548,12 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@experience", newUser.Experience.ToString());
             cmd.Parameters.AddWithValue("@skillPoints", newUser.SkillPoints.ToString());
             cmd.Parameters.AddWithValue("@alive", Int32Helper.Parse(newUser.Alive));
-            cmd.Parameters.AddWithValue("@location", newUser.CurrentLocation);
+            cmd.Parameters.AddWithValue("@location", newUser.CurrentLocation.ToString());
             cmd.Parameters.AddWithValue("@currentEndurance", newUser.CurrentEndurance.ToString());
             cmd.Parameters.AddWithValue("@maximumEndurance", newUser.MaximumEndurance.ToString());
             cmd.Parameters.AddWithValue("@hunger", newUser.Hunger.ToString());
             cmd.Parameters.AddWithValue("@thirst", newUser.Thirst.ToString());
-            cmd.Parameters.AddWithValue("@currentWeapon", newUser.CurrentWeaponType);
+            cmd.Parameters.AddWithValue("@currentWeapon", newUser.CurrentWeaponType.ToString());
             cmd.Parameters.AddWithValue("@lightWeapon", newUser.LightWeapon.Name);
             cmd.Parameters.AddWithValue("@heavyWeapon", newUser.HeavyWeapon.Name);
             cmd.Parameters.AddWithValue("@twoHandedWeapon", newUser.TwoHandedWeapon.Name);
@@ -586,13 +586,13 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> SaveUser(User saveUser)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Users SET [Level] = @level, [Experience] = @experience, [SkillPoints] = @skillPoints, [Alive] = @alive, [Location] = location, [CurrentEndurance] = @currentEndurance, [MaximumEndurance] = @maximumEndurance, [Hunger] = @hunger, [Thirst] = @thirst, [CurrentWeapon] = @currentWeapon, [LightWeapon] = @lightWeapon, [HeavyWeapon] = @heavyWeapon, [TwoHandedWeapon] = @twoHandedWeapon, [Armor] = @armor, [Potion] = @potion, [Lockpicks] = @lockpicks, [GoldOnHand] = @goldOnHand, [GoldInBank] = @goldInBank, [GoldOnLoan] = @goldOnLoan, [Shovel] = @shovel, [Lantern] = @lantern, [Amulet] = @amulet, [LightWeaponSkill] = @lightWeaponSkill, [HeavyWeaponSkill] = @heavyWeaponSkill, [TwoHandedWeaponSkill] = @twoHandedWeaponSkill, [Blocking] = @blocking, [Slipping] = @slipping, [Stealth] = @stealth, [HenchmenLevel1] = @henchmenLevel1, [HenchmenLevel2] = @henchmenLevel2, [HenchmenLevel3] = @henchmenLevel3, [HenchmenLevel4] = @henchmenLevel4, [HenchmenLevel5] = @henchmenLevel5 WHERE [Username] = @name" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Users SET [Level] = @level, [Experience] = @experience, [SkillPoints] = @skillPoints, [Alive] = @alive, [Location] = @location, [CurrentEndurance] = @currentEndurance, [MaximumEndurance] = @maximumEndurance, [Hunger] = @hunger, [Thirst] = @thirst, [CurrentWeapon] = @currentWeapon, [LightWeapon] = @lightWeapon, [HeavyWeapon] = @heavyWeapon, [TwoHandedWeapon] = @twoHandedWeapon, [Armor] = @armor, [Potion] = @potion, [Lockpicks] = @lockpicks, [GoldOnHand] = @goldOnHand, [GoldInBank] = @goldInBank, [GoldOnLoan] = @goldOnLoan, [Shovel] = @shovel, [Lantern] = @lantern, [Amulet] = @amulet, [LightWeaponSkill] = @lightWeaponSkill, [HeavyWeaponSkill] = @heavyWeaponSkill, [TwoHandedWeaponSkill] = @twoHandedWeaponSkill, [Blocking] = @blocking, [Slipping] = @slipping, [Stealth] = @stealth, [HenchmenLevel1] = @henchmenLevel1, [HenchmenLevel2] = @henchmenLevel2, [HenchmenLevel3] = @henchmenLevel3, [HenchmenLevel4] = @henchmenLevel4, [HenchmenLevel5] = @henchmenLevel5 WHERE [Username] = @name" };
 
             cmd.Parameters.AddWithValue("@level", saveUser.Level);
             cmd.Parameters.AddWithValue("@experience", saveUser.Experience.ToString());
             cmd.Parameters.AddWithValue("@skillPoints", saveUser.SkillPoints.ToString());
             cmd.Parameters.AddWithValue("@alive", Int32Helper.Parse(saveUser.Alive));
-            cmd.Parameters.AddWithValue("@location", saveUser.CurrentLocation);
+            cmd.Parameters.AddWithValue("@location", saveUser.CurrentLocation.ToString());
             cmd.Parameters.AddWithValue("@currentEndurance", saveUser.CurrentEndurance.ToString());
             cmd.Parameters.AddWithValue("@maximumEndurance", saveUser.MaximumEndurance.ToString());
             cmd.Parameters.AddWithValue("@hunger", saveUser.Hunger.ToString());
