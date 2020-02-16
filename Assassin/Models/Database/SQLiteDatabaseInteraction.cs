@@ -581,7 +581,7 @@ namespace Assassin.Models.Database
             cmd.Parameters.AddWithValue("@maximumEndurance", saveUser.MaximumEndurance.ToString());
             cmd.Parameters.AddWithValue("@hunger", saveUser.Hunger.ToString());
             cmd.Parameters.AddWithValue("@thirst", saveUser.Thirst.ToString());
-            cmd.Parameters.AddWithValue("@currentWeapon", saveUser.CurrentWeaponType);
+            cmd.Parameters.AddWithValue("@currentWeapon", saveUser.CurrentWeaponType.ToString());
             cmd.Parameters.AddWithValue("@lightWeapon", saveUser.LightWeapon.Name);
             cmd.Parameters.AddWithValue("@heavyWeapon", saveUser.HeavyWeapon.Name);
             cmd.Parameters.AddWithValue("@twoHandedWeapon", saveUser.TwoHandedWeapon.Name);

@@ -1,4 +1,5 @@
 ﻿using Assassin.Models;
+using Assassin.Models.Enums;
 using Assassin.Views.City;
 using Assassin.Views.Shopping;
 using Extensions;
@@ -11,13 +12,17 @@ namespace Assassin.Views.Guilds
     {
         public GuildListPage RefToGuildListPage { get; set; }
 
-        #region Click
-
-        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        /// <summary>Closes the Page.</summary>
+        private async void ClosePage()
         {
             Functions.AddTextToTextBox(RefToGuildListPage.TxtGuild, TxtGuild.Text);
             GameState.GoBack();
+            await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
+
+        #region Click
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e) => ClosePage();
 
         private void BtnBar_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new BarPage());
 
@@ -47,18 +52,31 @@ namespace Assassin.Views.Guilds
 
         private void BtnPlanRaid_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement raiding.
         }
 
-        private void BtnQuitGuild_Click(object sender, RoutedEventArgs e)
+        private async void BtnQuitGuild_Click(object sender, RoutedEventArgs e)
         {
+            if (GameState.YesNoNotification($"Are you sure you want to quit {GameState.CurrentGuild}? You will have to reapply if you want to join again.", "Assassin") && await GameState.MemberLeavesGuild(GameState.CurrentUser, GameState.CurrentGuild))
+            {
+                Functions.AddTextToTextBox(TxtGuild, $"You quit {GameState.CurrentGuild.Name}");
+                ClosePage();
+            }
         }
 
         private void BtnSleep_Click(object sender, RoutedEventArgs e)
         {
+            Functions.AddTextToTextBox(TxtGuild, "You rent a room for the night.");
+            GameState.CurrentUser.CurrentLocation = SleepLocation.Guild;
+            GameState.GamePage.ToggleButtons(false);
+            RefToGuildListPage.BtnEnter.IsEnabled = false;
+            RefToGuildListPage.LstGuilds.IsEnabled = false;
+            ClosePage();
         }
 
         private void BtnTransferItems_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement transferring items to the Guild.
         }
 
         #endregion Click

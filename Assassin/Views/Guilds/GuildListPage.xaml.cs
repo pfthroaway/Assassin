@@ -10,6 +10,7 @@ namespace Assassin.Views.Guilds
     {
         #region Data-Binding
 
+        /// <summary>Refreshed the list of Guilds.</summary>
         private void RefreshItemsSource()
         {
             LstGuilds.ItemsSource = GameState.AllGuilds;
@@ -91,6 +92,7 @@ namespace Assassin.Views.Guilds
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshItemsSource();
+            LstGuilds.SelectedIndex = -1;
             LstGuilds.SelectedIndex = 0;
         }
 
