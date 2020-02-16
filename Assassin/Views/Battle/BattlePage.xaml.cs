@@ -551,6 +551,7 @@ namespace Assassin.Views.Battle
         private void EndBattle()
         {
             _blnDone = true;
+            GameState.MainWindow.BlnPreventClosing = false;
             ToggleButtons(false);
             BtnExit.IsEnabled = true;
         }
@@ -723,7 +724,12 @@ namespace Assassin.Views.Battle
             }
         }
 
-        public BattlePage() => InitializeComponent();
+        public BattlePage()
+        {
+            InitializeComponent();
+            GameState.MainWindow.BlnPreventClosing = true;
+            GameState.MainWindow.TxtPreventClosing = "You must finish your battle first.";
+        }
 
         private void BattlePage_OnLoaded(object sender, RoutedEventArgs e) => BindLabels();
 

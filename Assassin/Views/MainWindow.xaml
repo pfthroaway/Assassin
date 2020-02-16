@@ -9,7 +9,8 @@
         Style="{StaticResource WindowStyle}"
         Title="{Binding Path=Content.Title, ElementName=MainFrame}"
         WindowState="Maximized"
-        Loaded="WindowMain_Loaded">
+        Loaded="WindowMain_Loaded"
+        Closing="WindowMain_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">

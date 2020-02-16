@@ -128,7 +128,10 @@ namespace Assassin.Views.Battle
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             if (!_blnCourt)
+            {
+                Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtRob.Text);
                 GameState.GoBack();
+            }
             else
             {
                 GameState.Navigate(new CourtPage(_reason));

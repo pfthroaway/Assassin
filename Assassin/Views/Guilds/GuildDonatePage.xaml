@@ -4,8 +4,50 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-        Title="GuildDonatePage"
+      Title="Donate to Guild"
+      Loaded="Page_Loaded"
       Style="{StaticResource PageStyle}">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="LblDonate" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Level 1 Henchmen:" HorizontalAlignment="Right" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Level 2 Henchmen:" HorizontalAlignment="Right" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Level 3 Henchmen:" HorizontalAlignment="Right" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Level 4 Henchmen:" HorizontalAlignment="Right" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Level 5 Henchmen:" HorizontalAlignment="Right" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="Gold:" HorizontalAlignment="Right" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Level1}" HorizontalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Level2}" HorizontalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Level3}" HorizontalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Level4}" HorizontalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Level5}" HorizontalAlignment="Center" Margin="0,0,10,10" />
+        <TextBlock x:Name="LblGold" Grid.Column="1" Grid.Row="6" Text="{Binding GoldOnHandToString}" HorizontalAlignment="Center" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtLevel1" Grid.Column="2" Grid.Row="1" Width="120" MaxLength="3" TextChanged="Txt_TextChanged" PreviewKeyDown="Txt_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtLevel2" Grid.Column="2" Grid.Row="2" Width="120" MaxLength="3" TextChanged="Txt_TextChanged" PreviewKeyDown="Txt_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtLevel3" Grid.Column="2" Grid.Row="3" Width="120" MaxLength="3" TextChanged="Txt_TextChanged" PreviewKeyDown="Txt_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtLevel4" Grid.Column="2" Grid.Row="4" Width="120" MaxLength="3" TextChanged="Txt_TextChanged" PreviewKeyDown="Txt_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtLevel5" Grid.Column="2" Grid.Row="5" Width="120" MaxLength="3" TextChanged="Txt_TextChanged" PreviewKeyDown="Txt_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtGold" Grid.Column="2" Grid.Row="6" Width="120" MaxLength="6" TextChanged="Txt_TextChanged" PreviewKeyDown="Txt_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtDonate" Grid.Column="0" Grid.Row="7" PreviewKeyDown="Txt_PreviewKeyDown" Grid.ColumnSpan="4" Width="620" Height="300" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <StackPanel Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="BtnDonate" Width="200" Content="_Donate" Click="BtnDonate_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnClear" Width="200" Content="_Clear" Click="BtnClear_Click" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+        </StackPanel>
     </Grid>
 </Page>

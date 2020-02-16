@@ -1,6 +1,7 @@
 ﻿using Assassin.Models;
 using Assassin.Views.Admin;
 using Assassin.Views.Help;
+using System.ComponentModel;
 using System.Windows;
 
 namespace Assassin.Views
@@ -8,6 +9,12 @@ namespace Assassin.Views
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow
     {
+        /// <summary>Prevent the Window from closing if during battle or court.</summary>
+        public bool BlnPreventClosing { get; set; }
+
+        /// <summary>Text to be displayed if the Window is being prevented from closing.</summary>
+        public string TxtPreventClosing { get; set; }
+
         #region Menu Click Methods
 
         private void MnuFileExit_Click(object sender, RoutedEventArgs e) => Close();
@@ -31,6 +38,15 @@ namespace Assassin.Views
             await GameState.LoadAll();
         }
 
-        #endregion Window-Manipulation Methods
+        private void WindowMain_Closing(object sender, CancelEventArgs e)
+        {
+            if (BlnPreventClosing)
+            {
+                e.Cancel = true;
+                GameState.DisplayNotification(TxtPreventClosing, "Assassin");
+            }
+
+            #endregion Window-Manipulation Methods
+        }
     }
 }

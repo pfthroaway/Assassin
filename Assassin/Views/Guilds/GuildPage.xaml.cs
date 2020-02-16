@@ -31,10 +31,7 @@ namespace Assassin.Views.Guilds
             //TODO Implement challenging a guildmaster.
         }
 
-        private void BtnDonate_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement donating to Guilds.
-        }
+        private void BtnDonate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildDonatePage(this));
 
         private void BtnJobs_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new JobsPage(this));
 

@@ -18,6 +18,13 @@ namespace Assassin.Views.City
         private bool _blnGuilty, _blnFinished;
         private Crime _reason;
 
+        /// <summary>Finished the Court session and allows the MainWindow to be closed.</summary>
+        private void FinishCourt()
+        {
+            _blnFinished = true;
+            GameState.MainWindow.BlnPreventClosing = false;
+        }
+
         ///<summary>Administers justice!</summary>
         private void Justice()
         {
@@ -83,7 +90,7 @@ namespace Assassin.Views.City
         private void BtnFreedom_Click(object sender, RoutedEventArgs e)
         {
             Functions.AddTextToTextBox(TxtCourt, "You beat a hasty retreat and return to the streets.");
-            _blnFinished = true;
+            FinishCourt();
             ClosePage();
         }
 
@@ -105,7 +112,7 @@ namespace Assassin.Views.City
                 BtnFreedom.IsEnabled = true;
                 BtnFreedom.Content = "_Back";
             }
-            _blnFinished = true;
+            FinishCourt();
             ClosePage();
         }
 
@@ -113,7 +120,7 @@ namespace Assassin.Views.City
         {
             Functions.AddTextToTextBox(TxtCourt, "You decide it is best to pay the fine and depart.");
             GameState.CurrentUser.GoldOnHand -= _fine;
-            _blnFinished = true;
+            FinishCourt();
             ClosePage();
         }
 
@@ -126,6 +133,7 @@ namespace Assassin.Views.City
         {
             if (_blnFinished)
             {
+                Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtCourt.Text);
                 GameState.MainWindow.MainFrame.RemoveBackEntry();
                 GameState.GoBack();
                 await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
@@ -140,6 +148,8 @@ namespace Assassin.Views.City
             LoadPage(reason);
             _timer.Tick += Timer_Tick;
             _timer.Interval = new TimeSpan(0, 0, 0, 1, 500);
+            GameState.MainWindow.BlnPreventClosing = true;
+            GameState.MainWindow.TxtPreventClosing = "You must finish your court session first.";
         }
 
         private void Timer_Tick(object sender, EventArgs e)
