@@ -5,7 +5,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="ManageApplicationsPage"
+      Loaded="Page_Loaded"
       Style="{StaticResource PageStyle}">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-    </Grid>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ListBox x:Name="LstApplications" Width="350" Height="500" SelectionChanged="LstApplications_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10" />
+        <Button x:Name="BtnApprove" Content="_Approve" Width="200" Click="BtnApprove_Click" IsDefault="True" IsEnabled="False" Margin="0,0,0,10" />
+        <Button x:Name="BtnDeny" Content="_Deny" Width="200" Click="BtnDeny_Click" IsEnabled="False" Margin="0,0,0,10" />
+        <Button x:Name="BtnBack" Content="_Back" Click="BtnBack_Click" Width="200" IsCancel="True" />
+    </StackPanel>
 </Page>

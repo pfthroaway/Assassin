@@ -100,7 +100,7 @@ namespace Assassin.Models.Database
         public async Task<bool> ApplyToGuild(User joinUser, Guild joinGuild)
         {
             string guildID = $"Guild{joinGuild.ID}Members";
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO Applications([Username], [Guild])VALUES(@name, @guild)" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Applications([Username], [Guild])VALUES(@name, @guild)" };
             cmd.Parameters.AddWithValue("@name", joinUser.Name);
             cmd.Parameters.AddWithValue("@guild", joinGuild.ID);
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
@@ -112,7 +112,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> ApproveGuildApplication(User approveUser, Guild approveGuild)
         {
-            return await DeleteGuildApplication(approveUser, approveGuild) && await SendMessage(new Message(await SQLiteHelper.GetNextIndex(_con, "Messages"), approveGuild.Name, approveUser.Name, $"Your application to join the {approveGuild.Name.Replace("'", "''")} guild has been approved. Welcome!", DateTime.UtcNow, true)) && await MemberJoinsGuild(approveUser, approveGuild);
+            return await DeleteGuildApplication(approveUser, approveGuild) && await SendMessage(new Message(await SQLiteHelper.GetNextIndex(_con, "Messages"), approveGuild.Name, approveUser.Name, $"Your application to join the {approveGuild.Name} guild has been approved. Welcome!", DateTime.UtcNow, true)) && await MemberJoinsGuild(approveUser, approveGuild);
         }
 
         /// <summary>Deletes a <see cref="User"/>'s application to a<see cref= "Guild" />.</ summary >
@@ -121,7 +121,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> DeleteGuildApplication(User deleteUser, Guild deleteGuild)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM Applications WHERE [Username] = @name AND [Guild] = @guild" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Applications WHERE [Username] = @name AND [Guild] = @guild" };
             cmd.Parameters.AddWithValue("@name", deleteUser.Name);
             cmd.Parameters.AddWithValue("@guild", deleteGuild.ID);
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
@@ -133,7 +133,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> DenyGuildApplication(User denyUser, Guild denyGuild)
         {
-            return await DeleteGuildApplication(denyUser, denyGuild) && await SendMessage(new Message(await SQLiteHelper.GetNextIndex(_con, "Messages"), denyGuild.Name, denyUser.Name, $"Your application to join the {denyGuild.Name.Replace("'", "''")} guild has been denied.", DateTime.UtcNow, true));
+            return await DeleteGuildApplication(denyUser, denyGuild) && await SendMessage(new Message(await SQLiteHelper.GetNextIndex(_con, "Messages"), denyGuild.Name, denyUser.Name, $"Your application to join the {denyGuild.Name} guild has been denied.", DateTime.UtcNow, true));
         }
 
         /// <summary>Checks whether the <see cref="User"/> has applied to the selected <see cref="Guild"/>.</summary>
@@ -202,7 +202,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> FreeFromJail(JailedUser jailUser)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM Jail WHERE [Username] = @name" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Jail WHERE [Username] = @name" };
             cmd.Parameters.AddWithValue("@name", jailUser.Name);
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
@@ -212,7 +212,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> SendToJail(JailedUser jailUser)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO Jail([Username], [Reason], [Fine], [DateJailed])VALUES(@name, @reason, @fine, @dateJailed)" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Jail([Username], [Reason], [Fine], [DateJailed])VALUES(@name, @reason, @fine, @dateJailed)" };
             cmd.Parameters.AddWithValue("@name", jailUser.Name);
             cmd.Parameters.AddWithValue("@reason", jailUser.Reason);
             cmd.Parameters.AddWithValue("@fine", jailUser.Fine);
@@ -285,6 +285,22 @@ namespace Assassin.Models.Database
                 allFood.AddRange(from DataRow dr in ds.Tables[0].Rows select new Food(new Food(dr["FoodName"].ToString(), Int32Helper.Parse(dr["RestoreHunger"]), Int32Helper.Parse(dr["FoodValue"]))));
 
             return allFood.OrderBy(food => food.Value).ToList();
+        }
+
+        /// <summary>Loads all applicants to a specific <see cref="Guild"/>.</summary>
+        /// <param name="loadGuild"><see cref="Guild"/> whose applicants are to be loaded</param>
+        /// <returns>List of applicant names</returns>
+        public async Task<List<string>> LoadGuildApplicants(Guild loadGuild)
+        {
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, $"SELECT * FROM Applications WHERE [Guild] = {loadGuild.ID}");
+            List<string> allApplicants = new List<string>();
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                allApplicants.AddRange(from DataRow dr in ds.Tables[0].Rows
+                                       select dr["Username"].ToString());
+            }
+            return allApplicants;
         }
 
         /// <summary>Loads all <see cref="Guild"/>s from the database.</summary>
@@ -416,7 +432,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> DeleteMessage(Message message)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"DELETE FROM Messages WHERE [ID] = @id" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Messages WHERE [ID] = @id" };
             cmd.Parameters.AddWithValue("@id", message.ID);
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
@@ -426,7 +442,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> SendMessage(Message message)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"INSERT INTO Messages([UserTo], [UserFrom], [Message], [DateSent], [GuildMessage])VALUES(@userTo, @userFrom, @message, @dateSent, @guildMessage)" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Messages([UserTo], [UserFrom], [Message], [DateSent], [GuildMessage])VALUES(@userTo, @userFrom, @message, @dateSent, @guildMessage)" };
             cmd.Parameters.AddWithValue("@userTo", message.UserTo);
             cmd.Parameters.AddWithValue("@userFrom", message.UserFrom);
             cmd.Parameters.AddWithValue("@message", message.Contents);

@@ -10,6 +10,34 @@ namespace Assassin.Views.Guilds
     {
         #region Data-Binding
 
+        /// <summary>Checks whether the Enter and Apply Buttons should be enabled.</summary>
+        public async void CheckEnterApply()
+        {
+            if (LstGuilds.SelectedIndex >= 0)
+            {
+                GameState.CurrentGuild = GameState.AllGuilds[LstGuilds.SelectedIndex];
+                RefreshItemsSource();
+                BtnApply.Content = "_Apply";
+
+                if (GameState.CurrentGuild.HasMember(GameState.CurrentUser))
+                {
+                    BtnEnter.IsEnabled = true;
+                    BtnApply.IsEnabled = false;
+                }
+                else if (await GameState.DatabaseInteraction.HasAppliedToGuild(GameState.CurrentUser, GameState.CurrentGuild))
+                {
+                    BtnEnter.IsEnabled = false;
+                    BtnApply.IsEnabled = false;
+                    BtnApply.Content = "_Applied";
+                }
+                else
+                {
+                    BtnEnter.IsEnabled = false;
+                    BtnApply.IsEnabled = (GameState.CurrentGuild.ID == 1 && GameState.CurrentUser.Level < 5) || GameState.CurrentUser.GoldOnHand >= GameState.CurrentGuild.Fee;
+                }
+            }
+        }
+
         /// <summary>Refreshed the list of Guilds.</summary>
         private void RefreshItemsSource()
         {
@@ -56,32 +84,7 @@ namespace Assassin.Views.Guilds
 
         private void BtnEnter_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildPage(this));
 
-        private async void LstGuilds_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (LstGuilds.SelectedIndex >= 0)
-            {
-                GameState.CurrentGuild = GameState.AllGuilds[LstGuilds.SelectedIndex];
-                RefreshItemsSource();
-                BtnApply.Content = "_Apply";
-
-                if (GameState.CurrentGuild.HasMember(GameState.CurrentUser))
-                {
-                    BtnEnter.IsEnabled = true;
-                    BtnApply.IsEnabled = false;
-                }
-                else if (await GameState.DatabaseInteraction.HasAppliedToGuild(GameState.CurrentUser, GameState.CurrentGuild))
-                {
-                    BtnEnter.IsEnabled = false;
-                    BtnApply.IsEnabled = false;
-                    BtnApply.Content = "_Applied";
-                }
-                else
-                {
-                    BtnEnter.IsEnabled = false;
-                    BtnApply.IsEnabled = (GameState.CurrentGuild.ID == 1 && GameState.CurrentUser.Level < 5) || GameState.CurrentUser.GoldOnHand >= GameState.CurrentGuild.Fee;
-                }
-            }
-        }
+        private void LstGuilds_SelectionChanged(object sender, SelectionChangedEventArgs e) => CheckEnterApply();
 
         #endregion Click
 
@@ -89,12 +92,7 @@ namespace Assassin.Views.Guilds
 
         public GuildListPage() => InitializeComponent();
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            RefreshItemsSource();
-            LstGuilds.SelectedIndex = -1;
-            LstGuilds.SelectedIndex = 0;
-        }
+        private void Page_Loaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         #endregion Page-Manipulation Methods
     }

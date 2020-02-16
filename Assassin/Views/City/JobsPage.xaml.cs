@@ -53,7 +53,7 @@ namespace Assassin.Views.City
             _bounty = Functions.GenerateRandomNumber(GameState.CurrentEnemy.GoldOnHand, GameState.CurrentEnemy.GoldOnHand * 2);
             Functions.AddTextToTextBox(TxtJob,
                 $"\"Greetings, {GameState.CurrentUser.Name}.\"\n" +
-                $"\"I have an opportunity for you.\"\n" +
+                "\"I have an opportunity for you.\"\n" +
                 $"\"It concerns the elimination of a {GameState.CurrentEnemy.Name}.\"\n" +
                 $"\"I will pay you {_bounty} gold.\"\n" +
                 "\"Are you interested?\"");

@@ -7,5 +7,22 @@
       Title="GuildManagePage"
       Style="{StaticResource PageStyle}">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtManage" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Width="695" Height="300" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <Button x:Name="BtnApplications" Grid.Column="0" Grid.Row="1" Width="225" Content="_Applications" Click="BtnApplications_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnOptions" Grid.Column="1" Grid.Row="1" Width="225" Content="Guild _Options" Click="BtnOptions_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnHireHenchmen" Grid.Column="2" Grid.Row="1" Width="225" Content="_Hire Henchmen" Click="BtnHireHenchmen_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnMembers" Grid.Column="0" Grid.Row="2" Width="225" Content="_Members" Click="BtnMembers_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnTransfer" Grid.Column="1" Grid.Row="2" Width="225" Content="_Transfer" Click="BtnTransfer_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnBack" Grid.Column="2" Grid.Row="2" Width="225" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
     </Grid>
 </Page>

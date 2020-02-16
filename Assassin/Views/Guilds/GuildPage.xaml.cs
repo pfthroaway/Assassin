@@ -35,10 +35,7 @@ namespace Assassin.Views.Guilds
 
         private void BtnJobs_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new JobsPage(this));
 
-        private void BtnManageGuild_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement managing a Guild.
-        }
+        private void BtnManageGuild_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildManagePage(this));
 
         private void BtnHireHenchmen_Click(object sender, RoutedEventArgs e)
         {
@@ -57,13 +54,14 @@ namespace Assassin.Views.Guilds
             if (GameState.YesNoNotification($"Are you sure you want to quit {GameState.CurrentGuild}? You will have to reapply if you want to join again.", "Assassin") && await GameState.MemberLeavesGuild(GameState.CurrentUser, GameState.CurrentGuild))
             {
                 Functions.AddTextToTextBox(TxtGuild, $"You quit {GameState.CurrentGuild.Name}");
+                RefToGuildListPage.CheckEnterApply();
                 ClosePage();
             }
         }
 
         private void BtnSleep_Click(object sender, RoutedEventArgs e)
         {
-            Functions.AddTextToTextBox(TxtGuild, "You rent a room for the night.");
+            Functions.AddTextToTextBox(TxtGuild, "You find an empty room and sleep.");
             GameState.CurrentUser.CurrentLocation = SleepLocation.Guild;
             GameState.GamePage.ToggleButtons(false);
             RefToGuildListPage.BtnEnter.IsEnabled = false;
@@ -73,7 +71,7 @@ namespace Assassin.Views.Guilds
 
         private void BtnTransferItems_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Implement transferring items to the Guild.
+            //TODO Implement transferring items to the Guild and other members.
         }
 
         #endregion Click

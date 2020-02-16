@@ -4,58 +4,21 @@ using Assassin.Models.Enums;
 using Assassin.Views.Guilds;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Assassin.Views.City
 {
     /// <summary>Interaction logic for MembersPage.xaml</summary>
-    public partial class MembersPage : Page, INotifyPropertyChanged
+    public partial class MembersPage : Page
     {
         private string _previousPage;
         private List<User> _users;
         private User _selectedUser = new User();
 
-        /// <summary>List of <see cref="User"/>s currently accessible from the previous area.</summary>
-        private List<User> Users
-        {
-            get => _users;
-            set
-            {
-                _users = value;
-                NotifyPropertyChanged(nameof(Users));
-            }
-        }
-
-        #region INPC Members
-
-        /// <summary>The event that is raised when a property that calls the NotifyPropertyChanged method is changed.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
-        /// <param name="propertyNames">The names of the properties to update in the UI.</param>
-        protected void NotifyPropertyChanged(params string[] propertyNames)
-        {
-            if (PropertyChanged != null)
-            {
-                foreach (string propertyName in propertyNames)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                }
-            }
-        }
-
-        /// <summary>Notifys the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
-        /// <param name="propertyName">The optional name of the property to update in the UI. If this is left blank, the name will be taken from the calling member via the CallerMemberName attribute.</param>
-        protected virtual void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion INPC Members
+        /// <summary>Refreshes the list of members.</summary>
+        private void RefreshItemsSource() => LstMembers.ItemsSource = _users;
 
         #region Click
 
@@ -69,7 +32,10 @@ namespace Assassin.Views.City
         private async void BtnExpel_Click(object sender, RoutedEventArgs e)
         {
             if (await GameState.DatabaseInteraction.MemberLeavesGuild(_selectedUser, GameState.CurrentGuild))
+            {
                 await GameState.DatabaseInteraction.SendMessage(new Message(0, GameState.CurrentGuild.Master, _selectedUser.Name, $"You have been expelled from the guild {GameState.CurrentGuild.Name}.", DateTime.UtcNow, true));
+                RefreshItemsSource();
+            }
         }
 
         private void BtnMessage_Click(object sender, RoutedEventArgs e)
@@ -81,7 +47,7 @@ namespace Assassin.Views.City
         {
             if (LstMembers.SelectedIndex >= 0)
             {
-                _selectedUser = Users[LstMembers.SelectedIndex];
+                _selectedUser = _users[LstMembers.SelectedIndex];
                 switch (_previousPage)
                 {
                     case "Game":
@@ -119,19 +85,19 @@ namespace Assassin.Views.City
             if (previousPage is GamePage)
             {
                 _previousPage = "Game";
-                Users = new List<User>(GameState.AllUsers);
-                Users.Remove(GameState.CurrentUser);
+                _users = new List<User>(GameState.AllUsers);
+                _users.Remove(GameState.CurrentUser);
             }
             else if (previousPage is GuildPage)
             {
                 _previousPage = "Guild";
-                Users = GameState.AllUsers.Where(user => GameState.CurrentGuild.Members.Contains(user.Name)).ToList();
+                _users = GameState.AllUsers.Where(user => GameState.CurrentGuild.Members.Contains(user.Name)).ToList();
             }
             else if (previousPage is GuildManagePage)
             {
                 _previousPage = "Guild Manage";
                 BtnExpel.Visibility = Visibility.Visible;
-                Users = GameState.AllUsers.Where(user => GameState.CurrentGuild.Members.Contains(user.Name)).ToList();
+                _users = GameState.AllUsers.Where(user => GameState.CurrentGuild.Members.Contains(user.Name)).ToList();
             }
             else if (previousPage is InnPage)
             {
@@ -142,7 +108,7 @@ namespace Assassin.Views.City
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            LstMembers.ItemsSource = Users;
+            RefreshItemsSource();
             if (LstMembers.Items.Count > 0)
                 LstMembers.SelectedIndex = 0;
         }
