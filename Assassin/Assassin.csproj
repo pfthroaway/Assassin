@@ -90,6 +90,9 @@
     <Compile Include="Models\Items\IItem.cs" />
     <Compile Include="Models\Items\Item.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Views\City\InnPage.xaml.cs">
+      <DependentUpon>InnPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\City\MembersPage.xaml.cs">
       <DependentUpon>MembersPage.xaml</DependentUpon>
     </Compile>
@@ -161,9 +164,6 @@
     <Compile Include="Views\Help\ManualPage.xaml.cs">
       <DependentUpon>ManualPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Guilds\MembersPage.xaml.cs">
-      <DependentUpon>MembersPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Shopping\MysticPage.xaml.cs">
       <DependentUpon>MysticPage.xaml</DependentUpon>
     </Compile>
@@ -217,6 +217,10 @@
     <Compile Include="Views\Player\NewUserPage.xaml.cs">
       <DependentUpon>NewUserPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\City\InnPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\City\MembersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -306,10 +310,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Help\ManualPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Guilds\MembersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

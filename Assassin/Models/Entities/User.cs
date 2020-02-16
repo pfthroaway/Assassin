@@ -328,6 +328,17 @@ namespace Assassin.Models.Entities
         /// <returns>If the <see cref="User"/> can do an action</returns>
         public bool CanDoAction() => Hunger < 24 && Thirst < 24;
 
+        /// <summary>Converts an <see cref="Enemy"/> into a <see cref="User"/>.</summary>
+        /// <param name="enemy"><see cref="Enemy"/> to be converted</param>
+        public void ConvertFromEnemy(Enemy enemy)
+        {
+            CurrentEndurance = enemy.CurrentEndurance;
+            MaximumEndurance = enemy.MaximumEndurance;
+            if (CurrentEndurance <= 0)
+                Alive = false;
+            GoldOnHand = enemy.GoldOnHand;
+        }
+
         /// <summary>Displays text about the <see cref="User"/>'s current hunger and thirst.</summary>
         /// <returns>text about the <see cref="User"/>'s current hunger and thirst</returns>
         public string DisplayHungerThirstText()

@@ -22,7 +22,8 @@ namespace Assassin.Views.Guilds
         private void BtnBar_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new BarPage());
 
         private void BtnChallenge_Click(object sender, RoutedEventArgs e)
-        {//TODO Implement challenging a guildmaster.
+        {
+            //TODO Implement challenging a guildmaster.
         }
 
         private void BtnDonate_Click(object sender, RoutedEventArgs e)
@@ -33,7 +34,8 @@ namespace Assassin.Views.Guilds
         private void BtnJobs_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new JobsPage(this));
 
         private void BtnManageGuild_Click(object sender, RoutedEventArgs e)
-        {//TODO Implement managing a Guild.
+        {
+            //TODO Implement managing a Guild.
         }
 
         private void BtnHireHenchmen_Click(object sender, RoutedEventArgs e)
@@ -41,10 +43,7 @@ namespace Assassin.Views.Guilds
             //TODO Implement hiring Henchmen.
         }
 
-        private void BtnMembers_Click(object sender, RoutedEventArgs e)
-        {
-            //
-        }
+        private void BtnMembers_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new MembersPage(this));
 
         private void BtnPlanRaid_Click(object sender, RoutedEventArgs e)
         {
@@ -70,6 +69,7 @@ namespace Assassin.Views.Guilds
         {
             InitializeComponent();
             RefToGuildListPage = guildListPage;
+            TxtGuild.Text = $"You enter {GameState.CurrentGuild.Name}.";
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

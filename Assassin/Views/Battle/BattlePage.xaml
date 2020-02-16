@@ -61,7 +61,7 @@
                 <TextBlock Grid.Column="1" Grid.Row="3" Width="275" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Grid>
         </GroupBox>
-        <TextBox x:Name="TxtBattle" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Width="830" Height="300" BorderThickness="1" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,20" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+        <TextBox x:Name="TxtBattle" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Width="830" Height="400" BorderThickness="1" IsReadOnly="True" TextWrapping="Wrap" Margin="0,0,0,20" ScrollViewer.VerticalScrollBarVisibility="Visible" />
         <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="835">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />

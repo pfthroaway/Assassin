@@ -169,10 +169,7 @@ namespace Assassin.Views.City
 
         private void BtnOptions_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ChangePasswordPage());
 
-        private void BtnOthers_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Others
-        }
+        private void BtnOthers_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new MembersPage(this));
 
         private void BtnPub_Click(object sender, RoutedEventArgs e)
         {

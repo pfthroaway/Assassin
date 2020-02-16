@@ -109,6 +109,22 @@ namespace Assassin.Models.Entities
         {
         }
 
+        /// <summary>Initializes an instance of <see cref="Enemy"/> by taking values from a <see cref="User"/>.</summary>
+        /// <param name="user"><see cref="User"/> to become an <see cref="Enemy"/></param>
+        public Enemy(User user)
+        {
+            Name = user.Name;
+            Level = user.Level;
+            CurrentEndurance = user.CurrentEndurance;
+            MaximumEndurance = user.MaximumEndurance;
+            Weapon = user.CurrentWeapon;
+            Armor = user.Armor;
+            GoldOnHand = user.GoldOnHand;
+            WeaponSkill = user.CurrentWeaponSkill;
+            Blocking = user.Blocking;
+            Slipping = user.Slipping;
+        }
+
         #endregion Constructors
     }
 }
