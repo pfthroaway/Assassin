@@ -90,6 +90,9 @@
     <Compile Include="Models\Items\IItem.cs" />
     <Compile Include="Models\Items\Item.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Views\City\MembersPage.xaml.cs">
+      <DependentUpon>MembersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -214,6 +217,10 @@
     <Compile Include="Views\Player\NewUserPage.xaml.cs">
       <DependentUpon>NewUserPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\City\MembersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

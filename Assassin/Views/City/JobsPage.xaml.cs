@@ -116,16 +116,13 @@ namespace Assassin.Views.City
 
         #region Page-Manipulation Methods
 
-        public JobsPage()
+        public JobsPage(GuildPage guildPage)
         {
             InitializeComponent();
+            RefToGuildPage = guildPage;
             GenerateEmployers();
             TxtJob.Text = "You sit at a table and wait.";
             GenerateJob();
-        }
-
-        private void windowJobs_Closing(object sender, CancelEventArgs e)
-        {
         }
 
         #endregion Page-Manipulation Methods
