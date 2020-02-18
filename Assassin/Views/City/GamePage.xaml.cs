@@ -154,10 +154,7 @@ namespace Assassin.Views.City
 
         private void BtnJail_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new JailPage());
 
-        private void BtnMessages_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement messages.
-        }
+        private void BtnMessages_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new MessagesPage());
 
         private void BtnMystic_Click(object sender, RoutedEventArgs e)
         {

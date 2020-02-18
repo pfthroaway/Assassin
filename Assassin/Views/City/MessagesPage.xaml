@@ -1,0 +1,38 @@
+﻿<Page x:Class="Assassin.Views.City.MessagesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Loaded="Page_Loaded"
+      Title="Messages"
+      Style="{StaticResource PageStyle}">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Width="80" Text="From:" Margin="0,0,0,10" />
+            <TextBlock Grid.Column="1" Grid.Row="0" Width="350" Text="{Binding UserFrom}" Margin="0,0,0,10" />
+            <TextBlock Grid.Column="0" Grid.Row="1" Width="80" Text="Date:" />
+            <TextBlock Grid.Column="1" Grid.Row="1" Width="350" Text="{Binding LocalDateSentToString}" />
+        </Grid>
+        <TextBox x:Name="TxtContents" Width="830" Height="400" Text="{Binding Contents}" TextWrapping="Wrap" TextAlignment="Left" IsReadOnly="True" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+            <Button x:Name="BtnPrevious" Width="200" Content="_Previous" Click="BtnPrevious_Click" IsEnabled="False" Margin="0,0,10,0" />
+            <TextBlock x:Name="LblCount" Width="120" Text="{Binding Count}" VerticalAlignment="Center" TextAlignment="Center" Margin="0,0,10,0" />
+            <Button x:Name="BtnNext" Width="200" Content="_Next" Click="BtnNext_Click" IsEnabled="False" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="BtnNew" Width="200" Content="N_ew" Click="BtnNew_Click" Margin="0,0,10,0" />
+            <Button x:Name="BtnReply" Width="200" Content="_Reply" Click="BtnReply_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnDelete" Width="200" Content="_Delete" Click="BtnDelete_Click" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Page>

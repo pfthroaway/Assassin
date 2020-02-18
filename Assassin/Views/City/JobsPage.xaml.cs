@@ -5,7 +5,6 @@ using Assassin.Views.Guilds;
 using Assassin.Views.Shopping;
 using Extensions;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 
 namespace Assassin.Views.City

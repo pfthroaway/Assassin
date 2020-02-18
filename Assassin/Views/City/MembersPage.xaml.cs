@@ -38,10 +38,7 @@ namespace Assassin.Views.City
             }
         }
 
-        private void BtnMessage_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO Implement messaging.
-        }
+        private void BtnMessage_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new NewMessagePage(new List<User> { _selectedUser }));
 
         private void LstMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

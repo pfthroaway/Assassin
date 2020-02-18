@@ -1,0 +1,21 @@
+﻿<Page x:Class="Assassin.Views.City.NewMessagePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Loaded="Page_Loaded"
+      Title="New Message"
+      Style="{StaticResource PageStyle}">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="To:" Margin="0,0,10,0" />
+            <ComboBox x:Name="CmbRecipients" Width="350" SelectionChanged="CmbRecipients_SelectionChanged" />
+        </StackPanel>
+        <TextBox x:Name="TxtMessage" Width="830" Height="400" TextChanged="TxtMessage_TextChanged" TextWrapping="Wrap" TextAlignment="Left" Margin="0,0,0,10" />
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button x:Name="BtnSend" Width="200" Content="_Send" Click="BtnSend_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" Click="BtnBack_Click" IsCancel="True" Margin="0,0,10,0" />
+        </StackPanel>
+    </StackPanel>
+</Page>

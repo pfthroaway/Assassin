@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assassin.Models.Entities;
+using System;
 
 namespace Assassin.Models
 {
@@ -64,9 +65,16 @@ namespace Assassin.Models
         public DateTime LocalDateSent => TimeZone.CurrentTimeZone.ToLocalTime(DateSent);
 
         /// <summary>Date the <see cref="Message"/> was sent in local time, formatted.</summary>
-        public string LocalDateSentToString => LocalDateSent.ToString(@"yyyy-MM-dd hh\:mm\:ss tt");
+        public string LocalDateSentToString => DateSent != DateTime.MinValue ? LocalDateSent.ToString(@"yyyy-MM-dd hh\:mm\:ss tt") : "";
 
         #endregion Helper Properties
+
+        #region Constructors
+
+        /// <summary>Initializes a default instance of <see cref="Message"/>.</summary>
+        public Message()
+        {
+        }
 
         /// <summary>Constructs a new instance of <see cref="Message"/> by assigning property values.</summary>
         /// <param name="sender"><see cref="User"/> who sent the <see cref="Message"/></param>
@@ -95,5 +103,7 @@ namespace Assassin.Models
             DateSent = other.DateSent;
             GuildMessage = other.GuildMessage;
         }
+
+        #endregion Constructors
     }
 }

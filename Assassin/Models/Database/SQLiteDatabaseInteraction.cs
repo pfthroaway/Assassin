@@ -292,7 +292,9 @@ namespace Assassin.Models.Database
         /// <returns>List of applicant names</returns>
         public async Task<List<string>> LoadGuildApplicants(Guild loadGuild)
         {
-            DataSet ds = await SQLiteHelper.FillDataSet(_con, $"SELECT * FROM Applications WHERE [Guild] = {loadGuild.ID}");
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"SELECT * FROM Applications WHERE [Guild] = @id" };
+            cmd.Parameters.AddWithValue("@id", loadGuild.ID);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
             List<string> allApplicants = new List<string>();
 
             if (ds.Tables[0].Rows.Count > 0)
@@ -346,12 +348,15 @@ namespace Assassin.Models.Database
         public async Task<List<Message>> LoadMessages(User loadUser)
         {
             List<Message> messages = new List<Message>();
-            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM Messages WHERE UserTo={loadUser.Name}");
+
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "SELECT * FROM Messages WHERE [UserTo] = @name" };
+            cmd.Parameters.AddWithValue("@name", loadUser.Name);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
 
             if (ds.Tables[0].Rows.Count > 0)
                 foreach (DataRow dr in ds.Tables[0].Rows)
                     messages.Add(new Message(Int32Helper.Parse(dr["ID"].ToString()), dr["UserFrom"].ToString(), loadUser.Name, dr["Message"].ToString(), DateTimeHelper.Parse(dr["DateSent"].ToString()), BoolHelper.Parse(dr["GuildMessage"])));
-            return messages;
+            return messages.OrderByDescending(message => message.DateSent).ToList();
         }
 
         /// <summary>Loads all <see cref="Potion"/>s from the database.</summary>
