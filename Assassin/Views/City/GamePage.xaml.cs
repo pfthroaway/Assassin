@@ -147,10 +147,7 @@ namespace Assassin.Views.City
 
         private void BtnGuild_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildListPage());
 
-        private void BtnInn_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO Implement Inn
-        }
+        private void BtnInn_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InnPage());
 
         private void BtnInventory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new InventoryPage());
 

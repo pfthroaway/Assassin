@@ -2,6 +2,8 @@
 using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Assassin.Views.Guilds;
+using Extensions;
+using Extensions.DataTypeHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ namespace Assassin.Views.City
         private List<User> _users;
         private User _selectedUser = new User();
 
+        private InnPage RefToInnPage { get; set; }
+
         /// <summary>Refreshes the list of members.</summary>
         private void RefreshItemsSource() => LstMembers.ItemsSource = _users;
 
@@ -28,6 +32,32 @@ namespace Assassin.Views.City
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
+
+        private void BtnBribe_Click(object sender, RoutedEventArgs e)
+        {
+            string bribeText = GameState.InputDialog("The inkeeper asks, \"How much gold would you give me to have this key?\"", "Assassin").Trim();
+            int bribe = Int32Helper.Parse(bribeText);
+            int bribeRequired = Functions.GenerateRandomNumber(_selectedUser.Level * 50, _selectedUser.Level * 200);
+
+            if (bribe > 0 && bribe <= GameState.CurrentUser.GoldOnHand)
+            {
+                GameState.CurrentUser.GoldOnHand -= bribe;
+                if (bribe < bribeRequired)
+                {
+                    Functions.AddTextToTextBox(RefToInnPage.TxtInn, "The innkeeper takes your gold and walks away.");
+                    GameState.GoBack();
+                }
+                else
+                {
+                    Functions.AddTextToTextBox(RefToInnPage.TxtInn, "The innkeeper hands you a key.");
+                    // TODO Implement attacking sleeping Inn guests. Don't forget surprise from both sides.
+                }
+            }
+            else if (bribeText.Trim().Length > 0)
+                GameState.DisplayNotification("Please enter a positive integer value.", "Assassin");
+            else if (bribe > GameState.CurrentUser.GoldOnHand)
+                Functions.AddTextToTextBox(RefToInnPage.TxtInn, "You don't have that much gold to bribe the innkeeper with.");
+        }
 
         private async void BtnExpel_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +90,7 @@ namespace Assassin.Views.City
                         break;
 
                     case "Inn":
-                        BtnAttack.IsEnabled = _selectedUser.Alive;
+                        BtnBribe.IsEnabled = _selectedUser.Alive;
                         break;
                 }
             }
@@ -100,6 +130,10 @@ namespace Assassin.Views.City
             {
                 _previousPage = "Inn";
                 _users = GameState.AllUsers.Where(user => user.CurrentLocation == SleepLocation.Inn).ToList();
+                BtnBribe.Visibility = Visibility.Visible;
+                BtnMessage.Visibility = Visibility.Collapsed;
+                BtnAttack.Visibility = Visibility.Collapsed;
+                RefToInnPage = previousPage as InnPage;
             }
         }
 

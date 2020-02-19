@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       Title="InnPage"
-      Loaded="Page_Loaded"
       Style="{StaticResource PageStyle}">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBox x:Name="TxtInn" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Width="930" Height="400" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />

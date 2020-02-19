@@ -55,7 +55,7 @@ namespace Assassin.Views.City
         /// <returns>Value from the InputDialog</returns>
         private int DisplayDialog(string text, int maximum)
         {
-            string dialogAmount = GameState.InputDialog(text, "Assassin");
+            string dialogAmount = GameState.InputDialog(text, "Assassin").Trim();
             if (dialogAmount.Length > 0)
             {
                 int amount = Int32Helper.Parse(dialogAmount);
