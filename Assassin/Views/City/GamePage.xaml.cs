@@ -23,6 +23,8 @@ namespace Assassin.Views.City
         private DispatcherTimer Timer1 = new DispatcherTimer();
         private readonly SolidColorBrush defaultBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#CCCCCC");
 
+        //TODO Implement The Graveyard.
+
         /// <summary>Displays the appropriate text when a user awakens.</summary>
         internal async void Awaken()
         {

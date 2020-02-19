@@ -6,6 +6,9 @@ namespace Assassin.Views.Shopping
     /// <summary>Interaction logic for ShopsPage.xaml</summary>
     public partial class ShopsPage
     {
+        // TODO Implement the Alchemist's Lab - Potions.
+        // TODO Implement Magical Realms - Amulets - 1,000.
+
         #region Button-Click Methods
 
         private void BtnArmory_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new ArmoryPage());
