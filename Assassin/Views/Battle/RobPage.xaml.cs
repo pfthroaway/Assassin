@@ -129,7 +129,7 @@ namespace Assassin.Views.Battle
         {
             if (!_blnCourt)
             {
-                Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtRob.Text);
+                Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtRob.Text.Trim());
                 GameState.GoBack();
             }
             else

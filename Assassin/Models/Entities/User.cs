@@ -335,7 +335,10 @@ namespace Assassin.Models.Entities
             CurrentEndurance = enemy.CurrentEndurance;
             MaximumEndurance = enemy.MaximumEndurance;
             if (CurrentEndurance <= 0)
+            {
                 Alive = false;
+                CurrentLocation = SleepLocation.Streets;
+            }
             GoldOnHand = enemy.GoldOnHand;
         }
 

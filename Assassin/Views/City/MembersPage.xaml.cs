@@ -1,6 +1,7 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Entities;
 using Assassin.Models.Enums;
+using Assassin.Views.Battle;
 using Assassin.Views.Guilds;
 using Extensions;
 using Extensions.DataTypeHelpers;
@@ -28,7 +29,8 @@ namespace Assassin.Views.City
 
         private void BtnAttack_Click(object sender, RoutedEventArgs e)
         {
-            // TODO Implement attacking others from the Members Page.
+            GameState.CurrentEnemy = new Enemy(_selectedUser);
+            GameState.Navigate(new BattlePage(true));
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => GameState.GoBack();
@@ -49,12 +51,13 @@ namespace Assassin.Views.City
                 }
                 else
                 {
-                    Functions.AddTextToTextBox(RefToInnPage.TxtInn, "The innkeeper hands you a key.");
-                    // TODO Implement attacking sleeping Inn guests. Don't forget surprise from both sides.
+                    Functions.AddTextToTextBox(RefToInnPage.TxtInn, "The innkeeper takes your gold and hands you a key. You creep upstairs.");
+                    GameState.CurrentEnemy = new Enemy(_selectedUser);
+                    GameState.Navigate(new BattlePage(true) { RefToInnPage = RefToInnPage });
                 }
             }
             else if (bribeText.Trim().Length > 0)
-                GameState.DisplayNotification("Please enter a positive integer value.", "Assassin");
+                GameState.DisplayNotification($"Please enter a positive integer value less than {GameState.CurrentUser.GoldOnHand}.", "Assassin");
             else if (bribe > GameState.CurrentUser.GoldOnHand)
                 Functions.AddTextToTextBox(RefToInnPage.TxtInn, "You don't have that much gold to bribe the innkeeper with.");
         }

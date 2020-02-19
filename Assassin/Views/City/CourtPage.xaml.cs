@@ -133,7 +133,7 @@ namespace Assassin.Views.City
         {
             if (_blnFinished)
             {
-                Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtCourt.Text);
+                Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtCourt.Text.Trim());
                 GameState.MainWindow.MainFrame.RemoveBackEntry();
                 GameState.GoBack();
                 await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);

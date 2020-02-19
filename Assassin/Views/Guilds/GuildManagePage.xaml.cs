@@ -26,7 +26,7 @@ namespace Assassin.Views.Guilds
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, TxtManage.Text);
+            Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, TxtManage.Text.Trim());
             GameState.GoBack();
         }
 

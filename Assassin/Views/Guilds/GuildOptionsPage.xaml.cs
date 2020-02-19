@@ -28,14 +28,14 @@ namespace Assassin.Views.Guilds
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Functions.AddTextToTextBox(RefToGuildManagePage.TxtManage, TxtOptions.Text);
+            Functions.AddTextToTextBox(RefToGuildManagePage.TxtManage, TxtOptions.Text.Trim());
             GameState.GoBack();
         }
 
         private async void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             _copyOfGuild.Name = TxtGuildName.Text.Trim();
-            _copyOfGuild.Fee = Int32Helper.Parse(TxtEntranceFee.Text);
+            _copyOfGuild.Fee = Int32Helper.Parse(TxtEntranceFee.Text.Trim());
             _copyOfGuild.Master = CmbMaster.Text;
             if (GameState.CurrentGuild != _copyOfGuild)
             {

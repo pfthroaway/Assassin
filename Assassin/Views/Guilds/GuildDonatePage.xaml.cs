@@ -41,7 +41,7 @@ namespace Assassin.Views.Guilds
 
         private async void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, TxtDonate.Text);
+            Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, TxtDonate.Text.Trim());
             GameState.GoBack();
             await GameState.DatabaseInteraction.SaveGuild(GameState.CurrentGuild);
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);

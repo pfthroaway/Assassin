@@ -2,20 +2,10 @@
 using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Assassin.Views.City
 {
@@ -25,8 +15,16 @@ namespace Assassin.Views.City
         /// <summary>Closes the Page.</summary>
         private void ClosePage()
         {
-            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtInn.Text);
+            Functions.AddTextToTextBox(GameState.GamePage.TxtGame, TxtInn.Text.Trim());
             GameState.GoBack();
+        }
+
+        /// <summary>Disables all Buttons if the <see cref="User"/> has died.</summary>
+        public void DisableButtons()
+        {
+            BtnBribe.IsEnabled = false;
+            BtnRegistry.IsEnabled = false;
+            BtnSleep.IsEnabled = false;
         }
 
         #region Click

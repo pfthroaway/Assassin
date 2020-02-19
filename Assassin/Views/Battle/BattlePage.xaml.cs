@@ -7,6 +7,7 @@ using Extensions;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Assassin.Views.Battle
@@ -14,7 +15,7 @@ namespace Assassin.Views.Battle
     /// <summary>Interaction logic for BattlePage.xaml</summary>
     public partial class BattlePage : INotifyPropertyChanged
     {
-        private bool _blnDone, _blnWin, _blnSurprise = true;
+        private bool _blnDone, _blnWin, _blnSurprise = true, blnPlayer;
         private static readonly int _maxStamina = 100;
         private int _playerStamina = _maxStamina;
         private int _enemyStamina = _maxStamina;
@@ -27,6 +28,8 @@ namespace Assassin.Views.Battle
         internal bool BlnJob { get; set; }
         internal AssassinationPage RefToAssassinationPage { get; set; }
         internal JobsPage RefToJobsPage { get; set; }
+
+        internal InnPage RefToInnPage { get; set; }
 
         public int PlayerStamina
         {
@@ -528,19 +531,41 @@ namespace Assassin.Views.Battle
         private void Surprise()
         {
             LoadBattle();
-            AddText($"You approach the {GameState.CurrentEnemy.Name}.");
-            if (SkillCheck(GameState.CurrentUser.Stealth + Bonus()))
+            if (!blnPlayer)
             {
-                _playerDamage *= 2;
-                AddText("You surprise your opponent!");
-                PlayerHitsEnemy();
-
-                if (GameState.CurrentEnemy.CurrentEndurance <= 0)
-                    WinBattle();
+                AddText($"You approach the {GameState.CurrentEnemy.Name}.");
+                if (SkillCheck(GameState.CurrentUser.Stealth + Bonus()))
+                    SurpriseSuccess();
+            }
+            else
+            {
+                AddText(RefToInnPage != null ? $"You creep into the room where {GameState.CurrentEnemy} is sleeping..." : $"You head into the dark alleyway where {GameState.CurrentEnemy.Name} was last seen sleeping.");
+                int awake = Functions.GenerateRandomNumber(10, GameState.CurrentEnemy.Level * 8 + 2);
+                if (awake >= GameState.CurrentUser.Stealth + Bonus())
+                {
+                    AddText($"{GameState.CurrentEnemy} was waiting for you!");
+                    if (SkillCheck(GameState.CurrentUser.Stealth + Bonus()))
+                        SurpriseSuccess();
+                }
                 else
-                    RoundReset();
+                {
+                    AddText($"You successfully sneak up on {GameState.CurrentEnemy.Name} while they're sleeping!");
+                    SurpriseSuccess();
+                }
             }
             _blnSurprise = false;
+        }
+
+        private void SurpriseSuccess()
+        {
+            _playerDamage *= 2;
+            AddText("You surprise your opponent!");
+            PlayerHitsEnemy();
+
+            if (GameState.CurrentEnemy.CurrentEndurance <= 0)
+                WinBattle();
+            else
+                RoundReset();
         }
 
         #endregion Battle Management
@@ -705,8 +730,6 @@ namespace Assassin.Views.Battle
         {
             if (_blnDone)
             {
-                GameState.GoBack();
-                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
                 if (BlnJob)
                 {
                     Functions.AddTextToTextBox(RefToJobsPage.TxtJob, TxtBattle.Text.Trim());
@@ -717,16 +740,31 @@ namespace Assassin.Views.Battle
                         RefToJobsPage.GetPaid();
                     }
                 }
+                else if (blnPlayer)
+                {
+                    GameState.MainWindow.MainFrame.RemoveBackEntry();
+                    if (!GameState.CurrentUser.Alive && RefToInnPage != null)
+                        RefToInnPage.DisableButtons();
+                    Functions.AddTextToTextBox(RefToInnPage != null ? RefToInnPage.TxtInn : GameState.GamePage.TxtGame, TxtBattle.Text.Trim());
+                    if (!GameState.CurrentUser.Alive)
+
+                        GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name).ConvertFromEnemy(GameState.CurrentEnemy);
+                    await GameState.DatabaseInteraction.SaveUser(GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name));
+                }
                 else
                 {
                     Functions.AddTextToTextBox(RefToAssassinationPage.TxtAssassinate, TxtBattle.Text.Trim());
                 }
+
+                GameState.GoBack();
+                await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
             }
         }
 
-        public BattlePage()
+        public BattlePage(bool player = false)
         {
             InitializeComponent();
+            blnPlayer = player;
             GameState.MainWindow.BlnPreventClosing = true;
             GameState.MainWindow.TxtPreventClosing = "You must finish your battle first.";
         }

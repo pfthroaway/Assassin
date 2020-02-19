@@ -15,7 +15,7 @@ namespace Assassin.Views.Guilds
         /// <summary>Closes the Page.</summary>
         private async void ClosePage()
         {
-            Functions.AddTextToTextBox(RefToGuildListPage.TxtGuild, TxtGuild.Text);
+            Functions.AddTextToTextBox(RefToGuildListPage.TxtGuild, TxtGuild.Text.Trim());
             GameState.GoBack();
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
