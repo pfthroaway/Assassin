@@ -21,9 +21,7 @@ namespace Assassin.Views.Admin
         {
         }
 
-        private void BtnManageUsers_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        private void BtnManageUsers_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AdminUsersPage());
 
         #endregion Button-Click Methods
 

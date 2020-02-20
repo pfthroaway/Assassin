@@ -23,6 +23,9 @@ namespace Assassin.Views.Battle
         private int _playerBlocking, _enemyBlocking, _playerDamage, _enemyDamage, _playerWeaponSkill, _enemyWeaponSkill;
         private readonly SolidColorBrush defaultBrush = (SolidColorBrush)new BrushConverter().ConvertFrom("#CCCCCC");
 
+        //TODO Consider redoing how death is handled. Should they have to re-login and wait a time based on their level? If I do the Graveyard, that's almost definitely how I should do it.
+        //TODO In the original game, it was possible to knock out/be knocked out by your opponent. Should I re-implement that?
+
         #region Properties
 
         internal bool BlnJob { get; set; }
