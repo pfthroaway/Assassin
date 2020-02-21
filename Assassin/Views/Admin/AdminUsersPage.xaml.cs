@@ -172,11 +172,14 @@ namespace Assassin.Views.Admin
             bool blnChangeName = false;
             if (TxtName.Text.Trim() != GameState.CurrentUser.Name)
             {
-                if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()))
+                if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()) && TxtName.Text.Trim() != "Rathskeller" && TxtName.Text.Trim() != "The Master")
                     blnChangeName = true;
                 else
                 {
-                    GameState.DisplayNotification("The new username you have chosen is already in use.", "Assassin");
+                    if (TxtName.Text.Trim() == "Rathskeller" || TxtName.Text.Trim() == "The Master")
+                        GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
+                    else
+                        GameState.DisplayNotification("The new username you have chosen is already in use.", "Assassin");
                     TxtName.Clear();
                     TxtName.Focus();
                     return;
@@ -248,13 +251,18 @@ namespace Assassin.Views.Admin
                 {
                     if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()))
                     {
-                        AssignSelectedUser(true);
-                        if (await GameState.NewUser(_selectedUser))
+                        if (_selectedUser.Name != "Rathskeller" && _selectedUser.Name != "The Master")
                         {
-                            GameState.DisplayNotification("New user successfully created.", "Assassin");
-                            Clear();
-                            RefreshItemsSource();
+                            AssignSelectedUser(true);
+                            if (await GameState.NewUser(_selectedUser))
+                            {
+                                GameState.DisplayNotification("New user successfully created.", "Assassin");
+                                Clear();
+                                RefreshItemsSource();
+                            }
                         }
+                        else
+                            GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
                     }
                     else
                     {
@@ -310,7 +318,7 @@ namespace Assassin.Views.Admin
                             await GameState.MemberLeavesGuild(GameState.CurrentUser, guild);
                             await GameState.DatabaseInteraction.DenyGuildApplication(GameState.CurrentUser, guild);
                             if (guild.Master == GameState.CurrentUser.Name)
-                                guild.Master = "Computer";
+                                guild.Master = guild.DefaultMaster;
                         }
                         List<Message> messages = await GameState.DatabaseInteraction.LoadMessages(GameState.CurrentUser);
                         foreach (var message in messages)

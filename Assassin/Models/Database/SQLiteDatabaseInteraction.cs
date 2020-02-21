@@ -35,6 +35,24 @@ namespace Assassin.Models.Database
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
+        /// <summary>Updates the User Version in the database.</summary>
+        /// <param name="version">New version</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> UpdateUserVersion(long version)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "PRAGMA user_version = 1" };
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
+        /// <summary>Executes a passed command.</summary>
+        /// <param name="sql">Command to be executed</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> ExecuteCommand(string sql)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = sql };
+            return await SQLiteHelper.ExecuteCommand(_con, cmd);
+        }
+
         #region Enemy Management
 
         /// <summary>Deletes an <see cref="Enemy"/> from the database.</summary>
@@ -316,7 +334,7 @@ namespace Assassin.Models.Database
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    Guild newGuild = new Guild(Int32Helper.Parse(dr["ID"]), dr["GuildName"].ToString(), dr["Guildmaster"].ToString(), Int32Helper.Parse(dr["GuildFee"]), Int32Helper.Parse(dr["GuildGold"]), new List<string>(), new Henchmen(Int32Helper.Parse(dr["HenchmenLevel1"]), Int32Helper.Parse(dr["HenchmenLevel2"]), Int32Helper.Parse(dr["HenchmenLevel3"]), Int32Helper.Parse(dr["HenchmenLevel4"]), Int32Helper.Parse(dr["HenchmenLevel5"])));
+                    Guild newGuild = new Guild(Int32Helper.Parse(dr["ID"]), dr["GuildName"].ToString(), dr["Guildmaster"].ToString(), dr["DefaultGuildmaster"].ToString(), Int32Helper.Parse(dr["GuildFee"]), Int32Helper.Parse(dr["GuildGold"]), new List<string>(), new Henchmen(Int32Helper.Parse(dr["HenchmenLevel1"]), Int32Helper.Parse(dr["HenchmenLevel2"]), Int32Helper.Parse(dr["HenchmenLevel3"]), Int32Helper.Parse(dr["HenchmenLevel4"]), Int32Helper.Parse(dr["HenchmenLevel5"])));
                     string members = $"Guild{Int32Helper.Parse(dr["ID"])}Members";
                     DataSet membersDS = await SQLiteHelper.FillDataSet(_con, $"SELECT * FROM {members}");
                     if (membersDS.Tables[0].Rows.Count > 0)
@@ -411,6 +429,16 @@ namespace Assassin.Models.Database
                                   select AssignUserFromDataRow(dr));
 
             return allUsers.OrderBy(user => user.Name).ToList();
+        }
+
+        /// <summary>Gets the User Version PRAGMA of the database.</summary>
+        /// <returns>User Version PRAGMA</returns>
+        public async Task<long> LoadUserVersion()
+        {
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "PRAGMA user_version");
+            if (ds.Tables[0].Rows.Count > 0)
+                return LongHelper.Parse(ds.Tables[0].Rows[0].ItemArray[0]);
+            return 0;
         }
 
         /// <summary>Loads all <see cref="Weapon"/>s from the database.</summary>

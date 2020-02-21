@@ -15,10 +15,12 @@ namespace Assassin.Views.Admin
 
         private void BtnManageEnemies_Click(object sender, RoutedEventArgs e)
         {
+            // TODO Implement Admin - Manage Enemies
         }
 
         private void BtnManageGuilds_Click(object sender, RoutedEventArgs e)
         {
+            // TODO Implement Admin - Manage Guilds
         }
 
         private void BtnManageUsers_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new AdminUsersPage());

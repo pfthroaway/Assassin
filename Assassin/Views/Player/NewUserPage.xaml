@@ -15,23 +15,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Username" TextAlignment="Center" Margin="0,0,0,5" />
-        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="1" Width="410" TextChanged="TxtUsername_Changed" TextAlignment="Center" PreviewKeyDown="TxtUsername_PreviewKeyDown" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Password" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Width="410" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
-        <TextBlock Grid.Column="0" Grid.Row="4" Text="Confirm Password:" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdConfirm" Grid.Column="0" Grid.Row="5" Width="410" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
-        <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=SkillPointsToString}" Margin="0,0,0,10" />
-        <GroupBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Header="Skills" Margin="20,0,0,10">
-            <Grid Margin="5">
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="Login" Padding="10" Margin="0,0,10,10">
+            <StackPanel Margin="5">
+                <TextBlock Text="Username" TextAlignment="Center" Margin="0,0,0,5" />
+                <TextBox x:Name="TxtUsername" Width="410" TextChanged="TxtUsername_Changed" TextAlignment="Center" PreviewKeyDown="TxtUsername_PreviewKeyDown" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
+                <TextBlock Text="Password" TextAlignment="Center" Margin="0,0,0,5" />
+                <PasswordBox x:Name="PswdPassword" Width="410" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
+                <TextBlock Text="Confirm Password:" TextAlignment="Center" Margin="0,0,0,5" />
+                <PasswordBox x:Name="PswdConfirm" Width="410" PasswordChanged="Pswd_TextChanged" HorizontalContentAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
+                <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=SkillPointsToString}" Margin="0,0,0,10" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="Skills" Padding="10" Margin="0,0,0,10">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -78,7 +75,7 @@
                 <Button x:Name="BtnStealthPlus" Grid.Column="3" Grid.Row="6" Width="50" Height="50" Content="+" Click="BtnStealthPlus_Click" IsEnabled="False" />
             </Grid>
         </GroupBox>
-        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="BtnCreate" Width="200" Content="_Create" Click="BtnCreate_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
             <Button x:Name="BtnReset" Width="200" Content="_Reset" Click="BtnReset_Click" Margin="0,0,10,0" />
             <Button x:Name="BtnCancel" Width="200" Content="C_ancel" Click="BtnCancel_Click" IsCancel="True" />

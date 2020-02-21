@@ -229,12 +229,21 @@ namespace Assassin.Views.Player
                 if (TxtUsername.Text.Trim().Length >= 4 && PswdPassword.Password.Trim().Length >= 4 && PswdConfirm.Password.Trim().Length >= 4)
                 {
                     _createUser.Name = TxtUsername.Text.Trim();
-                    _createUser.Password = PBKDF2.HashPassword(PswdPassword.Password.Trim());
-                    if (await GameState.NewUser(_createUser))
+                    if (!GameState.AllUsers.Exists(user => user.Name == _createUser.Name))
                     {
-                        _blnStart = true;
-                        ClosePage();
+                        if (_createUser.Name != "Rathskeller" && _createUser.Name != "The Master")
+                        {
+                            _createUser.Password = PBKDF2.HashPassword(PswdPassword.Password.Trim());
+                            if (await GameState.NewUser(_createUser))
+                            {
+                                _blnStart = true;
+                                ClosePage();
+                            }
+                        }
+                        GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
                     }
+                    else
+                        GameState.DisplayNotification("That username is taken.", "Assassin");
                 }
                 else
                     GameState.DisplayNotification("Usernames and passwords must be at least 4 characters in length, excluding leading and trailing spaces.", "Assassin");

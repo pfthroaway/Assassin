@@ -54,12 +54,25 @@ namespace Assassin.Models
 
         #endregion Navigation
 
+        /// <summary>Checks the database version so the table can be updated if necessary.</summary>
+        private async static void CheckDatabaseVersion()
+        {
+            if (await DatabaseInteraction.LoadUserVersion() == 0)
+            {
+                await DatabaseInteraction.UpdateUserVersion(1);
+                await DatabaseInteraction.ExecuteCommand("ALTER TABLE Guilds ADD COLUMN DefaultGuildmaster TEXT");
+                await DatabaseInteraction.ExecuteCommand("Update Guilds SET [DefaultGuildmaster] = \"The Master\" WHERE [ID] = 1");
+                await DatabaseInteraction.ExecuteCommand("Update Guilds SET [DefaultGuildmaster] = \"Rathskeller\" WHERE [ID] = 2");
+            }
+        }
+
         /// <summary>Handles verification of required files.</summary>
         internal static void FileManagement()
         {
             if (!Directory.Exists(AppData.Location))
                 Directory.CreateDirectory(AppData.Location);
             DatabaseInteraction.VerifyDatabaseIntegrity();
+            CheckDatabaseVersion();
         }
 
         /// <summary>Loads almost everything necessary for the game to function correctly.</summary>

@@ -54,7 +54,7 @@ namespace Assassin.Views.Guilds
         {
             if (GameState.YesNoNotification($"Are you sure you want to apply for this guild? It will cost {GameState.CurrentGuild.Fee} gold.", "Assassin"))
             {
-                if (GameState.CurrentGuild.Master == "Computer")
+                if (GameState.CurrentGuild.Master == GameState.CurrentGuild.DefaultMaster)
                 {
                     if (await GameState.MemberJoinsGuild(GameState.CurrentUser, GameState.CurrentGuild))
                     {

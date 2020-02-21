@@ -9,7 +9,7 @@ namespace Assassin.Models.Entities
     {
         private int _id, _fee, _gold;
         private Henchmen _henchmen = new Henchmen(0, 0, 0, 0, 0);
-        private string _name, _master;
+        private string _name, _master, _defaultMaster;
         private List<string> _members = new List<string>();
 
         #region Modifying Properties
@@ -33,6 +33,13 @@ namespace Assassin.Models.Entities
         {
             get => _master;
             set { _master = value; NotifyPropertyChanged(nameof(Master)); }
+        }
+
+        /// <summary>Default Master of the <see cref="Guild"/>.</summary>
+        public string DefaultMaster
+        {
+            get => _defaultMaster;
+            set { _defaultMaster = value; NotifyPropertyChanged(nameof(DefaultMaster)); }
         }
 
         /// <summary>Fee paid to join the <see cref="Guild"/>.</summary>
@@ -86,7 +93,7 @@ namespace Assassin.Models.Entities
         {
             if (left is null && right is null) return true;
             if (left is null ^ right is null) return false;
-            return left.ID == right.ID && string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && string.Equals(left.Master, right.Master, StringComparison.OrdinalIgnoreCase) && left.Fee == right.Fee && left.Gold == right.Gold && left.Henchmen == right.Henchmen && !left.Members.Except(right.Members).Any() && !right.Members.Except(left.Members).Any();
+            return left.ID == right.ID && string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && string.Equals(left.Master, right.Master, StringComparison.OrdinalIgnoreCase) && string.Equals(left.DefaultMaster, right.DefaultMaster, StringComparison.OrdinalIgnoreCase) && left.Fee == right.Fee && left.Gold == right.Gold && left.Henchmen == right.Henchmen && !left.Members.Except(right.Members).Any() && !right.Members.Except(left.Members).Any();
         }
 
         public override bool Equals(object obj) => Equals(this, obj as Guild);
@@ -111,6 +118,7 @@ namespace Assassin.Models.Entities
             ID = 0;
             Name = "";
             Master = "Computer";
+            DefaultMaster = "Computer";
             Fee = 50;
             Gold = 500;
             Members = new List<string>();
@@ -121,15 +129,17 @@ namespace Assassin.Models.Entities
         /// <param name="id">ID of <see cref="Guild"/></param>
         /// <param name="name">Name of <see cref="Guild"/></param>
         /// <param name="master">Name of Guildmaster</param>
+        /// <param name="defaultMaster">Default name of Guildmaster</param>
         /// <param name="fee">Fee to enter <see cref="Guild"/></param>
         /// <param name="gold">Amount of Gold owned by <see cref="Guild"/></param>
         /// <param name="members">Names of <see cref="User"/>s who are a member of the <see cref="Guild"/></param>
         /// <param name="henchmen">Amount of <see cref="Henchmen"/> the <see cref="Guild"/> employs</param>
-        public Guild(int id, string name, string master, int fee, int gold, List<string> members, Henchmen henchmen)
+        public Guild(int id, string name, string master, string defaultMaster, int fee, int gold, List<string> members, Henchmen henchmen)
         {
             ID = id;
             Name = name;
             Master = master;
+            DefaultMaster = defaultMaster;
             Fee = fee;
             Gold = gold;
             Members = members;
@@ -138,7 +148,7 @@ namespace Assassin.Models.Entities
 
         /// <summary>Replaces this instance of <see cref="Guild"/> with another instance.</summary>
         /// <param name="other">Instance of <see cref="Guild"/> to replace this instance.</param>
-        public Guild(Guild other) : this(other.ID, other.Name, other.Master, other.Fee, other.Gold, other.Members, other.Henchmen)
+        public Guild(Guild other) : this(other.ID, other.Name, other.Master, other.DefaultMaster, other.Fee, other.Gold, other.Members, other.Henchmen)
         { }
 
         #endregion Constructors

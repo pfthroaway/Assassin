@@ -77,7 +77,7 @@ namespace Assassin.Views.Guilds
             TxtEntranceFee.Text = GameState.CurrentGuild.Fee.ToString();
             foreach (string member in GameState.CurrentGuild.Members)
                 CmbMaster.Items.Add(member);
-            CmbMaster.Items.Add("Computer");
+            CmbMaster.Items.Add(GameState.CurrentGuild.DefaultMaster);
             CmbMaster.Text = GameState.CurrentGuild.Master;
         }
 
