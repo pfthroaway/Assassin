@@ -172,11 +172,12 @@ namespace Assassin.Views.Admin
             bool blnChangeName = false;
             if (TxtName.Text.Trim() != GameState.CurrentUser.Name)
             {
-                if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()) && TxtName.Text.Trim() != "Rathskeller" && TxtName.Text.Trim() != "The Master")
+                if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()) &&
+                    !string.Equals(TxtName.Text.Trim(), "Computer", StringComparison.OrdinalIgnoreCase) && !string.Equals(TxtName.Text.Trim(), "Rathskeller", StringComparison.OrdinalIgnoreCase) && !string.Equals(TxtName.Text.Trim(), "The Master", StringComparison.OrdinalIgnoreCase))
                     blnChangeName = true;
                 else
                 {
-                    if (TxtName.Text.Trim() == "Rathskeller" || TxtName.Text.Trim() == "The Master")
+                    if (string.Equals(TxtName.Text.Trim(), "Computer", StringComparison.OrdinalIgnoreCase) || string.Equals(TxtName.Text.Trim(), "Rathskeller", StringComparison.OrdinalIgnoreCase) || string.Equals(TxtName.Text.Trim(), "The Master"))
                         GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
                     else
                         GameState.DisplayNotification("The new username you have chosen is already in use.", "Assassin");
@@ -251,7 +252,7 @@ namespace Assassin.Views.Admin
                 {
                     if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()))
                     {
-                        if (_selectedUser.Name != "Rathskeller" && _selectedUser.Name != "The Master")
+                        if (!string.Equals(_selectedUser.Name, "Computer", StringComparison.OrdinalIgnoreCase) && !string.Equals(_selectedUser.Name, "Rathskeller", StringComparison.OrdinalIgnoreCase) && !string.Equals(_selectedUser.Name, "The Master", StringComparison.OrdinalIgnoreCase))
                         {
                             AssignSelectedUser(true);
                             if (await GameState.NewUser(_selectedUser))
