@@ -1,5 +1,6 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Enums;
+using Assassin.Views.Battle;
 using Assassin.Views.City;
 using Assassin.Views.Shopping;
 using Extensions;
@@ -28,7 +29,8 @@ namespace Assassin.Views.Guilds
 
         private void BtnChallenge_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Implement challenging a guildmaster.
+            //TODO Set up Guildmaster as Enemy.
+            //GameState.Navigate(new BattlePage(false, true) { RefToGuildPage = this });
         }
 
         private void BtnDonate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildDonatePage(this));

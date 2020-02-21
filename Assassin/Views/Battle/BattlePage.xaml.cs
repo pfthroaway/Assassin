@@ -2,6 +2,7 @@
 using Assassin.Models.Enums;
 using Assassin.Models.Items;
 using Assassin.Views.City;
+using Assassin.Views.Guilds;
 using Assassin.Views.Player;
 using Extensions;
 using System.ComponentModel;
@@ -15,7 +16,7 @@ namespace Assassin.Views.Battle
     /// <summary>Interaction logic for BattlePage.xaml</summary>
     public partial class BattlePage : INotifyPropertyChanged
     {
-        private bool _blnDone, _blnWin, _blnSurprise = true, blnPlayer;
+        private bool _blnDone, _blnWin, _blnSurprise = true, _blnPlayer, _blnGuild;
         private static readonly int _maxStamina = 100;
         private int _playerStamina = _maxStamina;
         private int _enemyStamina = _maxStamina;
@@ -30,9 +31,9 @@ namespace Assassin.Views.Battle
 
         internal bool BlnJob { get; set; }
         internal AssassinationPage RefToAssassinationPage { get; set; }
-        internal JobsPage RefToJobsPage { get; set; }
-
+        internal GuildPage RefToGuildPage { get; set; }
         internal InnPage RefToInnPage { get; set; }
+        internal JobsPage RefToJobsPage { get; set; }
 
         public int PlayerStamina
         {
@@ -534,7 +535,7 @@ namespace Assassin.Views.Battle
         private void Surprise()
         {
             LoadBattle();
-            if (!blnPlayer)
+            if (!_blnPlayer)
             {
                 AddText($"You approach the {GameState.CurrentEnemy.Name}.");
                 if (SkillCheck(GameState.CurrentUser.Stealth + Bonus()))
@@ -743,7 +744,7 @@ namespace Assassin.Views.Battle
                         RefToJobsPage.GetPaid();
                     }
                 }
-                else if (blnPlayer)
+                else if (_blnPlayer)
                 {
                     GameState.MainWindow.MainFrame.RemoveBackEntry();
                     if (!GameState.CurrentUser.Alive && RefToInnPage != null)
@@ -753,6 +754,21 @@ namespace Assassin.Views.Battle
 
                         GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name).ConvertFromEnemy(GameState.CurrentEnemy);
                     await GameState.DatabaseInteraction.SaveUser(GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name));
+                }
+                else if (_blnGuild)
+                {
+                    Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, TxtBattle.Text.Trim());
+                    if (_blnWin)
+                    {
+                        Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, "You have defeated the guildmaster! You are now the guild leader.");
+                        GameState.CurrentGuild.Master = GameState.CurrentUser.Name;
+                        await GameState.DatabaseInteraction.SaveGuild(GameState.CurrentGuild);
+                    }
+                    else
+                    {
+                        Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, "You have been defeated by the guildmaster. You also have been expelled.");
+                        await GameState.MemberLeavesGuild(GameState.CurrentUser, GameState.CurrentGuild);
+                    }
                 }
                 else
                 {
@@ -764,10 +780,11 @@ namespace Assassin.Views.Battle
             }
         }
 
-        public BattlePage(bool player = false)
+        public BattlePage(bool player = false, bool guild = false)
         {
             InitializeComponent();
-            blnPlayer = player;
+            _blnPlayer = player;
+            _blnGuild = guild;
             GameState.MainWindow.BlnPreventClosing = true;
             GameState.MainWindow.TxtPreventClosing = "You must finish your battle first.";
         }
