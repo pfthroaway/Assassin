@@ -9,7 +9,7 @@
         MinWidth="1032"
         MinHeight="600"
         Style="{StaticResource WindowStyle}"
-        Title="{Binding Path=Content.Title, ElementName=MainFrame}"
+        Title="{Binding Content.Title, ElementName=MainFrame}"
         WindowState="Maximized"
         Loaded="WindowMain_Loaded"
         Closing="WindowMain_Closing">

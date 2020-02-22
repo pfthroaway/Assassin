@@ -39,19 +39,19 @@
                 <TextBlock Text="Guildmaster" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="1,1,1,0">
-                <TextBlock Text="{Binding Path=Master}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Master}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="2" BorderThickness="1,1,1,0">
                 <TextBlock Text="Entrance Fee" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="2" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=FeeToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding FeeToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="3" BorderThickness="1,1,1,1">
                 <TextBlock Text="Gold On Hand" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="3" BorderThickness="0,1,1,1">
-                <TextBlock x:Name="LblGoldOnHand" Text="{Binding Path=GoldOnHandToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblGoldOnHand" Text="{Binding GoldOnHandToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
         </Grid>
     </Grid>

@@ -11,7 +11,7 @@
         <ListBox x:Name="LstMembers" Width="350" Height="500" SelectionChanged="LstMembers_SelectionChanged" Margin="0,0,0,10" />
         <Button x:Name="BtnBribe" Width="225" Content="Bribe _Innkeeper" Click="BtnBribe_Click" Visibility="Collapsed" IsEnabled="False" Margin="0,0,0,10" />
         <Button x:Name="BtnMessage" Width="225" Content="_Message" Click="BtnMessage_Click" IsDefault="True" IsEnabled="False" Margin="0,0,0,10" />
-        <Button x:Name="BtnExpel" Width="200" Content="_Expel" Click="BtnExpel_Click" IsEnabled="False" Visibility="Collapsed" Margin="0,0,0,10" />
+        <Button x:Name="BtnExpel" Width="225" Content="_Expel" Click="BtnExpel_Click" IsEnabled="False" Visibility="Collapsed" Margin="0,0,0,10" />
         <Button x:Name="BtnAttack" Width="225" Content="_Attack" Click="BtnAttack_Click" IsEnabled="False" Margin="0,0,0,10" />
         <Button x:Name="BtnBack" Width="225" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
     </StackPanel>

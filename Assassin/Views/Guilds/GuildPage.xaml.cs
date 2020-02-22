@@ -1,4 +1,5 @@
 ﻿using Assassin.Models;
+using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Assassin.Models.Items;
 using Assassin.Views.Battle;
@@ -24,6 +25,22 @@ namespace Assassin.Views.Guilds
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
 
+        /// <summary>Disables all the Buttons on the Page.</summary>
+        public void DisableButtons()
+        {
+            BtnBar.IsEnabled = false;
+            BtnChallenge.IsEnabled = false;
+            BtnDonate.IsEnabled = false;
+            BtnHireHenchmen.IsEnabled = false;
+            BtnJobs.IsEnabled = false;
+            BtnManageGuild.IsEnabled = false;
+            BtnMembers.IsEnabled = false;
+            BtnPlanRaid.IsEnabled = false;
+            BtnQuitGuild.IsEnabled = false;
+            BtnSleep.IsEnabled = false;
+            BtnTransferItems.IsEnabled = false;
+        }
+
         #region Click
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => ClosePage();
@@ -32,12 +49,21 @@ namespace Assassin.Views.Guilds
 
         private void BtnChallenge_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Set up Guildmaster as Enemy.
-            if (GameState.CurrentGuild.Master == GameState.CurrentGuild.DefaultMaster)
+            if (GameState.YesNoNotification("Are you sure you want to challenge the guildmaster? If you fail, you will be expelled from the guild.", "Assassin"))
             {
-                List<Weapon> weapons = GameState.AllWeapons.Where(wpn => wpn.Value >= GameState.CurrentGuild.ID * 250 && wpn.Value <= GameState.CurrentGuild.ID * 500).ToList();
-                List<Armor> armor = GameState.AllArmor.Where(armr => armr.Value >= GameState.CurrentGuild.ID * 250 && armr.Value <= GameState.CurrentGuild.ID * 500).ToList(); ;
-                //GameState.Navigate(new BattlePage(false, true) { RefToGuildPage = this });
+                if (GameState.CurrentGuild.Master == GameState.CurrentGuild.DefaultMaster)
+                {
+                    List<Weapon> weapons = GameState.AllWeapons.Where(wpn => wpn.Value >= GameState.CurrentGuild.ID * 100 && wpn.Value <= GameState.CurrentGuild.ID * 500).ToList();
+                    List<Armor> armor = GameState.AllArmor.Where(armr => armr.Value >= GameState.CurrentGuild.ID * 100 && armr.Value <= GameState.CurrentGuild.ID * 500).ToList();
+
+                    GameState.CurrentEnemy = new Enemy(GameState.CurrentGuild.Master, GameState.CurrentGuild.ID * 2, GameState.CurrentGuild.ID * 100, GameState.CurrentGuild.ID * 100, weapons[Functions.GenerateRandomNumber(0, weapons.Count - 1)], armor[Functions.GenerateRandomNumber(0, armor.Count - 1)], Functions.GenerateRandomNumber(1, GameState.CurrentGuild.Gold), GameState.CurrentGuild.ID * 15, GameState.CurrentGuild.ID * 15, GameState.CurrentGuild.ID * 15);
+                    GameState.Navigate(new BattlePage(false, true) { RefToGuildPage = this });
+                }
+                else
+                {
+                    GameState.CurrentEnemy = new Enemy(GameState.AllUsers.Find(user => user.Name == GameState.CurrentGuild.Master));
+                    GameState.Navigate(new BattlePage(true, true) { RefToGuildPage = this });
+                }
             }
         }
 
@@ -97,7 +123,7 @@ namespace Assassin.Views.Guilds
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            BtnChallenge.IsEnabled = GameState.CurrentGuild.Master != GameState.CurrentUser.Name;
+            BtnChallenge.IsEnabled = GameState.CurrentGuild.ID != 1 && GameState.CurrentGuild.Master != GameState.CurrentUser.Name && GameState.CurrentGuild.HasMember(GameState.CurrentUser);
             BtnManageGuild.IsEnabled = GameState.CurrentGuild.Master == GameState.CurrentUser.Name;
             Title = GameState.CurrentGuild.Name;
         }

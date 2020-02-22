@@ -38,7 +38,7 @@
             <RadioButton x:Name="RadDrinks" Content="Drinks" Checked="RadDrinks_Checked" Margin="0,10,0,10" />
             <RadioButton x:Name="RadFood" Content="Food" Checked="RadFood_Checked" Margin="0,0,0,10" />
         </StackPanel>
-        <TextBlock x:Name="LblGold" Grid.Column="0" Grid.Row="1" Text="{Binding Path=GoldOnHandToStringWithText}" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,35" />
+        <TextBlock x:Name="LblGold" Grid.Column="0" Grid.Row="1" Text="{Binding GoldOnHandToStringWithText}" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,35" />
         <TextBox x:Name="TxtBar" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Width="656" Height="380" ScrollViewer.VerticalScrollBarVisibility="Visible" IsReadOnly="True" Text="You approach the bar." TextWrapping="Wrap" Margin="0,0,0,10" />
         <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" Width="200" Content="_Back" HorizontalAlignment="Center" IsCancel="True" Click="BtnBack_Click" />
     </Grid>

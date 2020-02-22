@@ -72,40 +72,40 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BorderThickness="1,1,1,0">
-                <TextBlock x:Name="LblName" Text="{Binding Path=Name}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblName" Text="{Binding Name}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="1,1,1,0">
-                <TextBlock x:Name="LblRank" Text="{Binding Path=Rank}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblRank" Text="{Binding Rank}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="2" BorderThickness="1,1,1,0">
                 <TextBlock Text="Experience" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="2" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=Experience}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Experience}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="3" BorderThickness="1,1,1,0">
                 <TextBlock Text="Skill Points" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="3" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=SkillPoints}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SkillPoints}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="4" BorderThickness="1,1,1,0">
                 <TextBlock Text="Endurance" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="4" BorderThickness="0,1,1,0">
-                <TextBlock x:Name="LblEndAmt" Text="{Binding Path=EnduranceToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblEndAmt" Text="{Binding EnduranceToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="5" BorderThickness="1,1,1,0">
                 <TextBlock Text="Hunger" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="5" BorderThickness="0,1,1,0">
-                <TextBlock x:Name="LblHunger" Text="{Binding Path=HungerToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblHunger" Text="{Binding HungerToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="6" BorderThickness="1,1,1,0">
                 <TextBlock Text="Thirst" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="6" BorderThickness="0,1,1,0">
-                <TextBlock x:Name="LblThirst" Text="{Binding Path=ThirstToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblThirst" Text="{Binding ThirstToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" BorderThickness="1,1,1,0">
                 <TextBlock Text="Inventory" TextAlignment="Center" VerticalAlignment="Center" />
@@ -114,37 +114,37 @@
                 <TextBlock Text="Weapon" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="8" BorderThickness="0,1,1,0">
-                <TextBlock x:Name="LblWeaponName" Text="{Binding Path=CurrentWeapon}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblWeaponName" Text="{Binding CurrentWeapon}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="9" BorderThickness="1,1,1,0">
                 <TextBlock Text="Armor" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="9" BorderThickness="0,1,1,0">
-                <TextBlock x:Name="LblArmorName" Text="{Binding Path=Armor}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="LblArmorName" Text="{Binding Armor}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="10" BorderThickness="1,1,1,0">
                 <TextBlock Text="Potion" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="10" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=Potion}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Potion}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="11" BorderThickness="1,1,1,0">
                 <TextBlock Text="Gold on Hand" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="11" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=GoldOnHandToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding GoldOnHandToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="12" BorderThickness="1,1,1,0">
                 <TextBlock Text="Gold in Bank" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="12" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=GoldInBankToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding GoldInBankToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="13" BorderThickness="1,1,1,0">
                 <TextBlock Text="Gold on Loan" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="13" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=GoldOnLoanToString}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding GoldOnLoanToString}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2" BorderThickness="1,1,1,0">
                 <TextBlock Text="Skills" TextAlignment="Center" VerticalAlignment="Center" />
@@ -153,37 +153,37 @@
                 <TextBlock Text="Light Weapon" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="15" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=LightWeaponSkill}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding LightWeaponSkill}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="16" BorderThickness="1,1,1,0">
                 <TextBlock Text="Heavy Weapon" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="16" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=HeavyWeaponSkill}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding HeavyWeaponSkill}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="17" BorderThickness="1,1,1,0">
                 <TextBlock Text="Two-Handed Weapon" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="17" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=TwoHandedWeaponSkill}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding TwoHandedWeaponSkill}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="18" BorderThickness="1,1,1,0">
                 <TextBlock Text="Blocking" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="18" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=Blocking}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Blocking}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="19" BorderThickness="1,1,1,0">
                 <TextBlock Text="Slipping" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="19" BorderThickness="0,1,1,0">
-                <TextBlock Text="{Binding Path=Slipping}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Slipping}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="0" Grid.Row="20" BorderThickness="1,1,1,1">
                 <TextBlock Text="Stealth" TextAlignment="Right" Padding="0,0,5,0" VerticalAlignment="Center" />
             </Border>
             <Border Style="{StaticResource BorderSurround}" Grid.Column="1" Grid.Row="20" BorderThickness="0,1,1,1">
-                <TextBlock Text="{Binding Path=Stealth}" TextAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Stealth}" TextAlignment="Center" VerticalAlignment="Center" />
             </Border>
         </Grid>
     </Grid>

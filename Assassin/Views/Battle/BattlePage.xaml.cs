@@ -1,4 +1,5 @@
 ﻿using Assassin.Models;
+using Assassin.Models.Entities;
 using Assassin.Models.Enums;
 using Assassin.Models.Items;
 using Assassin.Views.City;
@@ -8,7 +9,6 @@ using Extensions;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Assassin.Views.Battle
@@ -541,6 +541,10 @@ namespace Assassin.Views.Battle
                 if (SkillCheck(GameState.CurrentUser.Stealth + Bonus()))
                     SurpriseSuccess();
             }
+            else if (_blnGuild)
+            {
+                AddText($"You challenge {GameState.CurrentEnemy.Name} to become the master of {GameState.CurrentGuild.Name}.");
+            }
             else
             {
                 AddText(RefToInnPage != null ? $"You creep into the room where {GameState.CurrentEnemy} is sleeping..." : $"You head into the dark alleyway where {GameState.CurrentEnemy.Name} was last seen sleeping.");
@@ -585,6 +589,21 @@ namespace Assassin.Views.Battle
             BtnExit.IsEnabled = true;
         }
 
+        /// <summary>Saves the <see cref="User"/> who was an <see cref="Enemy"/> during the battle.</summary>
+        private async void EndPlayerBattle()
+        {
+            GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name).ConvertFromEnemy(GameState.CurrentEnemy);
+            await GameState.DatabaseInteraction.SaveUser(GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name));
+        }
+
+        /// <summary>Handles losing a <see cref="Guild"/> battle.</summary>
+        private async void LoseGuildBattle()
+        {
+            Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, "You have been defeated by the guildmaster. You also have been expelled for your insolence.");
+            RefToGuildPage.DisableButtons();
+            await GameState.MemberLeavesGuild(GameState.CurrentUser, GameState.CurrentGuild);
+        }
+
         /// <summary>The Player loses the battle.</summary>
         private void LoseBattle()
         {
@@ -619,12 +638,13 @@ namespace Assassin.Views.Battle
             Functions.AddTextToTextBox(TxtBattle, "You frisk your opponent's body and find " + GameState.CurrentEnemy.GoldOnHand + " gold.");
 
             bool blnTakeWeapon = false;
-
+            int difference = 0;
             switch (GameState.CurrentEnemy.Weapon.Type)
             {
                 case WeaponType.Light:
                     if (GameState.CurrentUser.LightWeapon.Value < GameState.CurrentEnemy.Weapon.Value)
                     {
+                        difference = GameState.CurrentEnemy.Weapon.Value - GameState.CurrentUser.LightWeapon.Value;
                         GameState.CurrentUser.LightWeapon = new Weapon(GameState.CurrentEnemy.Weapon);
                         blnTakeWeapon = true;
                     }
@@ -633,6 +653,7 @@ namespace Assassin.Views.Battle
                 case WeaponType.Heavy:
                     if (GameState.CurrentUser.HeavyWeapon.Value < GameState.CurrentEnemy.Weapon.Value)
                     {
+                        difference = GameState.CurrentEnemy.Weapon.Value - GameState.CurrentUser.HeavyWeapon.Value;
                         GameState.CurrentUser.HeavyWeapon = new Weapon(GameState.CurrentEnemy.Weapon);
                         blnTakeWeapon = true;
                     }
@@ -641,6 +662,7 @@ namespace Assassin.Views.Battle
                 case WeaponType.TwoHanded:
                     if (GameState.CurrentUser.TwoHandedWeapon.Value < GameState.CurrentEnemy.Weapon.Value)
                     {
+                        difference = GameState.CurrentEnemy.Weapon.Value - GameState.CurrentUser.TwoHandedWeapon.Value;
                         GameState.CurrentUser.TwoHandedWeapon = new Weapon(GameState.CurrentEnemy.Weapon);
                         blnTakeWeapon = true;
                     }
@@ -648,15 +670,31 @@ namespace Assassin.Views.Battle
             }
             if (!blnTakeWeapon)
             {
-                Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse and bring it to the Weapon shop and sell it for {GameState.CurrentEnemy.Weapon.SellValue} gold.");
+                Functions.AddTextToTextBox(TxtBattle, $"You take your opponent's {GameState.CurrentEnemy.Weapon.Name} off their corpse and bring it to the Weapon shop and sell it for {GameState.CurrentEnemy.Weapon.SellValue} gold.");
                 GameState.CurrentUser.GoldOnHand += GameState.CurrentEnemy.Weapon.SellValue;
             }
             else
-                Functions.AddTextToTextBox(TxtBattle, $"You take the {GameState.CurrentEnemy.Name}'s {GameState.CurrentEnemy.Weapon.Name} off their corpse.");
+            {
+                string weaponText = $"You take your opponent's {GameState.CurrentEnemy.Weapon.Name} off their corpse.";
+                if (difference > 0)
+                {
+                    weaponText += $" You take your old weapon to the Weapon shop and sell it for {difference} gold.";
+                    GameState.CurrentUser.GoldOnHand += difference;
+                }
+                Functions.AddTextToTextBox(TxtBattle, weaponText);
+            }
 
             EndBattle();
             _blnWin = true;
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
+        }
+
+        /// <summary>Handles winning a <see cref="Guild"/> battle.</summary>
+        private async void WinGuildBattle()
+        {
+            Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, "You have defeated the guildmaster! You are now the guild leader.");
+            GameState.CurrentGuild.Master = GameState.CurrentUser.Name;
+            await GameState.DatabaseInteraction.SaveGuild(GameState.CurrentGuild);
         }
 
         #endregion Battle Results
@@ -744,36 +782,33 @@ namespace Assassin.Views.Battle
                         RefToJobsPage.GetPaid();
                     }
                 }
+                else if (_blnPlayer && _blnGuild)
+                {
+                    if (_blnWin)
+                        WinGuildBattle();
+                    else
+                        LoseGuildBattle();
+
+                    EndPlayerBattle();
+                }
                 else if (_blnPlayer)
                 {
                     GameState.MainWindow.MainFrame.RemoveBackEntry();
                     if (!GameState.CurrentUser.Alive && RefToInnPage != null)
                         RefToInnPage.DisableButtons();
                     Functions.AddTextToTextBox(RefToInnPage != null ? RefToInnPage.TxtInn : GameState.GamePage.TxtGame, TxtBattle.Text.Trim());
-                    if (!GameState.CurrentUser.Alive)
-
-                        GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name).ConvertFromEnemy(GameState.CurrentEnemy);
-                    await GameState.DatabaseInteraction.SaveUser(GameState.AllUsers.Find(user => user.Name == GameState.CurrentEnemy.Name));
+                    EndPlayerBattle();
                 }
                 else if (_blnGuild)
                 {
                     Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, TxtBattle.Text.Trim());
                     if (_blnWin)
-                    {
-                        Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, "You have defeated the guildmaster! You are now the guild leader.");
-                        GameState.CurrentGuild.Master = GameState.CurrentUser.Name;
-                        await GameState.DatabaseInteraction.SaveGuild(GameState.CurrentGuild);
-                    }
+                        WinGuildBattle();
                     else
-                    {
-                        Functions.AddTextToTextBox(RefToGuildPage.TxtGuild, "You have been defeated by the guildmaster. You also have been expelled.");
-                        await GameState.MemberLeavesGuild(GameState.CurrentUser, GameState.CurrentGuild);
-                    }
+                        LoseGuildBattle();
                 }
                 else
-                {
                     Functions.AddTextToTextBox(RefToAssassinationPage.TxtAssassinate, TxtBattle.Text.Trim());
-                }
 
                 GameState.GoBack();
                 await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);

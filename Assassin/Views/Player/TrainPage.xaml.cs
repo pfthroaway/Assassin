@@ -15,7 +15,7 @@ namespace Assassin.Views.Player
         private void CheckButtons()
         {
             BtnTrain.IsEnabled = GameState.CurrentUser.SkillPoints != _originalUser.SkillPoints;
-            if (GameState.CurrentUser.SkillPoints > 0)
+            if (GameState.CurrentUser.SkillPoints > 5)
             {
                 TogglePlusButtons(true);
                 if (GameState.CurrentUser.SkillPoints == _originalUser.SkillPoints)
@@ -60,7 +60,7 @@ namespace Assassin.Views.Player
         private int IncreaseAttribute(int attribute)
         {
             attribute += 8;
-            GameState.CurrentUser.SkillPoints--;
+            GameState.CurrentUser.SkillPoints -= 5;
             CheckButtons();
             return attribute;
         }
@@ -71,7 +71,7 @@ namespace Assassin.Views.Player
         private int DecreaseAttribute(int attribute)
         {
             attribute -= 8;
-            GameState.CurrentUser.SkillPoints++;
+            GameState.CurrentUser.SkillPoints += 5;
             CheckButtons();
             return attribute;
         }
@@ -82,7 +82,7 @@ namespace Assassin.Views.Player
 
         private void BtnEnduranceMinus_Click(object sender, RoutedEventArgs e)
         {
-            GameState.CurrentUser.SkillPoints++;
+            GameState.CurrentUser.SkillPoints += 5;
             GameState.CurrentUser.CurrentEndurance -= 20;
             GameState.CurrentUser.MaximumEndurance -= 20;
             BtnEnduranceMinus.IsEnabled = GameState.CurrentUser.MaximumEndurance != _originalUser.MaximumEndurance;
@@ -91,7 +91,7 @@ namespace Assassin.Views.Player
 
         private void BtnEndurancePlus_Click(object sender, RoutedEventArgs e)
         {
-            GameState.CurrentUser.SkillPoints--;
+            GameState.CurrentUser.SkillPoints -= 5;
             GameState.CurrentUser.CurrentEndurance += 20;
             GameState.CurrentUser.MaximumEndurance += 20;
             BtnEnduranceMinus.IsEnabled = true;
