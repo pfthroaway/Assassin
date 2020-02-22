@@ -420,6 +420,8 @@ namespace Assassin.Views.Admin
                 txt.Text = maxValue.ToString();
         }
 
+        private void Pswd_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);
+
         /// <summary>Toggles all the Controls on the form.</summary>
         private void ToggleControls(bool enabled)
         {
@@ -479,11 +481,15 @@ namespace Assassin.Views.Admin
             BtnSave.IsEnabled = enabled;
         }
 
+        private void Txt_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
+
         private void TxtNum_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Integers);
 
         private void TxtSkill_TextChanged(object sender, TextChangedEventArgs e) => HandleIntTextBox(ref sender, 90);
 
-        private void TxtLevel_TextChanged(object sender, TextChangedEventArgs e) => HandleIntTextBox(ref sender, 1);
+        private void TxtLevel_TextChanged(object sender, TextChangedEventArgs e) => HandleIntTextBox(ref sender, 11);
+
+        private void TxtEndurance_TextChanged(object sender, TextChangedEventArgs e) => HandleIntTextBox(ref sender, 980);
 
         private void TxtExperience_TextChanged(object sender, TextChangedEventArgs e) => HandleIntTextBox(ref sender, 100);
 

@@ -12,6 +12,8 @@ namespace Assassin.Views.City
     /// <summary>Interaction logic for InnPage.xaml</summary>
     public partial class InnPage : Page
     {
+        //TODO Implement being able to use lockpicks.
+
         /// <summary>Closes the Page.</summary>
         private void ClosePage()
         {

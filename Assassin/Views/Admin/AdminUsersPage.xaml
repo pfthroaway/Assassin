@@ -45,31 +45,31 @@
             <!--Login-->
             <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Login Information:" TextAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="1" Text="Name:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtName" Grid.Column="1" Grid.Row="1" Width="300" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtName" Grid.Column="1" Grid.Row="1" Width="300" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="Password:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <PasswordBox x:Name="PswdPassword" Grid.Column="1" Grid.Row="2" Width="300" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <PasswordBox x:Name="PswdPassword" Grid.Column="1" Grid.Row="2" Width="300" HorizontalAlignment="Left" GotFocus="Pswd_GotFocus"  Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="3" Text="Confirm Password:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <PasswordBox x:Name="PswdConfirm" Grid.Column="1" Grid.Row="3" Width="300" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <PasswordBox x:Name="PswdConfirm" Grid.Column="1" Grid.Row="3" Width="300" HorizontalAlignment="Left" GotFocus="Pswd_GotFocus" Margin="0,0,10,10" />
             <!--Character-->
             <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Text="Character:" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="6" Text="Level:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtLevel" Grid.Column="1" Grid.Row="6" Width="100" MaxLength="2" TextChanged="TxtLevel_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtLevel" Grid.Column="1" Grid.Row="6" Width="120" MaxLength="2" TextChanged="TxtLevel_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="7" Text="Experience:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtExperience" Grid.Column="1" Grid.Row="7" Width="100" MaxLength="3" TextChanged="TxtExperience_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtExperience" Grid.Column="1" Grid.Row="7" Width="120" MaxLength="3" TextChanged="TxtExperience_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="8" Text="Skill Points:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtSkillPoints" Grid.Column="1" Grid.Row="8" Width="100" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtSkillPoints" Grid.Column="1" Grid.Row="8" Width="120" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="9" Text="Alive:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <CheckBox x:Name="ChkAlive" Grid.Column="1" Grid.Row="9" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
+            <CheckBox x:Name="ChkAlive" Grid.Column="1" Grid.Row="9" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="10" Text="Location:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
             <ComboBox x:Name="CmbLocation" Grid.Column="1" Grid.Row="10" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="11" Text="Current Endurance:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtCurrentEndurance" Grid.Column="1" Grid.Row="11" Width="100" MaxLength="4" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtCurrentEndurance" Grid.Column="1" Grid.Row="11" Width="120" MaxLength="3" TextChanged="TxtEndurance_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="12" Text="Maximum Endurance:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtMaximumEndurance" Grid.Column="1" Grid.Row="12" Width="100" MaxLength="4" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtMaximumEndurance" Grid.Column="1" Grid.Row="12" Width="120" MaxLength="3" TextChanged="TxtEndurance_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="13" Text="Hunger:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHunger" Grid.Column="1" Grid.Row="13" Width="100" MaxLength="2" TextChanged="TxtHungerThirst_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtHunger" Grid.Column="1" Grid.Row="13" Width="120" MaxLength="2" TextChanged="TxtHungerThirst_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="0" Grid.Row="14" Text="Thirst:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtThirst" Grid.Column="1" Grid.Row="14" Width="100" MaxLength="2" TextChanged="TxtHungerThirst_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtThirst" Grid.Column="1" Grid.Row="14" Width="120" MaxLength="2" TextChanged="TxtHungerThirst_TextChanged" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <!--Inventory-->
             <TextBlock Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Text="Inventory:" TextAlignment="Center" Margin="0,0,10,0" />
             <TextBlock Grid.Column="2" Grid.Row="1" Text="Current Weapon:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
@@ -85,45 +85,45 @@
             <TextBlock Grid.Column="2" Grid.Row="6" Text="Potion:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
             <ComboBox x:Name="CmbPotion" Grid.Column="3" Grid.Row="6" Text="Level:" VerticalAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="7" Text="Lockpicks:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtLockpicks" Grid.Column="3" Grid.Row="7" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtLockpicks" Grid.Column="3" Grid.Row="7" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="8" Text="Gold on Hand:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtGoldOnHand" Grid.Column="3" Grid.Row="8" Width="100" MaxLength="6" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtGoldOnHand" Grid.Column="3" Grid.Row="8" Width="120" MaxLength="6" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="9" Text="Gold in Bank:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtGoldInBank" Grid.Column="3" Grid.Row="9" Width="100" MaxLength="6" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtGoldInBank" Grid.Column="3" Grid.Row="9" Width="120" MaxLength="6" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="10" Text="Gold on Loan:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtGoldOnLoan" Grid.Column="3" Grid.Row="10" Width="100" MaxLength="6" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,10,10" />
+            <TextBox x:Name="TxtGoldOnLoan" Grid.Column="3" Grid.Row="10" Width="120" MaxLength="6" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="11" Text="Shovel:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <CheckBox x:Name="ChkShovel" Grid.Column="3" Grid.Row="11" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
+            <CheckBox x:Name="ChkShovel" Grid.Column="3" Grid.Row="11" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="12" Text="Lantern:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <CheckBox x:Name="ChkLantern" Grid.Column="3" Grid.Row="12" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
+            <CheckBox x:Name="ChkLantern" Grid.Column="3" Grid.Row="12" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
             <TextBlock Grid.Column="2" Grid.Row="13" Text="Amulet:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <CheckBox x:Name="ChkAmulet" Grid.Column="3" Grid.Row="13" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
+            <CheckBox x:Name="ChkAmulet" Grid.Column="3" Grid.Row="13" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,10,10" />
             <!--Skills-->
             <TextBlock Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" Text="Skills:" TextAlignment="Center" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="1" Text="Light Weapon:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtLightWeaponSkill" Grid.Column="5" Grid.Row="1" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtLightWeaponSkill" Grid.Column="5" Grid.Row="1" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="2" Text="Heavy Weapon:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHeavyWeaponSkill" Grid.Column="5" Grid.Row="2" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtHeavyWeaponSkill" Grid.Column="5" Grid.Row="2" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="3" Text="Two-H Weapon:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtTwoHWeaponSkill" Grid.Column="5" Grid.Row="3" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtTwoHWeaponSkill" Grid.Column="5" Grid.Row="3" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="4" Text="Blocking:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtBlockingSkill" Grid.Column="5" Grid.Row="4" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtBlockingSkill" Grid.Column="5" Grid.Row="4" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="5" Text="Slipping:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtSlippingSkill" Grid.Column="5" Grid.Row="5" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtSlippingSkill" Grid.Column="5" Grid.Row="5" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="6" Text="Stealth:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtStealthSkill" Grid.Column="5" Grid.Row="6" Width="100" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtStealthSkill" Grid.Column="5" Grid.Row="6" Width="120" MaxLength="2" PreviewKeyDown="TxtNum_PreviewKeyDown" TextChanged="TxtSkill_TextChanged" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <!--Henchmen-->
             <TextBlock Grid.Column="4" Grid.Row="8" Grid.ColumnSpan="2" Text="Henchmen:" TextAlignment="Center" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="9" Text="Level 1:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHenchmenLevel1" Grid.Column="5" Grid.Row="9" Width="100" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtHenchmenLevel1" Grid.Column="5" Grid.Row="9" Width="120" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="10" Text="Level 2:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHenchmenLevel2" Grid.Column="5" Grid.Row="10" Width="100" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtHenchmenLevel2" Grid.Column="5" Grid.Row="10" Width="120" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="11" Text="Level 3:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHenchmenLevel3" Grid.Column="5" Grid.Row="11" Width="100" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtHenchmenLevel3" Grid.Column="5" Grid.Row="11" Width="120" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="12" Text="Level 4:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHenchmenLevel4" Grid.Column="5" Grid.Row="12" Width="100" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtHenchmenLevel4" Grid.Column="5" Grid.Row="12" Width="120" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
             <TextBlock Grid.Column="4" Grid.Row="13" Text="Level 5:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" />
-            <TextBox x:Name="TxtHenchmenLevel5" Grid.Column="5" Grid.Row="13" Width="100" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" Margin="0,0,0,10" />
+            <TextBox x:Name="TxtHenchmenLevel5" Grid.Column="5" Grid.Row="13" Width="120" MaxLength="3" PreviewKeyDown="TxtNum_PreviewKeyDown" HorizontalAlignment="Left" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
         </Grid>
     </StackPanel>
 </Page>
