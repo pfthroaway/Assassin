@@ -1,9 +1,12 @@
 ﻿using Assassin.Models;
 using Assassin.Models.Enums;
+using Assassin.Models.Items;
 using Assassin.Views.Battle;
 using Assassin.Views.City;
 using Assassin.Views.Shopping;
 using Extensions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace Assassin.Views.Guilds
@@ -30,7 +33,12 @@ namespace Assassin.Views.Guilds
         private void BtnChallenge_Click(object sender, RoutedEventArgs e)
         {
             //TODO Set up Guildmaster as Enemy.
-            //GameState.Navigate(new BattlePage(false, true) { RefToGuildPage = this });
+            if (GameState.CurrentGuild.Master == GameState.CurrentGuild.DefaultMaster)
+            {
+                List<Weapon> weapons = GameState.AllWeapons.Where(wpn => wpn.Value >= GameState.CurrentGuild.ID * 250 && wpn.Value <= GameState.CurrentGuild.ID * 500).ToList();
+                List<Armor> armor = GameState.AllArmor.Where(armr => armr.Value >= GameState.CurrentGuild.ID * 250 && armr.Value <= GameState.CurrentGuild.ID * 500).ToList(); ;
+                //GameState.Navigate(new BattlePage(false, true) { RefToGuildPage = this });
+            }
         }
 
         private void BtnDonate_Click(object sender, RoutedEventArgs e) => GameState.Navigate(new GuildDonatePage(this));
