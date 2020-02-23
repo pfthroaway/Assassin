@@ -10,6 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,11 +18,13 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TxtShops" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="460" Height="300" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" ScrollViewer.VerticalScrollBarVisibility="Visible" />
-        <Button x:Name="BtnArmory" Grid.Column="0" Grid.Row="1" Width="225" Content="The _Armoury" Click="BtnArmory_Click" Margin="0,0,10,10" />
-        <Button x:Name="BtnGeneralStore" Grid.Column="1" Grid.Row="1" Width="225" Content="_General Store" Click="BtnGeneralStore_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnWeapons" Grid.Column="0" Grid.Row="2" Width="225" Content="_Weapons 'R Us" Click="BtnWeapons_Click" Margin="0,0,10,10" />
-        <Button x:Name="BtnThieves" Grid.Column="1" Grid.Row="2" Width="225" Content="_Thieves Guild" Click="BtnThieves_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="225" Content="_Back" IsCancel="True" Click="BtnBack_Click" />
+        <TextBox x:Name="TxtShops" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Width="695" Height="300" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+        <Button x:Name="BtnAlchemistsLab" Grid.Column="0" Grid.Row="1" Width="225" Content="_Alchemist's Lab" Click="BtnAlchemistsLab_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnArmory" Grid.Column="1" Grid.Row="1" Width="225" Content="The _Armoury" Click="BtnArmory_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnGeneralStore" Grid.Column="2" Grid.Row="1" Width="225" Content="_General Store" Click="BtnGeneralStore_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnMagicalRealms" Grid.Column="0" Grid.Row="2" Width="225" Content="_Magical Realms" Click="BtnMagicalRealms_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnThieves" Grid.Column="1" Grid.Row="2" Width="225" Content="_Thieves Guild" Click="BtnThieves_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnWeapons" Grid.Column="2" Grid.Row="2" Width="225" Content="_Weapons 'R Us" Click="BtnWeapons_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="3" Width="225" Content="_Back" IsCancel="True" Click="BtnBack_Click" Margin="0,0,10,0" />
     </Grid>
 </Page>

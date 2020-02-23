@@ -6,8 +6,9 @@
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
       Title="Assassin - The General Store">
-    <StackPanel>
-        <TextBox x:Name="TxtGeneralStore" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="770" Height="400" IsReadOnly="True" Margin="0,0,0,10" />
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox x:Name="TxtGeneralStore" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="770" Height="400" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBlock Text="{Binding GoldOnHandToStringWithText}" TextAlignment="Center" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="BtnShovel" Width="250" Content="Purchase _Shovel" Click="BtnShovel_Click" Margin="0,0,10,0" />
             <Button x:Name="BtnLantern" Width="250" Content="Purchase _Lantern" Click="BtnLantern_Click" Margin="0,0,10,0" />

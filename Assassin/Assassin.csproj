@@ -108,6 +108,9 @@
     <Compile Include="Views\Shopping\GeneralStorePage.xaml.cs">
       <DependentUpon>GeneralStorePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shopping\MagicalRealmsPage.xaml.cs">
+      <DependentUpon>MagicalRealmsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shopping\PubPage.xaml.cs">
       <DependentUpon>PubPage.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Shopping\GeneralStorePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shopping\MagicalRealmsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

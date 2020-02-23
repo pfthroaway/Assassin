@@ -18,6 +18,8 @@ namespace Assassin.Views.Shopping
 
         private async void BtnBack_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            Functions.AddTextToTextBox(GameState.ShopsPage.TxtShops, TxtGeneralStore.Text.Trim());
+            Functions.AddTextToTextBox(GameState.ShopsPage.TxtShops, "Thou overhears Grandpa Joe snoring as thou leaves.");
             GameState.GoBack();
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
@@ -46,6 +48,7 @@ namespace Assassin.Views.Shopping
             Functions.AddTextToTextBox(TxtGeneralStore, "You enter The General Store. Grandpa Joe sits in his rocking chair.\n\n" +
                 "\"Looking for supplies, eh? Wells, we just been cleaned out, except for some shovels and a few lanterns. I'll sell the shovels for 500 gold each, and the latnerns for 350 gold each.\"");
             CheckButtons();
+            DataContext = GameState.CurrentUser;
         }
     }
 }

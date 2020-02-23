@@ -1,0 +1,17 @@
+﻿<Page x:Class="Assassin.Views.Shopping.MagicalRealmsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Title="Assassin - Magical Realms"
+      Style="{StaticResource PageStyle}">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox x:Name="TxtMagicalRealms" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Width="600" Height="400" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBlock Text="{Binding GoldOnHandToStringWithText}" TextAlignment="Center" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="BtnPurchase" Width="200" Content="_Purchase" Click="BtnPurchase_Click" IsDefault="True" Margin="0,0,100,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Page>

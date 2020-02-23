@@ -3,6 +3,7 @@ using Assassin.Models.Entities;
 using Assassin.Models.Items;
 using Assassin.Views;
 using Assassin.Views.City;
+using Assassin.Views.Shopping;
 using Extensions;
 using Extensions.Encryption;
 using Extensions.Enums;
@@ -40,6 +41,8 @@ namespace Assassin.Models
 
         internal static MainWindow MainWindow { get; set; }
         internal static GamePage GamePage { get; set; }
+
+        internal static ShopsPage ShopsPage { get; set; }
 
         /// <summary>Navigates to selected Page.</summary>
         /// <param name="newPage">Page to navigate to.</param>

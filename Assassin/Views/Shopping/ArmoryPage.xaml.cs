@@ -120,6 +120,7 @@ namespace Assassin.Views.Shopping
 
         private async void BtnBack_Click(object sender, RoutedEventArgs e)
         {
+            Functions.AddTextToTextBox(GameState.ShopsPage.TxtShops, TxtArmor.Text.Trim());
             GameState.GoBack();
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }
