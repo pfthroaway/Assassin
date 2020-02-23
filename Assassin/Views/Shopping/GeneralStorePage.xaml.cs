@@ -28,7 +28,7 @@ namespace Assassin.Views.Shopping
         {
             GameState.CurrentUser.GoldOnHand -= 350;
             GameState.CurrentUser.Lantern = true;
-            Functions.AddTextToTextBox(TxtGeneralStore, "You purchase a lantern for 350 gold.");
+            Functions.AddTextToTextBox(TxtGeneralStore, "\"Here thou goes.  May a little more light enter thy life.\"\n\nYou purchase a lantern for 350 gold.");
             CheckButtons();
         }
 
@@ -36,7 +36,7 @@ namespace Assassin.Views.Shopping
         {
             GameState.CurrentUser.GoldOnHand -= 500;
             GameState.CurrentUser.Shovel = true;
-            Functions.AddTextToTextBox(TxtGeneralStore, "You purchase a shovel for 500 gold.");
+            Functions.AddTextToTextBox(TxtGeneralStore, "\"Here thou goes. Enjoy thy digging.\"\n\nYou purchase a shovel for 500 gold.");
             CheckButtons();
         }
 
