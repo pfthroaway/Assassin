@@ -132,7 +132,7 @@ namespace Assassin.Views.Shopping
         {
             InitializeComponent();
             TxtArmor.Text = "Thou hast entered The Armoury.The armorer greets you.\n\n" +
-                "Welcome to The Armoury! We deal only in the finest of armors.";
+                "\"Welcome to The Armoury! We deal only in the finest of armors.\"";
             _allArmor = GameState.AllArmor.FindAll(armor => !armor.Hidden);
             LstArmor.ItemsSource = _allArmor;
             LstArmor.SelectedIndex = 0;

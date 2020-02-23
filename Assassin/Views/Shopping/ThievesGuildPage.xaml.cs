@@ -8,7 +8,7 @@ namespace Assassin.Views.Shopping
     public partial class ThievesGuildPage
     {
         /// <summary>Checks whether the Purchase button should be enabled.</summary>
-        private void CheckPurchase() => BtnPurchase.IsEnabled = GameState.CurrentUser.GoldOnHand >= 300;
+        private void CheckPurchase() => BtnPurchase.IsEnabled = GameState.CurrentUser.GoldOnHand >= 300 && GameState.CurrentUser.Lockpicks < 99;
 
         #region Click Methods
 
@@ -33,7 +33,7 @@ namespace Assassin.Views.Shopping
         {
             InitializeComponent();
             TxtThieves.Text = "As you enter, a hooded figure emerges from the shadow.\n\n" +
-    "Sorry to disappoint you, but after a raid by the King's Men, all I have left is a few lockpicks. I can sell them to you for 300 gold each. Are you interested?";
+    "\"Sorry to disappoint you, but after a raid by the King's Men, all I have left is a few lockpicks. I can sell them to you for 300 gold each. Are you interested?\"";
             CheckPurchase();
             DataContext = GameState.CurrentUser;
         }

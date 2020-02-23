@@ -227,7 +227,7 @@ namespace Assassin.Views.Shopping
         {
             InitializeComponent();
             TxtWeapon.Text = "Thou hast entered Weapons 'R Us. The weaponsmith greets you.\n\n" +
-                "Weapons 'R Us is the name, tools of destruction is our game.";
+                "\"Weapons 'R Us is the name, tools of destruction is our game.\"";
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => RadLight.IsChecked = true;
