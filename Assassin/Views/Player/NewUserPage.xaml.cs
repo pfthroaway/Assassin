@@ -69,7 +69,7 @@ namespace Assassin.Views.Player
                 TogglePlusButtons(false);
                 BtnReset.IsEnabled = true;
 
-                BtnCreate.IsEnabled = TxtUsername.Text.Length >= 1 && PswdConfirm.Password.Length >= 1 && PswdPassword.Password.Length >= 1;
+                BtnCreate.IsEnabled = TxtUsername.Text.Trim().Length >= 1 && PswdConfirm.Password.Length >= 1 && PswdPassword.Password.Length >= 1;
             }
         }
 
@@ -241,7 +241,8 @@ namespace Assassin.Views.Player
                                 ClosePage();
                             }
                         }
-                        GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
+                        else
+                            GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
                     }
                     else
                         GameState.DisplayNotification("That username is taken.", "Assassin");

@@ -95,7 +95,7 @@ namespace Assassin.Views.Battle
 
         /// <summary>Add text to the TextBox.</summary>
         /// <param name="newText">Text to be added</param>
-        private void AddText(string newText) => Functions.AddTextToTextBox(TxtBattle, newText);
+        internal void AddText(string newText) => Functions.AddTextToTextBox(TxtBattle, newText);
 
         /// <summary>Checks which buttons to be enabled.</summary>
         private void CheckButtons()

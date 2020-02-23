@@ -133,7 +133,7 @@ namespace Assassin.Views.Guilds
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Title = $"Donate to {GameState.CurrentGuild.Name}";
+            Title = $"Assassin - Donate to {GameState.CurrentGuild.Name}";
             LblDonate.Text = $"Donate to {GameState.CurrentGuild.Name}";
             DataContext = GameState.CurrentUser.Henchmen;
             LblGold.DataContext = GameState.CurrentUser;

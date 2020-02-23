@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Title="Battle"
+      Title="Assassin - Battle"
       Loaded="BattlePage_OnLoaded"
       Style="{StaticResource PageStyle}">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -74,14 +74,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Button x:Name="BtnAttack" Grid.Column="0" Grid.Row="0" Width="200" Content="_Attack" Click="BtnAttack_Click" IsDefault="True" Margin="0,0,12,12" />
-            <Button x:Name="BtnBerserk" Grid.Column="1" Grid.Row="0" Width="200" Click="BtnBerserk_Click" Content="_Berserk" Margin="0,0,12,12" />
-            <Button x:Name="BtnDefend" Grid.Column="2" Grid.Row="0" Width="200" Content="_Defend" Click="BtnDefend_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnFlee" Grid.Column="3" Grid.Row="0" Width="200" Content="_Flee" Margin="0,0,0,12" />
-            <Button x:Name="BtnLunge" Grid.Column="0" Grid.Row="1" Width="200" Content="_Lunge" Click="BtnLunge_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnParry" Grid.Column="1" Grid.Row="1" Width="200" Content="_Parry" Click="BtnParry_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnQuickCombat" Grid.Column="2" Grid.Row="1" Width="200" Content="_Quick Combat" Click="BtnQuickCombat_Click" Margin="0,0,12,12" />
-            <Button x:Name="BtnInventory" Grid.Column="3" Grid.Row="1" Width="200" Content="_Inventory" Click="BtnInventory_Click" Margin="0,0,0,12" />
+            <Button x:Name="BtnAttack" Grid.Column="0" Grid.Row="0" Width="200" Content="_Attack" Click="BtnAttack_Click" IsDefault="True" Margin="0,0,10,10" />
+            <Button x:Name="BtnBerserk" Grid.Column="1" Grid.Row="0" Width="200" Click="BtnBerserk_Click" Content="_Berserk" Margin="0,0,10,10" />
+            <Button x:Name="BtnDefend" Grid.Column="2" Grid.Row="0" Width="200" Content="_Defend" Click="BtnDefend_Click" Margin="0,0,10,10" />
+            <Button x:Name="BtnFlee" Grid.Column="3" Grid.Row="0" Width="200" Content="_Flee" Margin="0,0,0,10" />
+            <Button x:Name="BtnLunge" Grid.Column="0" Grid.Row="1" Width="200" Content="_Lunge" Click="BtnLunge_Click" Margin="0,0,10,10" />
+            <Button x:Name="BtnParry" Grid.Column="1" Grid.Row="1" Width="200" Content="_Parry" Click="BtnParry_Click" Margin="0,0,10,10" />
+            <Button x:Name="BtnQuickCombat" Grid.Column="2" Grid.Row="1" Width="200" Content="_Quick Combat" Click="BtnQuickCombat_Click" Margin="0,0,10,10" />
+            <Button x:Name="BtnInventory" Grid.Column="3" Grid.Row="1" Width="200" Content="_Inventory" Click="BtnInventory_Click" Margin="0,0,0,10" />
             <Button x:Name="BtnExit" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Width="200" Content="E_xit" IsCancel="True" IsEnabled="False" Click="BtnExit_Click" />
         </Grid>
     </Grid>

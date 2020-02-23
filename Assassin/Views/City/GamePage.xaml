@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Title="Assassin"
+      Title="Assassin - City of Thieves"
       Loaded="GamePage_OnLoaded"
       Style="{StaticResource PageStyle}">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -40,7 +40,7 @@
         <Button x:Name="BtnOthers" Grid.Column="1" Grid.Row="4" Width="200" Content="_Others" Click="BtnOthers_Click" Margin="0,0,10,10" />
         <Button x:Name="BtnTrain" Grid.Column="2" Grid.Row="4" Width="200" Content="_Train" Click="BtnTrain_Click" Margin="0,0,10,10" />
         <Button x:Name="BtnOptions" Grid.Column="3" Grid.Row="4" Width="200" Content="O_ptions" Click="BtnOptions_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnInn" Grid.Column="0" Grid.Row="5" Width="200" Content="_Inn" Click="BtnInn_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnInn" Grid.Column="0" Grid.Row="5" Width="200" Content="I_nn" Click="BtnInn_Click" Margin="0,0,10,0" />
         <Button x:Name="BtnPub" Grid.Column="1" Grid.Row="5" Width="200" Content="_Pub" Click="BtnPub_Click" Margin="0,0,10,0" />
         <Button x:Name="BtnExit" Grid.Column="3" Grid.Row="5" Width="200" Content="_Exit" Click="BtnExit_Click" IsCancel="True" />
         <Grid Grid.Column="4" Grid.Row="0" Grid.RowSpan="9" Margin="10,0,0,0">

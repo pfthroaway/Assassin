@@ -189,7 +189,7 @@ namespace Assassin.Views.Admin
 
             AssignSelectedUser(blnChangePass);
 
-            if (blnChangeName && await GameState.DatabaseInteraction.SaveUser(_selectedUser, TxtName.Text))
+            if (blnChangeName && await GameState.DatabaseInteraction.SaveUser(_selectedUser, TxtName.Text.Trim()))
             {
                 foreach (Guild guild in GameState.AllGuilds)
                 {
@@ -225,7 +225,7 @@ namespace Assassin.Views.Admin
         {
             if (LstUsers.SelectedIndex >= 0 || _blnNewUser)
             {
-                if (TxtBlockingSkill.Text.Length > 0 && TxtCurrentEndurance.Text.Length > 0 && TxtExperience.Text.Length > 0 && TxtGoldInBank.Text.Length > 0 && TxtGoldOnHand.Text.Length > 0 && TxtGoldOnLoan.Text.Length > 0 && TxtHeavyWeaponSkill.Text.Length > 0 && TxtHenchmenLevel1.Text.Length > 0 && TxtHenchmenLevel2.Text.Length > 0 && TxtHenchmenLevel3.Text.Length > 0 && TxtHenchmenLevel4.Text.Length > 0 && TxtHenchmenLevel5.Text.Length > 0 && TxtLevel.Text.Length > 0 && TxtLightWeaponSkill.Text.Length > 0 && TxtLockpicks.Text.Length > 0 && TxtMaximumEndurance.Text.Length > 0 && TxtName.Text.Length > 0 && TxtSkillPoints.Text.Length > 0 && TxtSlippingSkill.Text.Length > 0 && TxtStealthSkill.Text.Length > 0 && TxtTwoHWeaponSkill.Text.Length > 0 && CmbArmor.SelectedIndex > -1 && CmbLocation.SelectedIndex > -1 && CmbPotion.SelectedIndex > -1 && CmbCurrentWeapon.SelectedIndex > -1 && CmbLightWeapon.SelectedIndex > -1 && CmbHeavyWeapon.SelectedIndex > -1 && CmbTwoHWeapon.SelectedIndex > -1)
+                if (TxtBlockingSkill.Text.Trim().Length > 0 && TxtCurrentEndurance.Text.Trim().Length > 0 && TxtExperience.Text.Trim().Length > 0 && TxtGoldInBank.Text.Trim().Length > 0 && TxtGoldOnHand.Text.Trim().Length > 0 && TxtGoldOnLoan.Text.Trim().Length > 0 && TxtHeavyWeaponSkill.Text.Trim().Length > 0 && TxtHenchmenLevel1.Text.Trim().Length > 0 && TxtHenchmenLevel2.Text.Trim().Length > 0 && TxtHenchmenLevel3.Text.Trim().Length > 0 && TxtHenchmenLevel4.Text.Trim().Length > 0 && TxtHenchmenLevel5.Text.Trim().Length > 0 && TxtLevel.Text.Trim().Length > 0 && TxtLightWeaponSkill.Text.Trim().Length > 0 && TxtLockpicks.Text.Trim().Length > 0 && TxtMaximumEndurance.Text.Trim().Length > 0 && TxtName.Text.Trim().Length > 0 && TxtSkillPoints.Text.Trim().Length > 0 && TxtSlippingSkill.Text.Trim().Length > 0 && TxtStealthSkill.Text.Trim().Length > 0 && TxtTwoHWeaponSkill.Text.Trim().Length > 0 && CmbArmor.SelectedIndex > -1 && CmbLocation.SelectedIndex > -1 && CmbPotion.SelectedIndex > -1 && CmbCurrentWeapon.SelectedIndex > -1 && CmbLightWeapon.SelectedIndex > -1 && CmbHeavyWeapon.SelectedIndex > -1 && CmbTwoHWeapon.SelectedIndex > -1)
                 {
                     if (_blnNewUser)
                         SaveNewUser();
@@ -416,7 +416,7 @@ namespace Assassin.Views.Admin
         private void HandleIntTextBox(ref object sender, int maxValue)
         {
             TextBox txt = sender as TextBox;
-            if (txt.Text.Length > 0 && Int32Helper.Parse(txt.Text.Trim()) > maxValue)
+            if (txt.Text.Trim().Length > 0 && Int32Helper.Parse(txt.Text.Trim()) > maxValue)
                 txt.Text = maxValue.ToString();
         }
 

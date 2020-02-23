@@ -4,14 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
-      Title="InnPage"
+      Title="Assassin - Inn"
       Style="{StaticResource PageStyle}">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox x:Name="TxtInn" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Width="930" Height="400" TextWrapping="Wrap" IsReadOnly="True" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtInn" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Width="1165" Height="400" TextWrapping="Wrap" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal">
             <Button x:Name="BtnBribe" Width="225" Content="Bribe _Innkeeper" Click="BtnBribe_Click" Margin="0,0,10,0" />
             <Button x:Name="BtnRegistry" Width="225" Content="_Check Registry" Click="BtnRegistry_Click" Margin="0,0,10,0" />
             <Button x:Name="BtnSleep" Width="225" Content="_Rent Room" Click="BtnSleep_Click" IsDefault="True" Margin="0,0,10,0" />
+            <Button x:Name="BtnLockpick" Width="225" Content="_Use Lockpick" Click="BtnLockpick_Click" Margin="0,0,10,0" />
             <Button x:Name="BtnBack" Width="225" Content="_Back" IsCancel="True" Click="BtnBack_Click" />
         </StackPanel>
     </StackPanel>

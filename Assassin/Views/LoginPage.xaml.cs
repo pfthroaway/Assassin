@@ -39,7 +39,7 @@ namespace Assassin.Views
 
         #region Page-Manipulation Methods
 
-        private void TextChanged() => BtnLogin.IsEnabled = TxtUsername.Text.Length >= 1 && PswdPassword.Password.Length >= 1;
+        private void TextChanged() => BtnLogin.IsEnabled = TxtUsername.Text.Trim().Length >= 1 && PswdPassword.Password.Length >= 1;
 
         public LoginPage()
         {

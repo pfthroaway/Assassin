@@ -17,6 +17,14 @@ namespace Assassin.Views.Guilds
     {
         public GuildListPage RefToGuildListPage { get; set; }
 
+        /// <summary>Checks the User's Hunger and Thirst to determine whether or not they can continue.</summary>
+        /// <returns>Returns true if player isn't too hungry or thirst to continue.</returns>
+        private bool CheckHungerThirst()
+        {
+            Functions.AddTextToTextBox(TxtGuild, GameState.CurrentUser.DisplayHungerThirstText());
+            return GameState.CurrentUser.CanDoAction();
+        }
+
         /// <summary>Closes the Page.</summary>
         private async void ClosePage()
         {
@@ -49,8 +57,9 @@ namespace Assassin.Views.Guilds
 
         private void BtnChallenge_Click(object sender, RoutedEventArgs e)
         {
-            if (GameState.YesNoNotification("Are you sure you want to challenge the guildmaster? If you fail, you will be expelled from the guild.", "Assassin"))
+            if (CheckHungerThirst() && GameState.YesNoNotification("Are you sure you want to challenge the guildmaster? If you fail, you will be expelled from the guild.", "Assassin"))
             {
+                GameState.CurrentUser.GainHungerThirst();
                 if (GameState.CurrentGuild.Master == GameState.CurrentGuild.DefaultMaster)
                 {
                     List<Weapon> weapons = GameState.AllWeapons.Where(wpn => wpn.Value >= GameState.CurrentGuild.ID * 100 && wpn.Value <= GameState.CurrentGuild.ID * 500).ToList();
@@ -125,7 +134,7 @@ namespace Assassin.Views.Guilds
         {
             BtnChallenge.IsEnabled = GameState.CurrentGuild.ID != 1 && GameState.CurrentGuild.Master != GameState.CurrentUser.Name && GameState.CurrentGuild.HasMember(GameState.CurrentUser);
             BtnManageGuild.IsEnabled = GameState.CurrentGuild.Master == GameState.CurrentUser.Name;
-            Title = GameState.CurrentGuild.Name;
+            Title = $"Assassin - {GameState.CurrentGuild.Name}";
         }
 
         #endregion Page-Manipulation Methods

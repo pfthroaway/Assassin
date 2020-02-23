@@ -12,7 +12,13 @@ namespace Assassin.Views.City
     /// <summary>Interaction logic for InnPage.xaml</summary>
     public partial class InnPage : Page
     {
-        //TODO Implement being able to use lockpicks.
+        /// <summary>Checks the User's Hunger and Thirst to determine whether or not they can continue.</summary>
+        /// <returns>Returns true if player isn't too hungry or thirst to continue.</returns>
+        private bool CheckHungerThirst()
+        {
+            Functions.AddTextToTextBox(TxtInn, GameState.CurrentUser.DisplayHungerThirstText());
+            return GameState.CurrentUser.CanDoAction();
+        }
 
         /// <summary>Closes the Page.</summary>
         private void ClosePage()
@@ -25,6 +31,7 @@ namespace Assassin.Views.City
         public void DisableButtons()
         {
             BtnBribe.IsEnabled = false;
+            BtnLockpick.IsEnabled = false;
             BtnRegistry.IsEnabled = false;
             BtnSleep.IsEnabled = false;
         }
@@ -35,11 +42,28 @@ namespace Assassin.Views.City
 
         private void BtnBribe_Click(object sender, RoutedEventArgs e)
         {
-            List<User> guests = GameState.AllUsers.Where(user => user.CurrentLocation == SleepLocation.Inn).ToList();
-            if (guests.Count > 0)
-                GameState.Navigate(new MembersPage(this));
-            else
-                Functions.AddTextToTextBox(TxtInn, "There are no guests here.");
+            if (CheckHungerThirst())
+            {
+                List<User> guests = GameState.AllUsers.Where(user => user.CurrentLocation == SleepLocation.Inn).ToList();
+                if (guests.Count > 0)
+                    GameState.Navigate(new MembersPage(this, true));
+                else
+                    Functions.AddTextToTextBox(TxtInn, "There are no guests here.");
+            }
+        }
+
+        private void BtnLockpick_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckHungerThirst() && GameState.CurrentUser.Lockpicks > 0)
+            {
+                List<User> guests = GameState.AllUsers.Where(user => user.CurrentLocation == SleepLocation.Inn).ToList();
+                if (guests.Count > 0)
+                    GameState.Navigate(new MembersPage(this));
+                else
+                    Functions.AddTextToTextBox(TxtInn, "There are no guests here.");
+            }
+            else if (GameState.CurrentUser.Lockpicks <= 0)
+                Functions.AddTextToTextBox(TxtInn, "You do not have any lockpicks.");
         }
 
         private void BtnRegistry_Click(object sender, RoutedEventArgs e)
@@ -48,9 +72,7 @@ namespace Assassin.Views.City
 
             List<User> guests = GameState.AllUsers.Where(user => user.CurrentLocation == SleepLocation.Inn).ToList();
             if (guests.Count > 0)
-            {
                 Functions.AddTextToTextBox(TxtInn, string.Join("\n", guests.Select(user => user.Name)));
-            }
             else
                 Functions.AddTextToTextBox(TxtInn, "There are no guests here.");
         }

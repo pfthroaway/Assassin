@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       Loaded="Page_Loaded"
-      Title="Members"
+      Title="Assassin - Members"
       Style="{StaticResource PageStyle}">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <ListBox x:Name="LstMembers" Width="350" Height="500" SelectionChanged="LstMembers_SelectionChanged" Margin="0,0,0,10" />
