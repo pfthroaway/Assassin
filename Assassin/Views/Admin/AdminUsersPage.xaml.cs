@@ -309,27 +309,27 @@ namespace Assassin.Views.Admin
         {
             if (LstUsers.SelectedIndex >= 0)
             {
-                if (GameState.YesNoNotification($"Are you sure you want to delete {GameState.CurrentUser.Name}?", "Assassin"))
+                if (GameState.YesNoNotification($"Are you sure you want to delete {GameState.CurrentUser.Name}?", "Assassin") && await GameState.DatabaseInteraction.DeleteUser(GameState.CurrentUser))
                 {
-                    if (await GameState.DatabaseInteraction.DeleteUser(GameState.CurrentUser))
+                    foreach (var guild in GameState.AllGuilds)   // remove member from all guilds
                     {
-                        foreach (var guild in GameState.AllGuilds)   // remove member from all guilds
+                        guild.Members.Remove(GameState.CurrentUser.Name);
+                        await GameState.MemberLeavesGuild(GameState.CurrentUser, guild);
+                        await GameState.DatabaseInteraction.DenyGuildApplication(GameState.CurrentUser, guild);
+                        if (guild.Master == GameState.CurrentUser.Name)
                         {
-                            guild.Members.Remove(GameState.CurrentUser.Name);
-                            await GameState.MemberLeavesGuild(GameState.CurrentUser, guild);
-                            await GameState.DatabaseInteraction.DenyGuildApplication(GameState.CurrentUser, guild);
-                            if (guild.Master == GameState.CurrentUser.Name)
-                                guild.Master = guild.DefaultMaster;
+                            guild.Master = guild.DefaultMaster;
+                            await GameState.DatabaseInteraction.SaveGuild(guild);
                         }
-                        List<Message> messages = await GameState.DatabaseInteraction.LoadMessages(GameState.CurrentUser);
-                        foreach (var message in messages)
-                            await GameState.DatabaseInteraction.DeleteMessage(message);
-                        GameState.AllUsers.Remove(GameState.CurrentUser);
-                        GameState.DisplayNotification("User successfully deleted.", "Assassin");
-
-                        Clear();
-                        RefreshItemsSource();
                     }
+                    List<Message> messages = await GameState.DatabaseInteraction.LoadMessages(GameState.CurrentUser);
+                    foreach (var message in messages)
+                        await GameState.DatabaseInteraction.DeleteMessage(message);
+                    GameState.AllUsers.Remove(GameState.CurrentUser);
+                    GameState.DisplayNotification("User successfully deleted.", "Assassin");
+
+                    Clear();
+                    RefreshItemsSource();
                 }
             }
             else

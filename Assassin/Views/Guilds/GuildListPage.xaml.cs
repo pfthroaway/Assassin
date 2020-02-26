@@ -52,7 +52,10 @@ namespace Assassin.Views.Guilds
 
         private async void BtnApply_Click(object sender, RoutedEventArgs e)
         {
-            if (GameState.YesNoNotification($"Are you sure you want to apply for this guild? It will cost {GameState.CurrentGuild.Fee} gold.", "Assassin"))
+            //TODO Use old text for guild applications.
+            if (GameState.CurrentGuild.ID == 1 && GameState.CurrentUser.Level > 5)
+                Functions.AddTextToTextBox(TxtGuild, "This guild is for beginners and novices.\n\nThou art too experienced to be a member.");
+            else if (GameState.YesNoNotification($"Are you sure you want to apply for this guild? It will cost {GameState.CurrentGuild.Fee} gold.", "Assassin"))
             {
                 if (GameState.CurrentGuild.Master == GameState.CurrentGuild.DefaultMaster)
                 {

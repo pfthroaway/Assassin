@@ -285,7 +285,6 @@ namespace Assassin.Views.Player
                 GamePage gamePage = new GamePage();
                 gamePage.NewUser();
                 GameState.Navigate(gamePage);
-                GameState.MainWindow.MainFrame.RemoveBackEntry();
             }
         }
 

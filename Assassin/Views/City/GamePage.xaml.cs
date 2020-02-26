@@ -17,7 +17,7 @@ namespace Assassin.Views.City
     /// <summary>Interaction logic for GamePage.xaml</summary>
     public partial class GamePage
     {
-        private bool blnAwake;
+        private bool blnAwake, blnNewUser;
         private TimeSpan jailTimeSpan;
         private JailedUser jailedUser;
         private DispatcherTimer Timer1 = new DispatcherTimer();
@@ -28,7 +28,7 @@ namespace Assassin.Views.City
         /// <summary>Displays the appropriate text when a user awakens.</summary>
         internal async void Awaken()
         {
-            if (GameState.CurrentUser.Alive)
+            if (!blnNewUser && GameState.CurrentUser.Alive)
             {
                 switch (GameState.CurrentUser.CurrentLocation)
                 {
@@ -101,7 +101,11 @@ namespace Assassin.Views.City
         }
 
         /// <summary>If the character is newly created, display this text.</summary>
-        internal void NewUser() => TxtGame.Text = $"Creare An Vita, {GameState.CurrentUser.Name}!\n\nYou enter the city of thieves to take your place among the legends!";
+        internal void NewUser()
+        {
+            blnNewUser = true;
+            TxtGame.Text = $"Creare An Vita, {GameState.CurrentUser.Name}!\n\nYou enter the city of thieves to take your place among the legends!";
+        }
 
         /// <summary>Toggles all the Buttons on the Form.</summary>
         /// <param name="enabled">Should the Buttons be enabled?</param>
@@ -182,6 +186,8 @@ namespace Assassin.Views.City
         /// <summary>Closes the Page and saves the current <see cref="User"/>.</summary>
         private async void ClosePage()
         {
+            if (blnNewUser)
+                GameState.MainWindow.MainFrame.RemoveBackEntry();
             GameState.GoBack();
             await GameState.DatabaseInteraction.SaveUser(GameState.CurrentUser);
         }

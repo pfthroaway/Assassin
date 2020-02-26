@@ -127,14 +127,27 @@ namespace Assassin.Views.Guilds
         {
             InitializeComponent();
             RefToGuildListPage = guildListPage;
-            TxtGuild.Text = $"You enter {GameState.CurrentGuild.Name}.";
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            BtnChallenge.IsEnabled = GameState.CurrentGuild.ID != 1 && GameState.CurrentGuild.Master != GameState.CurrentUser.Name && GameState.CurrentGuild.HasMember(GameState.CurrentUser);
-            BtnManageGuild.IsEnabled = GameState.CurrentGuild.Master == GameState.CurrentUser.Name;
             Title = $"Assassin - {GameState.CurrentGuild.Name}";
+            if (GameState.CurrentGuild.ID == 1 && GameState.CurrentUser.Level > 5)
+            {
+                Functions.AddTextToTextBox(TxtGuild, "A chill fills your heart.\n\n" +
+                    "The guildmaster prevents thee from entering.\n\n" +
+                    "Thou art experienced enough in the ways of the assassin.\n\n" +
+                    "Thou must now begin thy own path without the charity of this guild.\n\n" +
+                    "With that said, the guildmaster leaves, barring thee forever as a member of the Master's Tavern.");
+                await GameState.MemberLeavesGuild(GameState.CurrentUser, GameState.CurrentGuild);
+                DisableButtons();
+            }
+            else
+            {
+                BtnChallenge.IsEnabled = GameState.CurrentGuild.ID != 1 && GameState.CurrentGuild.Master != GameState.CurrentUser.Name && GameState.CurrentGuild.HasMember(GameState.CurrentUser);
+                BtnManageGuild.IsEnabled = GameState.CurrentGuild.Master == GameState.CurrentUser.Name;
+                TxtGuild.Text = $"You enter {GameState.CurrentGuild.Name}.";
+            }
         }
 
         #endregion Page-Manipulation Methods
