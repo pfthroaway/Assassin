@@ -6,6 +6,7 @@ using Extensions.Encryption;
 using Extensions.Enums;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -232,7 +233,7 @@ namespace Assassin.Views.Player
                     _createUser.Name = TxtUsername.Text.Trim();
                     if (!GameState.AllUsers.Exists(user => user.Name == _createUser.Name))
                     {
-                        if (!string.Equals(_createUser.Name, "Computer", StringComparison.OrdinalIgnoreCase) && !string.Equals(_createUser.Name, "Rathskeller", StringComparison.OrdinalIgnoreCase) && !string.Equals(_createUser.Name, "The Master", StringComparison.OrdinalIgnoreCase))
+                        if (!GameState.ReservedNames.Any(name => name.Equals(_createUser.Name, StringComparison.OrdinalIgnoreCase)))
                         {
                             _createUser.Password = PBKDF2.HashPassword(PswdPassword.Password.Trim());
                             if (await GameState.NewUser(_createUser))

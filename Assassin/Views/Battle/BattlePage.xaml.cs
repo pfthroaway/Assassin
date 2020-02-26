@@ -177,14 +177,12 @@ namespace Assassin.Views.Battle
 
         /// <summary>Gives a <see cref="User"/> a bonus.</summary>
         /// <returns>Bonus amount</returns>
-        private int Bonus() => GameState.CurrentUser.Level <= 4 ? 11 - GameState.CurrentUser.Level * 5 : 0;
+        private int Bonus() => GameState.CurrentUser.Level <= 4 ? (11 - GameState.CurrentUser.Level) * 5 : 0;
 
         /// <summary>Handle's an <see cref="Enemy"/>'s attack.</summary>
         private void EnemyAttack()
         {
-            if (_playerStance != Stance.Parry)
-                EnemyHitsPlayer();
-            else if (SkillCheck(GameState.CurrentUser.CurrentWeaponSkill + Bonus()))
+            if (_playerStance != Stance.Parry && SkillCheck(GameState.CurrentUser.CurrentWeaponSkill + Bonus()))
             {
                 AddText("You parry your opponent's attack!");
                 PlayerHitsEnemy();
@@ -192,6 +190,9 @@ namespace Assassin.Views.Battle
             else
                 EnemyHitsPlayer();
         }
+
+        /// <summary>The <see cref="Enemy"/> flees the battle.</summary>
+        private void EnemyFlee() => EndBattleFlee("Your opponent has fled the battle.");
 
         /// <summary>The <see cref="Enemy"/> hits the <see cref="User"/>.</summary>
         private void EnemyHitsPlayer()
@@ -211,96 +212,160 @@ namespace Assassin.Views.Battle
         /// <summary>Chooses an <see cref="Enemy"/>'s <see cref="Stance"/>.</summary>
         private void EnemyStance()
         {
-            if (_enemyStamina > 2)
+            if (GameState.CurrentEnemy.EnduranceRatio >= 0.4m && GameState.CurrentEnemy.Level >= GameState.CurrentUser.Level / 2m)
             {
-                // if enemy's stamina is above 2, any option
-                int type = Functions.GenerateRandomNumber(1, 100);
-                switch (type)
+                // if enemy's health is above 40% and the level isn't exceedingly low in comparison
+                if (_enemyStamina > 2)
                 {
-                    case object _ when 1 <= type && type <= 20    // 20%
-                   :
-                        {
-                            _enemyStance = Stance.Normal;
-                            break;
-                        }
-
-                    case object _ when 21 <= type && type <= 40    // 20%
-             :
-                        {
-                            _enemyStance = Stance.Berserk;
-                            _enemyDamage *= 2;
-                            break;
-                        }
-
-                    case object _ when 41 <= type && type <= 60    // 20%
-             :
-                        {
-                            _enemyStance = Stance.Lunge;
-                            _enemyDamage *= 2;
-                            _enemyWeaponSkill /= 2;
-                            break;
-                        }
-
-                    case object _ when 61 <= type && type <= 80    // 20%
-             :
-                        {
-                            _enemyStance = Stance.Parry;
-                            break;
-                        }
-
-                    case object _ when 81 <= type && type <= 100   // 20%
-             :
-                        {
-                            _enemyStance = Stance.Defend;
-                            if (_enemyStamina < 20)
-                            {
-                            }
-
-                            break;
-                        }
+                    // if enemy's stamina is above 2, any option
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 20) //20%
+                        _enemyStance = Stance.Normal;
+                    else if (type <= 40) // 20%
+                    {
+                        _enemyStance = Stance.Berserk;
+                        _enemyDamage *= 2;
+                    }
+                    else if (type <= 60) // 20%
+                    {
+                        _enemyStance = Stance.Lunge;
+                        _enemyDamage *= 2;
+                        _enemyWeaponSkill /= 2;
+                    }
+                    else if (type <= 80) // 20%
+                        _enemyStance = Stance.Parry;
+                    else if (type <= 100) // 20%
+                        _enemyStance = Stance.Defend;
+                }
+                else if (_enemyStamina == 1)
+                {
+                    // if enemy's stamina is 1, no berserk option, higher chance of defend
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 20) //20%
+                        _enemyStance = Stance.Normal;
+                    else if (type <= 40) //20%
+                    {
+                        _enemyStance = Stance.Lunge;
+                        _enemyDamage *= 2;
+                        _enemyWeaponSkill /= 2;
+                    }
+                    else if (type <= 60) //20%
+                        _enemyStance = Stance.Parry;
+                    else //40%
+                        _enemyStance = Stance.Defend;
+                }
+                else if (_enemyStamina <= 0)
+                    // if enemy's stamina is 0, only defend
+                    _enemyStance = Stance.Defend;
+            }
+            else if (GameState.CurrentEnemy.EnduranceRatio >= 0.1m && GameState.CurrentEnemy.Level >= GameState.CurrentUser.Level / 2m)
+            {
+                if (_enemyStamina > 2)
+                {
+                    // if enemy's stamina is above 2, any option
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 15) //15%
+                        _enemyStance = Stance.Normal;
+                    else if (type <= 30) //15%
+                    {
+                        _enemyStance = Stance.Berserk;
+                        _enemyDamage *= 2;
+                    }
+                    else if (type <= 45) //15%
+                    {
+                        _enemyStance = Stance.Lunge;
+                        _enemyDamage *= 2;
+                        _enemyWeaponSkill /= 2;
+                    }
+                    else if (type <= 60) //15%
+                        _enemyStance = Stance.Parry;
+                    else if (type <= 75) //15%
+                        _enemyStance = Stance.Defend;
+                    else //25%
+                        _enemyStance = Stance.Flee;
+                }
+                else if (_enemyStamina == 1)
+                {
+                    // if enemy's stamina is 1, no berserk option
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 15) //15%
+                        _enemyStance = Stance.Normal;
+                    else if (type <= 30) //15%
+                    {
+                        _enemyStance = Stance.Lunge;
+                        _enemyDamage *= 2;
+                        _enemyWeaponSkill /= 2;
+                    }
+                    else if (type <= 45) //15%
+                        _enemyStance = Stance.Parry;
+                    else if (type <= 60) //15%
+                        _enemyStance = Stance.Defend;
+                    else //40%
+                        _enemyStance = Stance.Flee;
+                }
+                else if (_enemyStamina <= 0)
+                {    // if enemy's stamina is 0, only defend
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 40) //40%
+                        _enemyStance = Stance.Defend;
+                    else //60%
+                        _enemyStance = Stance.Flee;
                 }
             }
-            else if (_enemyStamina == 1)
+            else if (GameState.CurrentEnemy.EnduranceRatio < 0.1m || GameState.CurrentEnemy.Level < GameState.CurrentUser.Level / 2m)
             {
-                // if enemy's stamina is 1, no berserk option, higher chance of defend
-                int type = Functions.GenerateRandomNumber(1, 100);
-                switch (type)
+                if (_enemyStamina > 2)
                 {
-                    case object _ when 1 <= type && type <= 20    // 20%
-                   :
-                        {
-                            _enemyStance = Stance.Normal;
-                            break;
-                        }
-
-                    case object _ when 21 <= type && type <= 40   // 20%
-             :
-                        {
-                            _enemyStance = Stance.Lunge;
-                            _enemyDamage *= 2;
-                            _enemyWeaponSkill /= 2;
-                            break;
-                        }
-
-                    case object _ when 41 <= type && type <= 60   // 20%
-             :
-                        {
-                            _enemyStance = Stance.Parry;
-                            break;
-                        }
-
-                    case object _ when 61 <= type && type <= 100  // 40%
-             :
-                        {
-                            _enemyStance = Stance.Defend;
-                            break;
-                        }
+                    // if enemy's stamina is above 2, any option
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 10) //10%
+                        _enemyStance = Stance.Normal;
+                    else if (type <= 20) //10%
+                    {
+                        _enemyStance = Stance.Berserk;
+                        _enemyDamage *= 2;
+                    }
+                    else if (type <= 30) //10%
+                    {
+                        _enemyStance = Stance.Lunge;
+                        _enemyDamage *= 2;
+                        _enemyWeaponSkill /= 2;
+                    }
+                    else if (type <= 40) //10%
+                        _enemyStance = Stance.Parry;
+                    else if (type <= 50) //10%
+                        _enemyStance = Stance.Defend;
+                    else //50%
+                        _enemyStance = Stance.Flee;
+                }
+                else if (_enemyStamina == 1)
+                {
+                    // if enemy's stamina is 1, no berserk option
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 10) //10%
+                        _enemyStance = Stance.Normal;
+                    else if (type <= 20) //10%
+                    {
+                        _enemyStance = Stance.Lunge;
+                        _enemyDamage *= 2;
+                        _enemyWeaponSkill /= 2;
+                    }
+                    else if (type <= 30) //10%
+                        _enemyStance = Stance.Parry;
+                    else if (type <= 40) //10%
+                        _enemyStance = Stance.Defend;
+                    else //60%
+                        _enemyStance = Stance.Flee;
+                }
+                else if (_enemyStamina <= 0)
+                {    // if enemy's stamina is 0, only defend
+                    int type = Functions.GenerateRandomNumber(1, 100);
+                    if (type <= 20) //20%
+                        _enemyStance = Stance.Defend;
+                    else //80%
+                        _enemyStance = Stance.Flee;
                 }
             }
-            else if (_enemyStamina <= 0)
-                // if enemy's stamina is 0, only defend
-                _enemyStance = Stance.Defend;
-
             if (_enemyStance == Stance.Defend)
             {
                 _enemyBlocking = _enemyBlocking >= 45 ? 90 : _enemyBlocking * 2;
@@ -311,23 +376,37 @@ namespace Assassin.Views.Battle
         /// <summary>The <see cref="Enemy"/>'s turn.</summary>
         private void EnemyTurn()
         {
-            // If the Enemy is not defending
+            // If the Enemy is not defending or fleeing
             // and the Enemy can hit
             // and the Assassin doesn't block
             // then attempt to attack.
-            // TODO Re-implement the enemy fleeing if they're below 20% endurance.
+            // If the Enemy is fleeing,
+            // check whether they have enough skill to flee,
+            // and if they aren't blocked from fleeing, flee.
 
-            if (_enemyStance != Stance.Defend)
+            if (_enemyStance != Stance.Defend && _enemyStance != Stance.Flee)
             {
                 if (SkillCheck(_enemyWeaponSkill))
                 {
-                    if (SkillCheck(_playerBlocking + Bonus()) == false)
+                    if (!SkillCheck(_playerBlocking + Bonus()))
                         EnemyAttack();
                     else
                         AddText("You block your opponent's attack.");
                 }
                 else
                     AddText("Your opponent misses you.");
+            }
+            else if (_enemyStance == Stance.Flee)
+            {
+                if (SkillCheck(GameState.CurrentEnemy.Slipping - Bonus()))
+                {
+                    if (!SkillCheck(_playerBlocking + Bonus()))
+                        EnemyFlee();
+                    else
+                        AddText("You blocked your opponent's attempt to flee.");
+                }
+                else
+                    AddText("Your opponent's attempt at flight failed miserably.");
             }
         }
 
@@ -355,13 +434,13 @@ namespace Assassin.Views.Battle
             if (playerFirst >= enemyFirst)
             {
                 PlayerTurn();
-                if (GameState.CurrentEnemy.CurrentEndurance > 0)
+                if (!_blnDone && GameState.CurrentEnemy.CurrentEndurance > 0)
                     EnemyTurn();
             }
             else
             {
                 EnemyTurn();
-                if (GameState.CurrentUser.CurrentEndurance > 0)
+                if (!_blnDone && GameState.CurrentUser.CurrentEndurance > 0)
                     PlayerTurn();
             }
 
@@ -378,9 +457,7 @@ namespace Assassin.Views.Battle
         /// <summary>The <see cref="User"/> attacks.</summary>
         private void PlayerAttack()
         {
-            if (_enemyStance != Stance.Parry)
-                PlayerHitsEnemy();
-            else if (SkillCheck(GameState.CurrentEnemy.WeaponSkill))
+            if (_enemyStance == Stance.Parry && SkillCheck(GameState.CurrentEnemy.WeaponSkill))
             {
                 AddText("Your opponent parries your attack!");
                 EnemyHitsPlayer();
@@ -390,23 +467,7 @@ namespace Assassin.Views.Battle
         }
 
         /// <summary>The <see cref="User"/> flees the battle.</summary>
-        private void PlayerFlee()
-        {
-            AddText("You have escaped the battle!");
-
-            if (GameState.CurrentUser.Experience < 100)
-            {
-                if ((GameState.CurrentEnemy.Level - GameState.CurrentUser.Level) >= 2)
-                {
-                    AddText("You have gained 1 experience from the battle.");
-                    GameState.CurrentUser.Experience++;
-                }
-            }
-
-            ToggleButtons(false);                    // disable buttons
-            BtnExit.IsEnabled = true;              // enable Exit buton
-            _blnDone = true;                      // allow the form to exit
-        }
+        private void PlayerFlee() => EndBattleFlee("You have escaped the battle!");
 
         /// <summary>The <see cref="User"/> hits the <see cref="Enemy"/>.</summary>
         private void PlayerHitsEnemy()
@@ -424,6 +485,23 @@ namespace Assassin.Views.Battle
             }
             else
                 AddText($"You attack your opponent for {plrDamage} damage, but their armor absorbs all of it.");
+        }
+
+        /// <summary>The <see cref="User"/>'s turn.</summary>
+        private void PlayerTurn()
+        {
+            if (_playerStance != Stance.Defend && _playerStance != Stance.Flee)
+            {
+                if (SkillCheck(_playerWeaponSkill + Bonus()))
+                {
+                    if (!SkillCheck(_enemyBlocking))
+                        PlayerAttack();
+                    else
+                        AddText("Your opponent blocks your attack.");
+                }
+                else
+                    AddText("You miss your opponent.");
+            }
         }
 
         /// <summary>Handles the <see cref="User"/>'s <see cref="Stance"/> in QuickCombat.</summary>
@@ -456,23 +534,6 @@ namespace Assassin.Views.Battle
             }
             else
                 SetPlayerStance(Stance.Defend);
-        }
-
-        /// <summary>The <see cref="User"/>'s turn.</summary>
-        private void PlayerTurn()
-        {
-            if (_playerStance != Stance.Defend && _playerStance != Stance.Flee)
-            {
-                if (SkillCheck(_playerWeaponSkill + Bonus()))
-                {
-                    if (!SkillCheck(_enemyBlocking))
-                        PlayerAttack();
-                    else
-                        AddText("Your opponent blocks your attack.");
-                }
-                else
-                    AddText("You miss your opponent.");
-            }
         }
 
         /// <summary>Resets <see cref="User"/> and <see cref="Enemy"/> stats after a round.</summary>
@@ -589,6 +650,19 @@ namespace Assassin.Views.Battle
             BtnExit.IsEnabled = true;
         }
 
+        /// <summary>The battle ends with one party fleeing.</summary>
+        /// <param name="fleeText">Text to be displayed regarding said flight</param>
+        private void EndBattleFlee(string fleeText)
+        {
+            AddText(fleeText);
+            if (GameState.CurrentUser.Experience < 100 && (GameState.CurrentEnemy.Level - GameState.CurrentUser.Level) >= 2)
+            {
+                AddText("You have gained 1 experience from the battle.");
+                GameState.CurrentUser.Experience++;
+            }
+            EndBattle();
+        }
+
         /// <summary>Saves the <see cref="User"/> who was an <see cref="Enemy"/> during the battle.</summary>
         private async void EndPlayerBattle()
         {
@@ -623,9 +697,7 @@ namespace Assassin.Views.Battle
             {
                 int experience = GameState.CurrentEnemy.Level + 1 - GameState.CurrentUser.Level;
                 if (experience > 0)
-                {
                     Functions.AddTextToTextBox(TxtBattle, GameState.CurrentUser.GainExperience(experience));
-                }
             }
 
             if (GameState.CurrentUser.Level - GameState.CurrentEnemy.Level >= -2)

@@ -65,7 +65,7 @@ namespace Assassin.Views.Guilds
                     List<Weapon> weapons = GameState.AllWeapons.Where(wpn => wpn.Value >= GameState.CurrentGuild.ID * 100 && wpn.Value <= GameState.CurrentGuild.ID * 500).ToList();
                     List<Armor> armor = GameState.AllArmor.Where(armr => armr.Value >= GameState.CurrentGuild.ID * 100 && armr.Value <= GameState.CurrentGuild.ID * 500).ToList();
 
-                    GameState.CurrentEnemy = new Enemy(GameState.CurrentGuild.Master, GameState.CurrentGuild.ID * 2, GameState.CurrentGuild.ID * 100, GameState.CurrentGuild.ID * 100, weapons[Functions.GenerateRandomNumber(0, weapons.Count - 1)], armor[Functions.GenerateRandomNumber(0, armor.Count - 1)], Functions.GenerateRandomNumber(1, GameState.CurrentGuild.Gold), GameState.CurrentGuild.ID * 15, GameState.CurrentGuild.ID * 15, GameState.CurrentGuild.ID * 15);
+                    GameState.CurrentEnemy = new Enemy(GameState.CurrentGuild.Master != "Computer" ? GameState.CurrentGuild.Master : "Guildmaster", GameState.CurrentGuild.ID * 2, GameState.CurrentGuild.ID * 100, GameState.CurrentGuild.ID * 100, weapons[Functions.GenerateRandomNumber(0, weapons.Count - 1)], armor[Functions.GenerateRandomNumber(0, armor.Count - 1)], Functions.GenerateRandomNumber(1, GameState.CurrentGuild.Gold), GameState.CurrentGuild.ID * 15, GameState.CurrentGuild.ID * 15, GameState.CurrentGuild.ID * 15);
                     GameState.Navigate(new BattlePage(false, true) { RefToGuildPage = this });
                 }
                 else

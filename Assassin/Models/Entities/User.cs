@@ -61,7 +61,7 @@ namespace Assassin.Models.Entities
             set
             {
                 _hunger = value;
-                NotifyPropertyChanged(nameof(Hunger), nameof(HungerToString));
+                NotifyPropertyChanged(nameof(Hunger), nameof(HungerToString), nameof(HungerToStringWithText));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Assassin.Models.Entities
             set
             {
                 _thirst = value;
-                NotifyPropertyChanged(nameof(Thirst), nameof(ThirstToString));
+                NotifyPropertyChanged(nameof(Thirst), nameof(ThirstToString), nameof(ThirstToStringWithText));
             }
         }
 

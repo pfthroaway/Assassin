@@ -31,6 +31,7 @@ namespace Assassin.Models
         internal static List<string> AllRanks = new List<string>();
         internal static List<User> AllUsers = new List<User>();
         internal static List<Weapon> AllWeapons = new List<Weapon>();
+        internal static List<string> ReservedNames = new List<string> { "The Master", "Rathskeller", "Computer", "Guildmaster" };
         internal static Enemy CurrentEnemy = new Enemy();
         internal static Guild CurrentGuild = new Guild();
         internal static User CurrentUser = new User();

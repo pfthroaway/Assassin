@@ -173,11 +173,11 @@ namespace Assassin.Views.Admin
             if (TxtName.Text.Trim() != GameState.CurrentUser.Name)
             {
                 if (!GameState.AllUsers.Exists(user => user.Name == TxtName.Text.Trim()) &&
-                    !string.Equals(TxtName.Text.Trim(), "Computer", StringComparison.OrdinalIgnoreCase) && !string.Equals(TxtName.Text.Trim(), "Rathskeller", StringComparison.OrdinalIgnoreCase) && !string.Equals(TxtName.Text.Trim(), "The Master", StringComparison.OrdinalIgnoreCase))
+                    !GameState.ReservedNames.Any(name => name.Equals(TxtName.Text.Trim(), StringComparison.OrdinalIgnoreCase)))
                     blnChangeName = true;
                 else
                 {
-                    if (string.Equals(TxtName.Text.Trim(), "Computer", StringComparison.OrdinalIgnoreCase) || string.Equals(TxtName.Text.Trim(), "Rathskeller", StringComparison.OrdinalIgnoreCase) || string.Equals(TxtName.Text.Trim(), "The Master"))
+                    if (GameState.ReservedNames.Any(name => name.Equals(TxtName.Text.Trim(), StringComparison.OrdinalIgnoreCase)))
                         GameState.DisplayNotification("That username is reserved and cannot be chosen.", "Assassin");
                     else
                         GameState.DisplayNotification("The new username you have chosen is already in use.", "Assassin");
