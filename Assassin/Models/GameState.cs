@@ -59,7 +59,7 @@ namespace Assassin.Models
         #endregion Navigation
 
         /// <summary>Checks the database version so the table can be updated if necessary.</summary>
-        private async static void CheckDatabaseVersion()
+        private static async void CheckDatabaseVersion()
         {
             if (await DatabaseInteraction.LoadUserVersion() == 0)
             {
@@ -105,7 +105,7 @@ namespace Assassin.Models
             try
             {
                 User checkUser = AllUsers.Find(hero => string.Equals(hero.Name, username, StringComparison.OrdinalIgnoreCase));
-                if (PBKDF2.ValidatePassword(password, checkUser.Password))
+                if (checkUser != null && checkUser != new User() && PBKDF2.ValidatePassword(password, checkUser.Password))
                 {
                     CurrentUser = checkUser;
                     return true;

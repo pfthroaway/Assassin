@@ -40,8 +40,7 @@ namespace Assassin.Models.Database
         /// <returns>True if successful</returns>
         public async Task<bool> UpdateUserVersion(long version)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "PRAGMA user_version = @version" };
-            cmd.Parameters.AddWithValue("@version", version);
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = $"PRAGMA user_version = {version}" };
             return await SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
